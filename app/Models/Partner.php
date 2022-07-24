@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Jamesh\Uuid\HasUuid;
 
-class Rule extends Model
+class Partner extends Model
 {
     use HasUuid;
     protected $guarded = [];

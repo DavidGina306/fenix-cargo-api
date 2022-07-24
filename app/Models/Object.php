@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Jamesh\Uuid\HasUuid;
 
-class Object extends Model
+class ObjectModel extends Model
 {
-    //
+    use HasUuid;
+    protected $guarded = [];
+    protected $table = 'objects';
+
 }

@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('role');
             $table->string('email');
-            $table->enum('type', ['F', 'J']);
+            $table->enum('type', ['P', 'J']);
             $table->string('document');
             $table->string('email_2')->nullable();
             $table->string('contact');

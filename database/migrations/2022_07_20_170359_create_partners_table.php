@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMovimentQuotesTable extends Migration
+class CreatePartnersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateMovimentQuotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('moviment_quotes', function (Blueprint $table) {
+        Schema::create('patners', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('number_doc');
+            $table->uuid('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->enum('status', ['E', 'D']);
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ class CreateMovimentQuotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('moviment_quotes');
+        Schema::dropIfExists('patners');
     }
 }

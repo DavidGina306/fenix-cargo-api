@@ -13,7 +13,7 @@ class CreatePartnersTable extends Migration
      */
     public function up()
     {
-        Schema::create('patners', function (Blueprint $table) {
+        Schema::create('partners', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('number_doc');

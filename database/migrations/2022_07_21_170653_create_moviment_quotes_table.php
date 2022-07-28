@@ -16,7 +16,7 @@ class CreateMovimentQuotesTable extends Migration
         Schema::create('moviment_quotes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->enum('status', ['E', 'D']);
+            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->uuid('quote_id');
             $table->foreign('quote_id')->references('id')->on('quotes');
             $table->timestamps();

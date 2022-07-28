@@ -19,7 +19,7 @@ class CreatePartnersTable extends Migration
             $table->string('number_doc');
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
-            $table->enum('status', ['E', 'D']);
+            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ class CreatePartnerAgentsTable extends Migration
             $table->uuid('partner_id');
             $table->foreign('partner_id')->references('id')->on('partners');
             $table->string('contact_2')->nullable();
-            $table->enum('status', ['E', 'D']);
+            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
         });
     }

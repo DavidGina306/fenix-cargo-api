@@ -16,7 +16,7 @@ class CreatePackingTypesTable extends Migration
         Schema::create('packing_types', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->enum('status', ['E', 'D']);
+            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
         });
     }

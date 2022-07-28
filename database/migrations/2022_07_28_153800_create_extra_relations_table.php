@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExtraTablesTable extends Migration
+class CreateExtraRelationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateExtraTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('extra_tables', function (Blueprint $table) {
+        Schema::create('extra_relations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateExtraTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extra_tables');
+        Schema::dropIfExists('extra_relations');
     }
 }

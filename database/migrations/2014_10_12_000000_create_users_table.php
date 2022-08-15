@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

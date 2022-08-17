@@ -15,12 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
+    'middleware' => 'api'
 ], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::group(['middleware' => ['jwt.verify'], 'namespace' => 'Api'], function () {
+        Route::group(['prefix' => 'partners'], function () {
+            Route::post('/', "PartnerController@store");
+            Route::put('/{partner}', "PartnerController@update");
+            Route::get('/{partner}', "PartnerController@get");
+        });
+
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/', "UserController@index");
+        });
+    });
+
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::get('refresh', 'AuthController@refresh');
+        Route::get('me', 'AuthController@me');
+    });
 });

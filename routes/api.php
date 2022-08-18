@@ -38,6 +38,7 @@ Route::group([
         Route::group(['prefix' => 'users'], function () {
             Route::post('/', "UserController@store");
             Route::get('/', "UserController@index");
+            Route::get('/{user}', "UserController@get");
         });
     });
 

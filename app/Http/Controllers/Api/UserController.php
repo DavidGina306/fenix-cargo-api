@@ -6,6 +6,7 @@ use App\DataTables\UserDatatable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Services\DatatableService;
+use App\Services\User\GetUserService;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Http\Request;
@@ -39,5 +40,13 @@ class UserController extends Controller
         }
     }
 
-
+    public function get($userId)
+    {
+        try {
+            $user =  GetUserService::get($userId);
+            return response($user, 200);
+        } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
 }

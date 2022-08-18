@@ -13,7 +13,7 @@ class StoreAddressService
         try {
             $address = Address::create(
                 [
-                    'address_line_1' => $request['address_line_1'], 'address_line_2' => $request['address_line_2'], 'address_line_3' => $request['address_line_3'],
+                    'address_line_1' => $request['address_line_1'], 'address_line_2' => $request['address_line_2'], 'address_line_3' => $request['address_line_3'] ?? "",
                     'town' => $request['town'],    'country' => $request['country'], 'postcode' => $request['postcode']
                 ]
             );

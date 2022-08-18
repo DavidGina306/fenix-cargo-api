@@ -21,7 +21,7 @@ class StoreAgentService
                         'email' => $value['email'],
                         'email_2' => $value['email_2'],
                         'contact' => $value['contact'],
-                        'contact_2' => $value['contact_2'],
+                        'contact_2' => $value['contact_2'] ?? "",
                         'partner_id' => $partner->id
                     ]));
                 }
@@ -32,7 +32,7 @@ class StoreAgentService
                     'email' => $request['email'],
                     'email_2' => $request['email_2'],
                     'contact' => $request['contact'],
-                    'contact_2' => $request['contact_2'],
+                    'contact_2' => $request['contact_2'] ?? "",
                     'partner_id' => $partner->id
                 ]);
             }

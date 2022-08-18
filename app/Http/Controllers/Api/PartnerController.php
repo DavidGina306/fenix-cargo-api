@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DataTables\PartnerDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePartnerRequest;
+use App\Services\DatatableService;
 use App\Services\Partner\GetPartnerService;
 use App\Services\Partner\StorePartnerService;
 use Exception;
@@ -11,6 +13,18 @@ use Illuminate\Support\Facades\DB;
 
 class PartnerController extends Controller
 {
+    private $partnerDataTable;
+
+    public function __construct(PartnerDataTable $partnerDataTable)
+    {
+        $this->partnerDataTable = $partnerDataTable;
+    }
+
+    public function index()
+    {
+        return DatatableService::datatable($this->partnerDataTable);
+    }
+
     public function store(StorePartnerRequest $request)
     {
         try {

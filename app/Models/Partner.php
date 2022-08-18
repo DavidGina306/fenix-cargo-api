@@ -20,7 +20,7 @@ class Partner extends Model
      */
     public function agents(): HasMany
     {
-        return $this->hasMany(PartnerAg::class);
+        return $this->hasMany(PartnerAgent::class);
     }
 
     /**

@@ -20,11 +20,23 @@ Route::group([
     Route::group(['middleware' => ['jwt.verify'], 'namespace' => 'Api'], function () {
         Route::group(['prefix' => 'partners'], function () {
             Route::post('/', "PartnerController@store");
+            Route::get('/', "PartnerController@index");
             Route::put('/{partner}', "PartnerController@update");
             Route::get('/{partner}', "PartnerController@get");
         });
 
+        Route::group(['prefix' => 'customers'], function () {
+            Route::post('/', "CustomerController@store");
+            Route::get('/', "CustomerController@index");
+            Route::get('/{customer}', "CustomerController@get");
+            Route::put('/{customer}', "CustomerController@update");
+        });
+
+        Route::group(['prefix' => 'relations'], function () {
+            Route::get('/', "RelationPriceController@index");
+        });
         Route::group(['prefix' => 'users'], function () {
+            Route::post('/', "UserController@store");
             Route::get('/', "UserController@index");
         });
     });

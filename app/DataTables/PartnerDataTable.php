@@ -19,15 +19,22 @@ class PartnerDataTable extends DataTable
                     'id' => $query->id,
                     'status' => $query->status
                 ];
-            })->editColumn('image', function ($query) {
-                return $query->variations->first()->images()->first()->value;
-            })->filterColumn('quantity', function ($query, $keyword) {
-                $query->whereHas('variations', function ($sql) use ($keyword) {
-                    $sql->where('quantity', 'like', $keyword);
+            })->editColumn('parceiros', function ($query) {
+                return $query->agents->pluck(['name']);
+            })->filterColumn('parceiros', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('name', 'like', $keyword);
                 });
-            })->filterColumn('price', function ($query, $keyword) {
-                $query->whereHas('variations', function ($sql) use ($keyword) {
-                    $sql->where('price', 'like', $keyword);
+            })->editColumn('address', function ($query) {
+                return $query->town . " ". $query->postcode;
+            })->filterColumn('address', function ($query, $keyword) {
+                $query->whereHas('address', function ($sql) use ($keyword) {
+                    $sql->where('address_line_1', 'like', $keyword)
+                        ->orWhere('address_line_1', 'like', $keyword)
+                        ->orWhere('address_line_2', 'like', $keyword)
+                        ->orWhere('address_line_3', 'like', $keyword)
+                        ->orWhere('town', 'like', $keyword)
+                        ->orWhere('country', 'like', $keyword);
                 });
             });
     }
@@ -36,16 +43,19 @@ class PartnerDataTable extends DataTable
     public function query(Partner $model)
     {
         return $model->newQuery()
-            ->leftJoin('categories as c', 'products.category_id', '=', 'c.id')
+            ->join('addresses as a', 'partners.address_id', '=', 'a.id')
             ->select(
-                'products.id',
-                'products.name',
-                'products.description',
-                'products.status',
-                'products.vat',
-                'c.name as category',
-                (DB::raw("(select v.quantity from variations v where v.product_id = products.id limit 1) as quantity")),
-                (DB::raw("(select v.quantity from variations v where v.product_id = products.id limit 1) as price"))
+                'partners.id',
+                'partners.name',
+                'partners.number_doc',
+                'partners.status',
+                'a.id as id_address',
+                'a.address_line_1',
+                'a.address_line_2',
+                'a.address_line_3',
+                'a.postcode',
+                'a.country',
+                'a.town'
             );
     }
 
@@ -62,24 +72,18 @@ class PartnerDataTable extends DataTable
     {
         return [
             'action' => [
-                'title' => 'Actions',
+                'title' => 'Ações',
                 'orderable' => false,
                 'searchable' => false,
                 'exportable' => false,
                 'printable' => false,
                 'width' => '10px'
             ],
-            'image' => [
-                'title' => '#', 'width' => '200px',
-                'orderable' => false,
-                'searchable' => false,
-            ],
-            'name' => ['title' => 'Name', 'name' => 'products.name',  'width' => '200px'],
-            'vat' => ['title' => 'VAT', 'name' => 'products.vat', 'width' => '200px'],
-            'category' => ['title' => 'Category', 'name' => 'c.name as category', 'width' => '200px'],
-            'price' => ['title' => 'Price', 'width' => '200px', 'class' => 'text-center'],
-            'quantity' => ['title' => 'Quantity', 'width' => '200px', 'class' => 'text-center'],
-            'status' => ['title' => 'Status', 'name' => 'products.status', 'width' => '50px', 'class' => 'text-center'],
+            'name' => ['title' => 'Name', 'name' => 'partners.name',  'width' => '200px'],
+            'number_doc' => ['title' => 'CNPJ', 'name' => 'partners.number_doc', 'width' => '200px'],
+            'address' => ['title' => 'Endereço', 'width' => '200px', 'class' => 'text-center'],
+            'parceiros' => ['title' => 'Parceiros', 'width' => '200px', 'class' => 'text-center'],
+            'status' => ['title' => 'Status', 'name' => 'partners.status', 'width' => '50px', 'class' => 'text-center'],
         ];
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\DataTables;
 
-use App\User;
+use App\Models\RelationPrice;
 use Yajra\DataTables\Services\DataTable;
 
-class UserDatatable extends DataTable
+class RelationDataTable extends DataTable
 {
     public function dataTable($query)
     {
@@ -20,15 +20,9 @@ class UserDatatable extends DataTable
     }
 
 
-    public function query(User $model)
+    public function query(RelationPrice $model)
     {
-        return $model->newQuery()
-            ->select(
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.status'
-            );
+        return $model->newQuery();
     }
 
     public function html()
@@ -51,9 +45,12 @@ class UserDatatable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'name' => ['title' => 'Nome', 'name' => 'users.name',  'width' => '200px'],
-            'email' => ['title' => 'Email', 'name' => 'users.email', 'width' => '200px'],
-            'status' => ['title' => 'Status', 'name' => 'users.status', 'width' => '50px', 'class' => 'text-center'],
+            'numero' => ['title' => 'Numero', 'width' => '200px'],
+            'tarifa' => ['title' => 'Tarifa',  'width' => '200px'],
+            'origem' => ['title' => 'Origem','width' => '50px', 'class' => 'text-center'],
+            'destino' => ['title' => 'Taxa Mínima', 'width' => '200px'],
+            'status' => ['title' => 'Excedente','width' => '50px', 'class' => 'text-center'],
+            'prazo' => ['title' => 'Prazo','width' => '50px', 'class' => 'text-center'],
         ];
     }
 

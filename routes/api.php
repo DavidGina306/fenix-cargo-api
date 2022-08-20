@@ -35,6 +35,12 @@ Route::group([
         Route::group(['prefix' => 'relations'], function () {
             Route::get('/', "RelationPriceController@index");
         });
+
+        Route::group(['prefix' => 'quotes'], function () {
+            Route::post('/', "QuoteController@store");
+            Route::get('/', "QuoteController@index");
+        });
+
         Route::group(['prefix' => 'users'], function () {
             Route::post('/', "UserController@store");
             Route::get('/', "UserController@index");

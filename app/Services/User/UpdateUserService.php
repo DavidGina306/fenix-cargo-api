@@ -6,7 +6,7 @@ use App\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class StoreUserService
+class UpdateUserService
 {
     public static function update($request, $userId)
     {

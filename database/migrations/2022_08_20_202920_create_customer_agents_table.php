@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomersTable extends Migration
+class CreateCustomerAgentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('customer_agents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('role');
+            $table->string('role')->nullable();
             $table->string('email');
-            $table->enum('type', ['F', 'J']);
-            $table->string('document');
             $table->string('email_2')->nullable();
             $table->string('contact');
-            $table->string('gender')->nullable();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->uuid('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('contact_2')->nullable();
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
@@ -36,6 +37,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('customer_agents');
     }
 }

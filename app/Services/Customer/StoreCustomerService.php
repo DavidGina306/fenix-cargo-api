@@ -3,6 +3,7 @@
 namespace App\Services\Customer;
 
 use App\Models\Customer;
+use App\Models\CustomerAgent;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -12,13 +13,8 @@ class StoreCustomerService
     public static function store($request)
     {
         try {
-            $dataUser = [
-                'name' => $request['user_name'],
-                'email' => $request['email'],
-                'password' => $request['password'],
-            ];
-            $user = StoreUserService::store($dataUser);
-            $partner = Customer::create(
+
+            $customer = Customer::create(
                 [
                     'name' => $request['name'],
                     'role' => $request['role'] ?? "",
@@ -28,14 +24,38 @@ class StoreCustomerService
                     'email' => $request['email'],
                     'email_2' => $request['email_2'] ?? "",
                     'contact' => $request['contact'],
-                    'contact_2' => $request['contact_2'] ?? "",
-                    'user_id' => $user->id
+                    'contact_2' => $request['contact_2'] ?? ""
                 ]
             );
-            return $partner->fresh();
+            self::storeAgents($request['agents'], $customer);
+            return $customer->fresh();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to register Customer', 500);
         }
     }
+
+    public static function storeAgents($agents, Customer $customer)
+    {
+        foreach ($agents as $agent) {
+            $dataUser = [
+                'name' => $agent['name'],
+                'email' => $agent['email'],
+                'password' => "Abcd@1234",
+            ];
+            $user = StoreUserService::store($dataUser);
+            CustomerAgent::query()->firstOrCreate([
+                'name' => $agent['name'],
+                'email' => $agent['email'],
+                'contact' => $agent['email'],
+                'user_id' => $user->id,
+                'role' => $request['role'] ?? "",
+                'customer_id' => $customer->id
+            ]);
+        }
+
+    }
+
+
+
 }

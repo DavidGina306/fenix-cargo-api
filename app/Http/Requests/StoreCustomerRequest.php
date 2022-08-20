@@ -29,15 +29,17 @@ class StoreCustomerRequest extends FormRequest
         return [
             'name' => 'required|max:200',
             'document' => 'required|max:100',
-            'user_name' => 'required|max:100',
             'role' => 'max:100',
             'type' => 'required',
             'gender' => 'nullable',
             'email' => 'required|max:200|email',
-            'password' => 'required|min:8|max:100',
             'email_2' => 'email|nullable',
             'contact' => 'required|max:50',
-            'contact_2' => 'max:100|nullable',
+            'contact_2' => 'max:10|nullable',
+            'agents' => 'array|required',
+            'agents.*.name' => 'required|max:100',
+            'agents.*.email' => 'max:200|email',
+            'agents.*.contact' => 'required|max:50',
         ];
     }
 }

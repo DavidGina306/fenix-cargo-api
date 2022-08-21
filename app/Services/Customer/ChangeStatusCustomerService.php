@@ -17,6 +17,7 @@ class ChangeStatusCustomerService
             $customer->update([
                 'status' => $customer->statud == 'D' ? 'E' : 'D'
             ]);
+            self::changeStatusAgents($customer);
             return new CustomerResource($customer->fresh());
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {

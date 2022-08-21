@@ -30,6 +30,7 @@ Route::group([
             Route::get('/', "CustomerController@index");
             Route::get('/{customer}', "CustomerController@get");
             Route::put('/{customer}', "CustomerController@update");
+            Route::put('/{customer}', "CustomerController@changeStatus");
         });
 
         Route::group(['prefix' => 'relations'], function () {

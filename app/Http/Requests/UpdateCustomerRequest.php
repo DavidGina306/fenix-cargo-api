@@ -35,7 +35,12 @@ class UpdateCustomerRequest extends FormRequest
             'email' => 'required|max:200|email',
             'email_2' => 'email|nullable',
             'contact' => 'required|max:50',
-            'contact_2' => 'max:100|nullable'
+            'contact_2' => 'max:100|nullable',
+            'agents' => 'array|required',
+            'agents.*.name' => 'required|max:100',
+            'agents.*.email' => 'max:200|email',
+            'agents.*.contact' => 'required|max:50',
+            'agents.*.id' => 'uuid|nullable',
         ];
     }
 }

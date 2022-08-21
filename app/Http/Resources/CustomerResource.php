@@ -26,6 +26,14 @@ class CustomerResource extends JsonResource
             "email_2" => $this->email_2,
             "contact" => $this->contact,
             "contact_2" => $this->contact_2,
+            "agents" => $this->agents->map(function($query)  {
+                return [
+                    "id" => $query->id,
+                    "name" => $query->name,
+                    "email"=> $query->email,
+                    "contact" =>$query->contact
+                ];
+            })
         ];
     }
 }

@@ -16,7 +16,7 @@ class CreatePartnerAgentsTable extends Migration
         Schema::create('partner_agents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('role');
+            $table->string('role')->nullable();
             $table->string('email');
             $table->string('email_2')->nullable();
             $table->string('contact');

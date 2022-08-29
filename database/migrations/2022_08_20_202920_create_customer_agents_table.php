@@ -17,7 +17,7 @@ class CreateCustomerAgentsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('role')->nullable();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('email_2')->nullable();
             $table->string('contact');
             $table->uuid('user_id');

@@ -8,13 +8,18 @@ use Illuminate\Support\Facades\Log;
 
 class StoreAddressService
 {
-    public static function store($request)
+    public static function store($request): Address
     {
         try {
             $address = Address::create(
                 [
-                    'address_line_1' => $request['address_line_1'], 'address_line_2' => $request['address_line_2'], 'address_line_3' => $request['address_line_3'] ?? "",
-                    'town' => $request['town'],    'country' => $request['country'], 'postcode' => $request['postcode']
+                    'address_line_1' => $request['address_line_1'],
+                    'address_line_2' => $request['address_line_2'],
+                    'address_line_3' => $request['address_line_3'] ?? "",
+                    'town' => $request['town'],
+                    'country' => $request['country'],
+                    'state' => $request['state'],
+                    'postcode' => $request['postcode']
                 ]
             );
             return $address;

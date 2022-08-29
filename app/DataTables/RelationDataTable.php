@@ -16,6 +16,40 @@ class RelationDataTable extends DataTable
                     'id' => $query->id,
                     'status' => $query->status
                 ];
+            })->editColumn('destiny', function ($query) {
+                return $query->destiny_initial . ' / ' . $query->destiny_final . ' - ' .  $query->destiny_state;
+            })->filterColumn('destiny', function ($query, $keyword) {
+                $query->where('destiny_initial', 'like', $keyword)->orWhere('destiny_final', 'like', $keyword);
+            })->editColumn('origin', function ($query) {
+                return $query->origin_initial . ' - ' . $query->origin_state;
+            })->filterColumn('origin', function ($query, $keyword) {
+                $query->where('origin_initial', 'like', $keyword);
+            })->editColumn('fee_type', function ($query) {
+                return $query->feeType->name;
+            })->filterColumn('fee_type', function ($query, $keyword) {
+                $query->whereHas('feeType',  function ($fee) use ($keyword) {
+                    $fee->where('name', 'like', $keyword);
+                });
+            })->editColumn('minimum', function ($query) {
+                return $query->relationPriceDetails()->whereHas('feeRule',  function ($rule) {
+                    $rule->where('name', 'like', 'Taxa Minima');
+                })->first()->value ?? "N\A";
+            })->filterColumn('minimum', function ($query, $keyword) {
+                $query->whereHas('relationPriceDetails',  function ($fee) use ($keyword) {
+                    $fee->whereHas('feeRule',  function ($rule) {
+                        $rule->where('name', 'like', 'Taxa Minima');
+                    })->where('value', $keyword);
+                });
+            })->editColumn('excess', function ($query) {
+                return $query->relationPriceDetails()->whereHas('feeRule',  function ($rule) {
+                    $rule->where('name', 'like', 'Excedente fixo por kg');
+                })->first()->weight_initial ?? "N\A";
+            })->filterColumn('excess', function ($query, $keyword) {
+                $query->whereHas('relationPriceDetails',  function ($fee) use ($keyword) {
+                    $fee->whereHas('feeRule',  function ($rule) {
+                        $rule->where('name', 'like', 'Excedente fixo por kg');
+                    })->where('weight_initial', $keyword);
+                });
             });
     }
 
@@ -28,7 +62,7 @@ class RelationDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('user_datatable')
+            ->setTableId('tabela_de_preços_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters() ?? []);
     }
@@ -45,17 +79,18 @@ class RelationDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'numero' => ['title' => 'Numero', 'width' => '200px'],
-            'tarifa' => ['title' => 'Tarifa',  'width' => '200px'],
-            'origem' => ['title' => 'Origem','width' => '50px', 'class' => 'text-center'],
-            'destino' => ['title' => 'Taxa Mínima', 'width' => '200px'],
-            'status' => ['title' => 'Excedente','width' => '50px', 'class' => 'text-center'],
-            'prazo' => ['title' => 'Prazo','width' => '50px', 'class' => 'text-center'],
+            'number' => ['title' => 'Numero', 'name' => 'number', 'width' => '100px'],
+            'fee_type' => ['title' => 'Tarifa', 'name' => 'fee_type', 'width' => '200px'],
+            'origin' => ['title' => 'Origem', 'name' => 'origin', 'width' => '200px'],
+            'destiny' => ['title' => 'Destino', 'name' => 'destiny', 'width' => '200px'],
+            'minimum' => ['title' => 'Taxa Mínima', 'name' => 'minimum', 'width' => '200px'],
+            'excess' => ['title' => 'Exc Kg', 'name' => 'excess', 'width' => '200px'],
+            'status' => ['title' => 'Status', 'name' => 'status', 'width' => '200px'],
         ];
     }
 
     protected function filename()
     {
-        return 'user_' . date('YmdHis');
+        return 'tabela_de_preços_' . date('YmdHis');
     }
 }

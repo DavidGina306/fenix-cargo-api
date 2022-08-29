@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Models\CustomerAgent;
+use App\Models\Profile;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'image_photo', 'email_verified_at', 'status', 'name'
+        'email', 'password', 'image_photo', 'email_verified_at', 'status', 'name', 'profile_id'
     ];
 
     /**
@@ -65,5 +67,15 @@ class User extends Authenticatable implements JWTSubject
     public function agentsCustomer(): HasMany
     {
         return $this->hasMany(CustomerAgent::class);
+    }
+
+    /**
+     * Get the profile that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(Profile::class);
     }
 }

@@ -15,9 +15,9 @@ class ChangeStatusCustomerService
         try {
             $customer = Customer::query()->findOrFail($customerId);
             $customer->update([
-                'status' => $customer->statud == 'D' ? 'E' : 'D'
+                'status' => $status = $customer->status == 'D' ? 'E' : 'D'
             ]);
-            self::changeStatusAgents($customer);
+            self::changeStatusAgents($customer, $status);
             return new CustomerResource($customer->fresh());
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {
@@ -34,19 +34,19 @@ class ChangeStatusCustomerService
     }
 
 
-    public static function changeStatusAgents(Customer $customer)
+    public static function changeStatusAgents(Customer $customer, $status)
     {
         try {
             foreach ($customer->agents as $agent) {
                 $agent->user->update([
-                    'status' => 'D'
+                    'status' => $status
                 ]);
                 $agent->update([
-                    'status' => 'D'
+                    'status' => $status
                 ]);
             }
             return true;
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to update Status Agent Customer ', 500);
         }

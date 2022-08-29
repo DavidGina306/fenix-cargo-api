@@ -28,7 +28,13 @@ class StorePartnerRequest extends FormRequest
     {
         return [
             'name' => 'required|max:200',
-            'number_doc' => 'required|max:100',
+            'document' => 'required|max:100',
+            'role' => 'max:100',
+            'type' => 'required',
+            'gender' => 'nullable',
+            'email' => 'required|max:200|email',
+            'email_2' => 'email|nullable',
+            'contact' => 'required|max:50',
             'address' => 'array|required',
             'address.address_line_1' => 'required|max:100',
             'address.address_line_2' => 'max:100',
@@ -38,11 +44,8 @@ class StorePartnerRequest extends FormRequest
             'address.postcode' => 'required|min:8|max:8',
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',
-            'agents.*.role' => 'max:100',
             'agents.*.email' => 'max:200|email',
-            'agents.*.email_2' => 'required|max:200|email',
             'agents.*.contact' => 'required|max:50',
-            'agents.*.contact_2' => 'max:100'
         ];
     }
 }

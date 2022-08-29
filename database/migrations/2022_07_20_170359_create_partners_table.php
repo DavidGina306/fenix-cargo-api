@@ -16,7 +16,7 @@ class CreatePartnersTable extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('number_doc');
+            $table->string('document');
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');

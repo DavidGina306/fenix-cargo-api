@@ -4,6 +4,7 @@ namespace App\Services\Customer;
 
 use App\Models\Customer;
 use App\Models\CustomerAgent;
+use App\Models\Profile;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -62,6 +63,7 @@ class UpdateCustomerService
                         'name' => $agent['name'],
                         'email' => $agent['email'],
                         'password' => "Abcd@1234",
+                        'profile_id' => Profile::query()->whereName('agent_customer')->first()->id
                     ];
                     $user = StoreUserService::store($dataUser);
                     $dataAgent = $customer->agents()->create(
@@ -98,7 +100,6 @@ class UpdateCustomerService
         try {
             $agents = $customer->agents->whereNotIn('id', $agentsId);
             foreach ($agents as $agent) {
-                Log::error($agents);
                 $agent->user()->delete();
                 $agent->delete();
             }

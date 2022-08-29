@@ -47,7 +47,7 @@ class PartnerDataTable extends DataTable
             ->select(
                 'partners.id',
                 'partners.name',
-                'partners.number_doc',
+                'partners.document',
                 'partners.status',
                 'a.id as id_address',
                 'a.address_line_1',
@@ -62,7 +62,7 @@ class PartnerDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('company_datatable')
+            ->setTableId('partner_datatable')
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters() ?? []);
     }
@@ -80,7 +80,7 @@ class PartnerDataTable extends DataTable
                 'width' => '10px'
             ],
             'name' => ['title' => 'Name', 'name' => 'partners.name',  'width' => '200px'],
-            'number_doc' => ['title' => 'CNPJ', 'name' => 'partners.number_doc', 'width' => '200px'],
+            'document' => ['title' => 'CNPJ', 'name' => 'document', 'width' => '200px'],
             'address' => ['title' => 'Endereço', 'width' => '200px', 'class' => 'text-center'],
             'parceiros' => ['title' => 'Parceiros', 'width' => '200px', 'class' => 'text-center'],
             'status' => ['title' => 'Status', 'name' => 'partners.status', 'width' => '50px', 'class' => 'text-center'],
@@ -89,6 +89,6 @@ class PartnerDataTable extends DataTable
 
     protected function filename()
     {
-        return 'company_' . date('YmdHis');
+        return 'partner_' . date('YmdHis');
     }
 }

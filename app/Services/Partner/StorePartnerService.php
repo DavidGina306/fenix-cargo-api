@@ -13,10 +13,18 @@ class StorePartnerService
     public static function store($request)
     {
         try {
-            Log::alert($request);
             $address = StoreAddressService::store($request['address']);
             $partner = Partner::create(
-                ['name' => $request['name'], 'number_doc' => $request['number_doc'], 'address_id' => $address->id]
+                [
+                    'name' => $request['name'],
+                    'type' => $request['type'],
+                    'gender' => $request['gender'],
+                    'document' => $request['document'],
+                    'email' => $request['email'],
+                    'email_2' => $request['email_2'] ?? "",
+                    'contact' => $request['contact'],
+                    'address_id' => $address->id
+                ]
             );
             StoreAgentService::store($request, $partner);
             return $partner->fresh();

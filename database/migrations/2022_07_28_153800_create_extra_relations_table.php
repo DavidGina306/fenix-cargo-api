@@ -14,7 +14,7 @@ class CreateExtraRelationsTable extends Migration
     public function up()
     {
         Schema::create('extra_relations', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->timestamps();
         });
     }

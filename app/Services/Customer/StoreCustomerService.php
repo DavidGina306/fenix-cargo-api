@@ -4,6 +4,7 @@ namespace App\Services\Customer;
 
 use App\Models\Customer;
 use App\Models\CustomerAgent;
+use App\Models\Profile;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -42,12 +43,13 @@ class StoreCustomerService
                 'name' => $agent['name'],
                 'email' => $agent['email'],
                 'password' => "Abcd@1234",
+                'profile_id' => Profile::query()->whereName('agent_customer')->first()->id
             ];
             $user = StoreUserService::store($dataUser);
             CustomerAgent::query()->firstOrCreate([
                 'name' => $agent['name'],
                 'email' => $agent['email'],
-                'contact' => $agent['email'],
+                'contact' => $agent['contact'],
                 'user_id' => $user->id,
                 'role' => $request['role'] ?? "",
                 'customer_id' => $customer->id

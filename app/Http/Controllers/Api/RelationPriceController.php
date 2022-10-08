@@ -6,6 +6,7 @@ use App\DataTables\RelationDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRelationPriceRequest;
 use App\Services\DatatableService;
+use App\Services\RelationPrice\GetRelationPriceService;
 use App\Services\RelationPrice\StoreRelationPriceService;
 use Exception;
 use Illuminate\Http\Request;
@@ -37,4 +38,19 @@ class RelationPriceController extends Controller
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }
+
+
+    public function get($relationPrice)
+    {
+        try {
+            DB::beginTransaction();
+            $relationPrice =  GetRelationPriceService::get($relationPrice);
+            DB::commit();
+            return response($relationPrice, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
 }

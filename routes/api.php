@@ -36,6 +36,7 @@ Route::group([
 
         Route::group(['prefix' => 'relations'], function () {
             Route::post('/', "RelationPriceController@store");
+            Route::get('/{relation}', "RelationPriceController@get");
             Route::get('/', "RelationPriceController@index");
         });
 
@@ -51,23 +52,23 @@ Route::group([
         });
 
         Route::group(['prefix' => 'profiles'], function () {
-            Route::post('search-select', "ProfileController@searchToSelect");
+            Route::get('search-select', "ProfileController@searchToSelect");
         });
 
         Route::group(['prefix' => 'fee-types'], function () {
-            Route::post('search-select', "FeeTypeController@searchToSelect");
+            Route::get('search-select', "FeeTypeController@searchToSelect");
         });
 
         Route::group(['prefix' => 'fee-rules'], function () {
-            Route::post('search-select', "FeeRuleController@searchToSelect");
+            Route::get('search-select', "FeeRuleController@searchToSelect");
         });
 
         Route::group(['prefix' => 'price-types'], function () {
-            Route::post('search-select', "PriceTypeController@searchToSelect");
+            Route::get('search-select', "PriceTypeController@searchToSelect");
         });
 
         Route::group(['prefix' => 'currencies'], function () {
-            Route::post('search-select', "CurrencyController@searchToSelect");
+            Route::get('search-select', "CurrencyController@searchToSelect");
         });
     });
 

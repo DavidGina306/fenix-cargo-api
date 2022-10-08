@@ -12,8 +12,8 @@ class SearchToSelectPriceTypeService
     {
         try {
             $response =  PriceType::query();
-            if ($search = request()->search) {
-                $response->where('name', 'ilike', "%$search%");
+            if ($search = $request->search) {
+                $response->where('name', 'like', "%$search%")->orWhere('id', 'like', "%$search%");
             }
             return $response->whereStatus('E')->select(['id as code', 'name as label'])->get();
         } catch (Exception $e) {

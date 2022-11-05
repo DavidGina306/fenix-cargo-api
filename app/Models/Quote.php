@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Jamesh\Uuid\HasUuid;
 
 class Quote extends Model
@@ -51,7 +52,7 @@ class Quote extends Model
         return $this->belongsTo(Address::class, 'sender_address_id');
     }
 
-      /**
+    /**
      * Get the recipienteAddress that owns the Quote
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -59,5 +60,15 @@ class Quote extends Model
     public function recipienteAddress(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'recipient_address_id');
+    }
+
+    /**
+     * The roles that belong to the Variation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function additionalFees(): BelongsToMany
+    {
+        return $this->belongsToMany(AdditionalFee::class, 'additional_fee_quote', 'quote_id', 'additional_fee_id');
     }
 }

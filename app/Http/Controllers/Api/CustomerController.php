@@ -8,10 +8,12 @@ use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Services\Customer\ChangeStatusCustomerService;
 use App\Services\Customer\GetCustomerService;
+use App\Services\Customer\SearchToSelectCustomerService;
 use App\Services\Customer\StoreCustomerService;
 use App\Services\DatatableService;
 use App\Services\Customer\UpdateCustomerService;
 use Exception;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -76,6 +78,15 @@ class CustomerController extends Controller
             return response($customer, 201);
         } catch (Exception $e) {
             DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function searchToSelect(Request $request)
+    {
+        try {
+            return response(SearchToSelectCustomerService::search($request), 200);
+        } catch (Exception $e) {
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }

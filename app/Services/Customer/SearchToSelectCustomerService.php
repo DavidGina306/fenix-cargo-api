@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Services\FeeType;
+namespace App\Services\Customer;
 
-use App\Models\FeeType;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class SearchToSelectFeeTypeService
+class SearchToSelectCustomerService
 {
     public static function search($request)
     {
         try {
-            $response =  FeeType::query();
+            $response =  Customer::query();
             if ($search = $request->search) {
                 $response->where('name', 'like', "%$search%")->orWhere('id', 'like', "%$search%");
             }
             return $response->whereStatus('E')->select(['id as code', 'name as label'])->get();
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            throw new Exception('Error to get FeeType', 500);
+            throw new Exception('Error to get Customer', 500);
         }
     }
 }

@@ -31,6 +31,7 @@ Route::group([
             Route::get('/', "CustomerController@index");
             Route::get('/{customer}', "CustomerController@get");
             Route::put('/{customer}', "CustomerController@update");
+            Route::get('/search-select', "CustomerController@searchToSelect");
             Route::put('/{customer}/change-status', "CustomerController@changeStatus");
         });
 
@@ -69,6 +70,18 @@ Route::group([
 
         Route::group(['prefix' => 'currencies'], function () {
             Route::get('search-select', "CurrencyController@searchToSelect");
+        });
+
+        Route::group(['prefix' => 'packing-types'], function () {
+            Route::get('search-select', "PackingTypeController@searchToSelect");
+        });
+
+        Route::group(['prefix' => 'add-fees'], function () {
+            Route::get('search-select', "AdditionalFeeController@searchToSelect");
+        });
+
+        Route::group(['prefix' => 'doc-types'], function () {
+            Route::get('search-select', "DocTypeController@searchToSelect");
         });
     });
 

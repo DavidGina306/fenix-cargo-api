@@ -78,6 +78,7 @@ Route::group([
 
         Route::group(['prefix' => 'add-fees'], function () {
             Route::get('search-select', "AdditionalFeeController@searchToSelect");
+            Route::get('{addFees}', "AdditionalFeeController@getAdditionalFee");
         });
 
         Route::group(['prefix' => 'doc-types'], function () {

@@ -29,9 +29,9 @@ Route::group([
         Route::group(['prefix' => 'customers'], function () {
             Route::post('/', "CustomerController@store");
             Route::get('/', "CustomerController@index");
+            Route::get('search-select', "CustomerController@searchToSelect");
             Route::get('/{customer}', "CustomerController@get");
             Route::put('/{customer}', "CustomerController@update");
-            Route::get('/search-select', "CustomerController@searchToSelect");
             Route::put('/{customer}/change-status', "CustomerController@changeStatus");
         });
 

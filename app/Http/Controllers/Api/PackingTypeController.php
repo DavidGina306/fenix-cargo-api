@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\PackingType\SearchToSelectPackingTypeService;
 use Exception;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 
 class PackingTypeController extends Controller
 {

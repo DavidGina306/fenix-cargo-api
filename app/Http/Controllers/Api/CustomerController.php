@@ -13,7 +13,7 @@ use App\Services\Customer\StoreCustomerService;
 use App\Services\DatatableService;
 use App\Services\Customer\UpdateCustomerService;
 use Exception;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller

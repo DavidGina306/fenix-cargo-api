@@ -14,17 +14,34 @@ class AdditionalFeeSeeder extends Seeder
     {
         $additionalFees = [
             [
-                'name' => 'Papelao',
+                'name' => 'Embalagem',
                 'value' => 10
             ],
             [
-                'name' => 'Embalagem Plástica',
+                'name' => 'Ajudante',
+                'value' => 30
+            ],
+            [
+                'name' => 'Shipper declaration com etiqueta',
+                'value' => 30
+            ],
+            [
+                'name' => 'Caixa homologada com certificado',
+                'value' => 30
+            ],
+            [
+                'name' => 'Área de risco',
+                'value' => 30
+            ],
+            [
+                'name' => 'Gelo',
                 'value' => 30
             ]
         ];
 
+
         foreach ($additionalFees as $item) {
-           AdditionalFee::query()->firstOrCreate($item);
+            AdditionalFee::query()->firstOrCreate($item);
         }
     }
 }

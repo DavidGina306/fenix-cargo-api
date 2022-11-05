@@ -14,10 +14,19 @@ class PackingTypeSeeder extends Seeder
     {
        $packingTypes = [
             [
-                'name' => 'Papelao'
+                'name' => 'Caixa de papelão'
             ],
             [
-                'name' => 'Embalagem Plástica'
+                'name' => 'Pallet'
+            ],
+            [
+                'name' => 'Isopor'
+            ],
+            [
+                'name' => 'Galão/rolo/tubo'
+            ],
+            [
+                'name' => 'Sem embalagem'
             ]
         ];
 

@@ -14,10 +14,13 @@ class DocTypeSeeder extends Seeder
     {
         $docTypes = [
             [
-                'name' => 'Nota Fistal'
+                'name' => 'Nota fiscal'
             ],
             [
-                'name' => 'Recibo'
+                'name' => 'CTE'
+            ],
+            [
+                'name' => 'Declaração'
             ]
         ];
 

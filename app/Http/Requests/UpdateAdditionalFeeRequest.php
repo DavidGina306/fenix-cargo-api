@@ -26,7 +26,7 @@ class UpdateAdditionalFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:additional_fees,name,' . $this->doc,
+            'name' => 'required|unique:additional_fees,name,' . $this->addFees,
             'value' => 'required'
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Services\Partner;
 
+use App\Helpers\GenderHelper;
 use App\Services\Address\StoreAddressService;
 use App\Services\Partner\Agent\StoreAgentService;
 use App\Models\Partner;
@@ -18,7 +19,7 @@ class StorePartnerService
                 [
                     'name' => $request['name'],
                     'type' => $request['type'],
-                    'gender' => $request['gender'],
+                    'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : "",
                     'document' => $request['document'],
                     'email' => $request['email'],
                     'email_2' => $request['email_2'] ?? "",

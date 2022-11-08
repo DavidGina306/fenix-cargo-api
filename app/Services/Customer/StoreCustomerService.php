@@ -2,6 +2,7 @@
 
 namespace App\Services\Customer;
 
+use App\Helpers\GenderHelper;
 use App\Models\Customer;
 use App\Models\CustomerAgent;
 use App\Models\Profile;
@@ -20,7 +21,7 @@ class StoreCustomerService
                     'name' => $request['name'],
                     'role' => $request['role'] ?? "",
                     'type' => $request['type'],
-                    'gender' => $request['gender'],
+                    'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
                     'email' => $request['email'],
                     'email_2' => $request['email_2'] ?? "",

@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->string('document');
             $table->string('email_2')->nullable();
             $table->string('contact');
-            $table->enum('gender', ['F', 'M', 'O'])->comment('F:female;M:male;O:Others');
+            $table->enum('gender', ['F', 'M', 'O'])->comment('F:female;M:male;O:Others')->nullable();
             $table->string('contact_2')->nullable();
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();

@@ -38,7 +38,7 @@ class StoreCustomerRequest extends FormRequest
             'contact_2' => 'max:10|nullable',
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',
-            'agents.*.email' => 'max:200|email',
+            'agents.*.email' => 'max:200|email|unique:users,email',
             'agents.*.contact' => 'required|max:50',
         ];
     }

@@ -73,6 +73,10 @@ Route::group([
         });
 
         Route::group(['prefix' => 'packing-types'], function () {
+            Route::post('/', "PackingTypeController@store");
+            Route::get('/', "PackingTypeController@index");
+            Route::put('/{packing}', "PackingTypeController@update");
+            Route::get('/{packing}', "PackingTypeController@get");
             Route::get('search-select', "PackingTypeController@searchToSelect");
         });
 

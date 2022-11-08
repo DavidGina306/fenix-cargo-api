@@ -86,6 +86,10 @@ Route::group([
         });
 
         Route::group(['prefix' => 'doc-types'], function () {
+            Route::post('/', "DocTypeController@store");
+            Route::get('/', "DocTypeController@index");
+            Route::put('/{doc}', "DocTypeController@update");
+            Route::get('/{doc}', "DocTypeController@get");
             Route::get('search-select', "DocTypeController@searchToSelect");
         });
     });

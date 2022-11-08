@@ -37,7 +37,7 @@ class UpdatePartnerService
                     throw new Exception('Partner not found', 404);
                     break;
                 default:
-                    throw new Exception('Error Model not found', 404);
+                    throw new Exception('Error Model not found in Update Partner', 404);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -87,7 +87,7 @@ class UpdatePartnerService
                     throw new Exception('PartnerAgent not found', 404);
                     break;
                 default:
-                    throw new Exception('Error Model not found', 404);
+                    throw new Exception('Error Model not found in Partner', 404);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());

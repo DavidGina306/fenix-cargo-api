@@ -2,17 +2,17 @@
 
 namespace App\Services\Address;
 
-use App\Models\Profile;
+use App\Models\Address;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 
 class UpdateAddressService
 {
-    public static function update($request, $addresId)
+    public static function update(array $request, string $addresId)
     {
         try {
-            $address = Profile::query()->findOrFail($addresId);
+            $address = Address::query()->findOrFail($addresId);
             $address->update(
                 [
                     'postcode' => $request['postcode'],
@@ -31,7 +31,7 @@ class UpdateAddressService
                     throw new Exception('Address not found', 404);
                     break;
                 default:
-                    throw new Exception('Error Model not found', 404);
+                    throw new Exception('Error Model not found in Address', 404);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());

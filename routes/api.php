@@ -81,8 +81,11 @@ Route::group([
         });
 
         Route::group(['prefix' => 'add-fees'], function () {
+            Route::post('/', "AdditionalFeeController@store");
+            Route::get('/', "AdditionalFeeController@index");
+            Route::put('/{addFees}', "AdditionalFeeController@update");
+            Route::get('/{addFees}', "AdditionalFeeController@get");
             Route::get('search-select', "AdditionalFeeController@searchToSelect");
-            Route::get('{addFees}', "AdditionalFeeController@getAdditionalFee");
         });
 
         Route::group(['prefix' => 'doc-types'], function () {

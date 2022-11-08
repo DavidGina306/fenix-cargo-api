@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDocTypeRequest extends FormRequest
+class StoreAdditionalFeeRequest extends FormRequest
 {
     use ValidationErrorTrait;
     /**
@@ -26,7 +26,8 @@ class UpdateDocTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:doc_types,name,' . $this->doc
+            'name' => 'required|max:200|unique:additional_fees,name',
+            'value' => 'required'
         ];
     }
 }

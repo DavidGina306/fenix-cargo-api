@@ -16,7 +16,6 @@ class DocTypeResource extends JsonResource
     {
         return  [
             "name" => $this->name,
-            "email" => $this->email,
             "status" => $this->status
         ];
     }

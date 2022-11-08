@@ -51,14 +51,14 @@ class AdditionalFeeDatatable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'name' => ['title' => 'Nome', 'name' => 'doc_types.name',  'width' => '200px'],
+            'name' => ['title' => 'Nome', 'name' => 'additional_fees.name',  'width' => '200px'],
             'value' => ['title' => 'Valor', 'name' => 'additional_fees.value',  'width' => '200px'],
-            'status' => ['title' => 'Status', 'status' => 'doc_types.status',  'width' => '200px']
+            'status' => ['title' => 'Status', 'status' => 'additional_fees.status',  'width' => '200px']
         ];
     }
 
     protected function filename()
     {
-        return 'packing_type_' . date('YmdHis');
+        return 'additional_fees_' . date('YmdHis');
     }
 }

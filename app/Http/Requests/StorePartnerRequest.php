@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class StorePartnerRequest extends FormRequest
 {
@@ -17,6 +19,20 @@ class StorePartnerRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'email' => Str::lower($this->email),
+            'contact' => preg_replace('/[^0-9]/', '', $this->contact),
+            'address' => array_merge(
+                $this->address,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address['postcode'])
+                ]
+            )
+        ]);
     }
 
     /**
@@ -45,7 +61,7 @@ class StorePartnerRequest extends FormRequest
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',
             'agents.*.email' => 'max:200|email',
-            'agents.*.contact' => 'required|max:50',
+            'agents.*.contact' => 'required|max:15',
         ];
     }
 }

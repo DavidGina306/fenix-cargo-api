@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class UpdatePartnerRequest extends FormRequest
 {
@@ -17,6 +18,21 @@ class UpdatePartnerRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'email' => Str::lower($this->email),
+            'contact' => preg_replace('/[^0-9]/', '', $this->contact),
+            'contact_2' => preg_replace('/[^0-9]/', '', $this->contact_2),
+            'address' => array_merge(
+                $this->address,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address['postcode'])
+                ]
+            )
+        ]);
     }
 
     /**

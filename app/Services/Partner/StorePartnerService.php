@@ -19,7 +19,7 @@ class StorePartnerService
                 [
                     'name' => $request['name'],
                     'type' => $request['type'],
-                    'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : "",
+                    'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
                     'email' => $request['email'],
                     'email_2' => $request['email_2'] ?? "",

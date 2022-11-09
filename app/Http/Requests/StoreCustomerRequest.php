@@ -35,7 +35,7 @@ class StoreCustomerRequest extends FormRequest
             'email' => 'required|max:200|email',
             'email_2' => 'email|nullable',
             'contact' => 'required|max:50',
-            'contact_2' => 'max:10|nullable',
+            'contact_2' => 'max:50|nullable',
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',
             'agents.*.email' => 'max:200|email|unique:users,email',

@@ -73,11 +73,11 @@ Route::group([
         });
 
         Route::group(['prefix' => 'packing-types'], function () {
+            Route::get('search-select', "PackingTypeController@searchToSelect");
             Route::post('/', "PackingTypeController@store");
             Route::get('/', "PackingTypeController@index");
             Route::put('/{packing}', "PackingTypeController@update");
             Route::get('/{packing}', "PackingTypeController@get");
-            Route::get('search-select', "PackingTypeController@searchToSelect");
         });
 
         Route::group(['prefix' => 'add-fees'], function () {
@@ -89,11 +89,11 @@ Route::group([
         });
 
         Route::group(['prefix' => 'doc-types'], function () {
+            Route::get('search-select', "DocTypeController@searchToSelect");
             Route::post('/', "DocTypeController@store");
             Route::get('/', "DocTypeController@index");
             Route::put('/{doc}', "DocTypeController@update");
             Route::get('/{doc}', "DocTypeController@get");
-            Route::get('search-select', "DocTypeController@searchToSelect");
         });
     });
 

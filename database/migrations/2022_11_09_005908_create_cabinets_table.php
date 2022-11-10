@@ -16,13 +16,15 @@ class CreateCabinetsTable extends Migration
         Schema::create('cabinets', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('order')->unique();
-            $table->string('entry_date');
-            $table->string('nf_value');
+            $table->char('status')->default('O');
+            $table->dateTime('entry_date');
+            $table->dateTime('out_date')->nullable();
+            $table->string('doc_value');
             $table->uuid('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
-            $table->string('storage');
+            $table->string('storage_locale');
             $table->timestamps();
         });
     }

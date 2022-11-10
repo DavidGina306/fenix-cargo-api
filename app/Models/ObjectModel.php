@@ -11,4 +11,14 @@ class ObjectModel extends Model
     protected $guarded = [];
     protected $table = 'objects';
 
+     /**
+     * Get all of the relationPrices for the RelationPrice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function objects(): HasMany
+    {
+        return $this->hasMany(ObjectModel::class);
+    }
+
 }

@@ -95,6 +95,10 @@ Route::group([
             Route::put('/{doc}', "DocTypeController@update");
             Route::get('/{doc}', "DocTypeController@get");
         });
+
+        Route::group(['prefix' => 'cabinets'], function () {
+            Route::post('/', "DocTypeController@store");
+        });
     });
 
     Route::group(['prefix' => 'auth'], function () {

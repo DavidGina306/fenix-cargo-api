@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Jamesh\Uuid\HasUuid;
 
 class ObjectModel extends Model
@@ -11,14 +12,13 @@ class ObjectModel extends Model
     protected $guarded = [];
     protected $table = 'objects';
 
-     /**
-     * Get all of the relationPrices for the RelationPrice
+    /**
+     * Undocumented function
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return BelongsTo
      */
-    public function objects(): HasMany
+    public function cabinet(): BelongsTo
     {
-        return $this->hasMany(ObjectModel::class);
+        return $this->belongsTo(Cabinet::class);
     }
-
 }

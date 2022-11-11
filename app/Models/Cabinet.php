@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jamesh\Uuid\HasUuid;
 
@@ -19,5 +20,15 @@ class Cabinet extends Model
     public function objects(): HasMany
     {
         return $this->hasMany(ObjectModel::class);
+    }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

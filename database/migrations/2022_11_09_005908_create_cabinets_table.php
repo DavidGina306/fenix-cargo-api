@@ -19,7 +19,7 @@ class CreateCabinetsTable extends Migration
             $table->char('status')->default('O');
             $table->dateTime('entry_date');
             $table->dateTime('out_date')->nullable();
-            $table->string('doc_value');
+            $table->decimal('doc_value');
             $table->uuid('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->uuid('address_id');

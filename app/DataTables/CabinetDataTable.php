@@ -3,10 +3,6 @@
 namespace App\DataTables;
 
 use App\Models\Cabinet;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class CabinetDataTable extends DataTable
@@ -15,6 +11,16 @@ class CabinetDataTable extends DataTable
     {
         return datatables($query)
             ->escapeColumns([])
+            ->editColumn('customer', function ($query) {
+                return $query->customer->name;
+            })->filterColumn('customer', function ($query, $keyword) {
+                $query->whereHas('customer', function ($sql) use ($keyword) {
+                    $sql->where('name', 'like', $keyword);
+                });
+            })
+            ->editColumn('total', function ($query) {
+                return $query->objects->count();
+            })
             ->addColumn('action', function ($query) {
                 return [
                     'id' => $query->id,
@@ -26,10 +32,25 @@ class CabinetDataTable extends DataTable
     public function query(Cabinet $model)
     {
         return $model->newQuery()
+            ->join('addresses as a', 'cabinets.address_id', '=', 'a.id')
+            ->join('customers as c', 'cabinets.customer_id', '=', 'c.id')
             ->select(
                 'cabinets.id',
-                'cabinets.name',
-                'cabinets.status'
+                'cabinets.order',
+                'cabinets.status',
+                'cabinets.entry_date',
+                'cabinets.doc_value',
+                'cabinets.storage_locale',
+                'a.id as id_address',
+                'a.address_line_1',
+                'a.address_line_2',
+                'a.address_line_3',
+                'a.postcode',
+                'a.country',
+                'a.town',
+                'c.id as customer_id',
+                'c.name',
+                'c.document'
             );
     }
 
@@ -53,7 +74,11 @@ class CabinetDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'name' => ['title' => 'Nome', 'name' => 'cabinets.name',  'width' => '200px'],
+            'order' => ['title' => 'Ordem', 'name' => 'cabinets.order',  'width' => '200px'],
+            'storage_locale' => ['title' => 'Armazém', 'name' => 'cabinets.storage_locale',  'width' => '200px'],
+            'customer' => ['title' => 'Parceiros', 'width' => '200px', 'class' => 'text-center'],
+            'entry_date' => ['title' => 'Entrada', 'name' => 'cabinets.entry_date',  'width' => '200px'],
+            'total' => ['title' => 'Objetos', 'width' => '200px', 'class' => 'text-center', 'searchable' => false, 'orderable' => false],
             'status' => ['title' => 'Status', 'status' => 'cabinets.status',  'width' => '200px']
         ];
     }

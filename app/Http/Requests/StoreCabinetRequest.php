@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class StoreCabinetRequest extends FormRequest
 {
@@ -13,7 +14,21 @@ class StoreCabinetRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'address' => array_merge(
+                $this->address,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address['postcode'])
+                ]
+            )
+        ]);
+
+        Log::warning($this->address);
     }
 
     /**
@@ -24,7 +39,21 @@ class StoreCabinetRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'customer_id' => 'required|uuid',
+            'storage' => 'required|max:200',
+            'address' => 'array|required',
+            'address.address_line_1' => 'required|max:100',
+            'address.address_line_2' => 'required|max:100',
+            'address.address_line_3' => 'max:100',
+            'address.country' => 'required|max:50',
+            'address.town' => 'required|max:50',
+            'address.postcode' => 'required|min:8|max:8',
+            'productData' => 'array|required',
+            'productData.*.quantity' => 'required',
+            'productData.*.weight' => 'required',
+            'productData.*.width' => 'required',
+            'productData.*.height' => 'required',
+            'productData.*.length' => 'required',
         ];
     }
 }

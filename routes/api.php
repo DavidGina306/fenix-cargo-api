@@ -97,7 +97,8 @@ Route::group([
         });
 
         Route::group(['prefix' => 'cabinets'], function () {
-            Route::post('/', "DocTypeController@store");
+            Route::get('/', "CabinetController@index");
+            Route::post('/', "CabinetController@store");
         });
     });
 

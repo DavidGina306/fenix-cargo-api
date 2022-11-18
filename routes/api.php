@@ -97,6 +97,7 @@ Route::group([
         });
 
         Route::group(['prefix' => 'cabinets'], function () {
+            Route::get('/paginate', "CabinetController@paginate");
             Route::get('/', "CabinetController@index");
             Route::post('/', "CabinetController@store");
         });

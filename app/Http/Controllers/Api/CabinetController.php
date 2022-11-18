@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\DataTables\CabinetDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCabinetRequest;
+use App\Models\Cabinet;
 use App\Services\Cabinet\StoreCabinetService;
 use App\Services\DatatableService;
 use Exception;
@@ -36,5 +37,10 @@ class CabinetController extends Controller
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
+    }
+
+    public function paginate()
+    {
+        return Cabinet::query()->paginate(10);
     }
 }

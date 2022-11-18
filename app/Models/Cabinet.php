@@ -31,4 +31,14 @@ class Cabinet extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
 }

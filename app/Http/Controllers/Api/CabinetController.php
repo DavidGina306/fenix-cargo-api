@@ -6,6 +6,7 @@ use App\DataTables\CabinetDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCabinetRequest;
 use App\Models\Cabinet;
+use App\Services\Cabinet\PagenateCabinetService;
 use App\Services\Cabinet\StoreCabinetService;
 use App\Services\DatatableService;
 use Exception;
@@ -39,8 +40,12 @@ class CabinetController extends Controller
         }
     }
 
-    public function paginate()
+    public function paginate(Request $request)
     {
-        return Cabinet::query()->paginate(10);
+        try {
+            return PagenateCabinetService::paginate($request);
+        } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
     }
 }

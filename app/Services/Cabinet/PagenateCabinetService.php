@@ -17,7 +17,7 @@ class PagenateCabinetService
             if ($search = $request->search) {
                 $response->where('storage_locale', 'like', "%$search%")->orWhere('order', 'like', "%$search%");
             }
-            return CabinetResource::collection($response->paginate($request->per_page ?? 2));
+            return CabinetResource::collection($response->paginate($request->per_page ?? 10));
         }  catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to register Cabinet', 500);

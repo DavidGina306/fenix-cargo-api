@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\DataTables\CabinetDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCabinetRequest;
-use App\Models\Cabinet;
 use App\Services\Cabinet\PagenateCabinetService;
 use App\Services\Cabinet\StoreCabinetService;
 use App\Services\DatatableService;

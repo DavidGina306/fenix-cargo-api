@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CabinetResource extends JsonResource
@@ -16,7 +17,7 @@ class CabinetResource extends JsonResource
     {
         return [
             "order" => $this->order,
-            "entry_date" => $this->entry_date,
+            "entry_date" =>  Carbon::parse($this->entry_date)->format('d M Y') ,
             "id" => $this->id,
             "out_date" => $this->out_date,
             "status" => $this->status,

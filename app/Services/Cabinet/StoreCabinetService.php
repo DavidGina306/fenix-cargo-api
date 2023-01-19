@@ -26,7 +26,6 @@ class StoreCabinetService
                     'address_id' => $address->id,
                     'status' => 'R',
                     'doc_value' => MoneyToDecimal::moneyToDecimal($request['nf_price']),
-                    'storage_locale' => $request['storage'],
                     'entry_date' => isset($request['entry_date']) ? new Carbon($request['entry_date']) : Carbon::now()
                 ]
             );

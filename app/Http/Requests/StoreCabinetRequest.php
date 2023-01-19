@@ -40,7 +40,6 @@ class StoreCabinetRequest extends FormRequest
     {
         return [
             'customer_id' => 'required|uuid',
-            'storage' => 'required|max:200',
             'address' => 'array|required',
             'address.address_line_1' => 'required|max:100',
             'address.address_line_2' => 'required|max:100',
@@ -53,6 +52,8 @@ class StoreCabinetRequest extends FormRequest
             'productData.*.weight' => 'required',
             'productData.*.width' => 'required',
             'productData.*.height' => 'required',
+            'productData.*.description' => 'required',
+            'productData.*.locale_id' => 'required|uuid',
             'productData.*.length' => 'required',
         ];
     }

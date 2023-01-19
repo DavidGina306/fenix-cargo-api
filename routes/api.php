@@ -102,6 +102,10 @@ Route::group([
             Route::post('/', "CabinetController@store");
         });
 
+        Route::group(['prefix' => 'objects'], function () {
+            Route::get('/paginate', "ObjectController@paginate");
+        });
+
         Route::group(['prefix' => 'locales'], function () {
             Route::get('search-select', "LocaleController@searchToSelect");
             Route::post('/', "LocaleController@store");

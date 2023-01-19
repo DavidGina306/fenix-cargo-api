@@ -21,4 +21,14 @@ class ObjectModel extends Model
     {
         return $this->belongsTo(Cabinet::class);
     }
+
+     /**
+     * Undocumented function
+     *
+     * @return BelongsTo
+     */
+    public function locale(): BelongsTo
+    {
+        return $this->belongsTo(Locale::class);
+    }
 }

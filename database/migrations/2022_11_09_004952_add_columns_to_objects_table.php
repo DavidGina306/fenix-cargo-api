@@ -23,8 +23,9 @@ class AddColumnsToObjectsTable extends Migration
             $table->decimal('weight');
             $table->integer('quantity');
             $table->string('description');
-            $table->string('storage_locale');
             $table->string('note')->nullable();
+            $table->uuid('locale_id');
+            $table->foreign('locale_id')->references('id')->on('locales');
         });
     }
 

@@ -73,11 +73,11 @@ Route::group([
         });
 
         Route::group(['prefix' => 'packing-types'], function () {
-            Route::get('search-select', "PackingTypeController@searchToSelect");
-            Route::post('/', "PackingTypeController@store");
-            Route::get('/', "PackingTypeController@index");
-            Route::put('/{packing}', "PackingTypeController@update");
-            Route::get('/{packing}', "PackingTypeController@get");
+            Route::get('search-select', "LocaleController@searchToSelect");
+            Route::post('/', "LocaleController@store");
+            Route::get('/', "LocaleController@index");
+            Route::put('/{packing}', "LocaleController@update");
+            Route::get('/{packing}', "LocaleController@get");
         });
 
         Route::group(['prefix' => 'add-fees'], function () {
@@ -100,6 +100,14 @@ Route::group([
             Route::get('/paginate', "CabinetController@paginate");
             Route::get('/', "CabinetController@index");
             Route::post('/', "CabinetController@store");
+        });
+
+        Route::group(['prefix' => 'locales'], function () {
+            Route::get('search-select', "LocaleController@searchToSelect");
+            Route::post('/', "LocaleController@store");
+            Route::get('/', "LocaleController@index");
+            Route::put('/{packing}', "LocaleController@update");
+            Route::get('/{packing}', "LocaleController@get");
         });
     });
 

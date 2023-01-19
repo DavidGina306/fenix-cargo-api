@@ -4,6 +4,7 @@ use App\Helpers\MoneyToDecimal;
 use App\Models\Address;
 use App\Models\Cabinet;
 use App\Models\Customer;
+use App\Models\Locale;
 use App\Models\ObjectModel;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -51,7 +52,7 @@ class CabinetSeeder extends Seeder
                         'cubed_weight' =>  ($length * $width * $height) / 6000,
                         'quantity' => rand(1, 10),
                         'description' => $faker->word(1),
-                        'storage_locale' => "Armazém Abandonado",
+                        'locale_id' => Locale::query()->first()->id,
                         'cabinet_id' => $cabinet->id
                     ]
                 );

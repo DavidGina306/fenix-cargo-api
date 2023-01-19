@@ -106,8 +106,8 @@ Route::group([
             Route::get('search-select', "LocaleController@searchToSelect");
             Route::post('/', "LocaleController@store");
             Route::get('/', "LocaleController@index");
-            Route::put('/{packing}', "LocaleController@update");
-            Route::get('/{packing}', "LocaleController@get");
+            Route::put('/{locale}', "LocaleController@update");
+            Route::get('/{locale}', "LocaleController@get");
         });
     });
 

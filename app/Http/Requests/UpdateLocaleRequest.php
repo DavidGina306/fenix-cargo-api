@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UpdateLocaleRequest extends FormRequest
 {
+    use ValidationErrorTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +17,8 @@ class UpdateLocaleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        Log::info($this->locale);
+        return true;
     }
 
     /**
@@ -24,7 +29,7 @@ class UpdateLocaleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|unique:locales,name,' . $this->locale
         ];
     }
 }

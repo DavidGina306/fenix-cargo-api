@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\PackingType;
+namespace App\Services\Locale;
 
 use App\Http\Resources\LocaleResource;
-use App\Http\Resources\PackingTypeResource;
 use App\Models\Locale;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

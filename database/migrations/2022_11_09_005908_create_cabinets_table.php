@@ -24,7 +24,6 @@ class CreateCabinetsTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
-            $table->string('storage_locale');
             $table->timestamps();
         });
     }

@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\ObjectModel;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-
+use Faker\Factory as Faker;
 class CabinetSeeder extends Seeder
 {
     /**
@@ -17,6 +17,7 @@ class CabinetSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
         $address = Address::query()->firstOrCreate([
             'address_line_1' => "rua 1",
             'address_line_2' => "adrianopolis",
@@ -35,18 +36,22 @@ class CabinetSeeder extends Seeder
                     'address_id' => $address->id,
                     'status' => 'R',
                     'doc_value' => MoneyToDecimal::moneyToDecimal(100),
-                    'storage_locale' => "Armazém Abandonado",
                     'entry_date' => Carbon::now()
                 ]
             );
             for ($i = 0; $i < rand(1, 10); $i++) {
                 ObjectModel::create(
                     [
-                        'width' => MoneyToDecimal::moneyToDecimal(rand(1, 10)),
-                        'height' => MoneyToDecimal::moneyToDecimal(rand(1, 10)),
-                        'length' => MoneyToDecimal::moneyToDecimal(rand(1, 10)),
-                        'cubed_weight' => MoneyToDecimal::moneyToDecimal(rand(1, 10)),
+                        'number' => substr(str_shuffle(time() . mt_rand(0, 999) . md5(time() . mt_rand(0, 999))), 0, 16),
+                        'width' => $width = MoneyToDecimal::moneyToDecimal(rand(1, 10)),
+                        'height' => $height = MoneyToDecimal::moneyToDecimal(rand(1, 10)),
+                        'weight' => MoneyToDecimal::moneyToDecimal(rand(1, 10)),
+                        'length' => $length = MoneyToDecimal::moneyToDecimal(rand(1, 10)),
+                        'cubed_metric' => $length * $width * $height,
+                        'cubed_weight' =>  ($length * $width * $height) / 6000,
                         'quantity' => rand(1, 10),
+                        'description' => $faker->word(1),
+                        'storage_locale' => "Armazém Abandonado",
                         'cabinet_id' => $cabinet->id
                     ]
                 );

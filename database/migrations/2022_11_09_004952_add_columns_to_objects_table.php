@@ -14,11 +14,17 @@ class AddColumnsToObjectsTable extends Migration
     public function up()
     {
         Schema::table('objects', function (Blueprint $table) {
+            $table->string('number')->unique();
             $table->decimal('width');
             $table->decimal('height');
             $table->decimal('length');
             $table->decimal('cubed_weight');
+            $table->decimal('cubed_metric');
+            $table->decimal('weight');
             $table->integer('quantity');
+            $table->string('description');
+            $table->string('storage_locale');
+            $table->string('note')->nullable();
         });
     }
 
@@ -29,8 +35,6 @@ class AddColumnsToObjectsTable extends Migration
      */
     public function down()
     {
-        Schema::table('objects', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('objects');
     }
 }

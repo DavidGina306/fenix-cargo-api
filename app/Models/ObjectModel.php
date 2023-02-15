@@ -31,4 +31,32 @@ class ObjectModel extends Model
     {
         return $this->belongsTo(Locale::class);
     }
+
+    /**
+ * Undocumented function
+ *
+ * @return BelongsTo
+ */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+     /**
+     * Get all of the post's comments.
+     */
+    public function medias()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
 }

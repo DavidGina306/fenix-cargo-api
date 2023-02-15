@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\MimeTypeRule;
 use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
-class StoreCabinetRequest extends FormRequest
+class OrderSingleItemRequest extends FormRequest
 {
     use ValidationErrorTrait;
 
@@ -31,8 +29,6 @@ class StoreCabinetRequest extends FormRequest
                 ]
             )
         ]);
-
-        Log::warning($this->address);
     }
 
     /**
@@ -51,19 +47,9 @@ class StoreCabinetRequest extends FormRequest
             'address.country' => 'required|max:50',
             'address.town' => 'required|max:50',
             'address.postcode' => 'required|min:8|max:8',
-            'productData' => 'array|required',
-            'productData.*.quantity' => 'required',
-            'productData.*.weight' => 'required',
-            'productData.*.width' => 'required',
-            'productData.*.height' => 'required',
-            'productData.*.description' => 'required',
-            'productData.*.locale_id' => 'required|uuid',
-            'productData.*.length' => 'required',
-            'productData.*.number' => 'required',
-            'productData.*.position' => 'nullable',
-            'productData.*.files' => 'array|required',
-            "productData.*.files.*.file" => ['required_with:productData.*.files', "required_with:productData.*.files.*.ext"],
-            "productData.*.files.*.ext" => ['required_with:productData.*.files', 'required_with:productData.*.files.*.file',  new MimeTypeRule(['jpg', 'png', 'jpeg'])],
+            'item' => 'array|required',
+            'item.number' => 'required',
+            'item.quantity' => 'required',
         ];
     }
 }

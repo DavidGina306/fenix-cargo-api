@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObjectsTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateObjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('objects', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('status', ['E', 'C', 'D'])->default('E')->comment('E: enbled, C: cancel, D: delivered');
-            $table->timestamps();
+            $table->string('name');
+            $table->string('group');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateObjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objects');
+        Schema::dropIfExists('statuses');
     }
 }

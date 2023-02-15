@@ -104,6 +104,8 @@ Route::group([
 
         Route::group(['prefix' => 'objects'], function () {
             Route::get('/paginate', "ObjectController@paginate");
+            Route::get('/paginate-create', "ObjectController@paginateCreate");
+            Route::get('/print/{objectId}', "ObjectController@print");
         });
 
         Route::group(['prefix' => 'locales'], function () {
@@ -112,6 +114,16 @@ Route::group([
             Route::get('/', "LocaleController@index");
             Route::put('/{locale}', "LocaleController@update");
             Route::get('/{locale}', "LocaleController@get");
+        });
+
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('search-select-status', "OrderController@searchToSelectStatus");
+            Route::post('/', "OrderController@store");
+            Route::post('/movement', "OrderController@updateMovement");
+            Route::post('/single-item', "OrderController@storeSingleItem");
+            Route::get('/', "OrderController@index");
+            Route::put('/{order}', "OrderController@update");
+            Route::get('/{order}', "OrderController@get");
         });
     });
 

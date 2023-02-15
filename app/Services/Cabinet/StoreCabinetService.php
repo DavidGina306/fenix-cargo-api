@@ -29,7 +29,7 @@ class StoreCabinetService
                     'entry_date' => isset($request['entry_date']) ? new Carbon($request['entry_date']) : Carbon::now()
                 ]
             );
-            StoreObjectService::storeAll($request['productData'], $cabinet->id);
+            StoreObjectService::storeAll($request['productData'], $cabinet->id, $customer->id, $address->id);
             return $cabinet;
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {

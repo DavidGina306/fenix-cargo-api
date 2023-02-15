@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateObjectsTable extends Migration
+class CreateOrderMovementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateObjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('objects', function (Blueprint $table) {
+        Schema::create('order_movements', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('status', ['E', 'C', 'D'])->default('E')->comment('E: enbled, C: cancel, D: delivered');
+            $table->date('entry_date');
+            $table->string('received_for');
+            $table->string('doc_received_for');
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateObjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objects');
+        Schema::dropIfExists('order_movements');
     }
 }

@@ -6,13 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Jamesh\Uuid\HasUuid;
 
-class OrderMovement extends Model
+class OrderWarning extends Model
 {
     use HasUuid;
     protected $guarded = [];
 
     /**
-     * Get the status that owns the OrderMovement
+     * Get the order that owns the OrderWarning
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+     /**
+     * The status that belong to the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

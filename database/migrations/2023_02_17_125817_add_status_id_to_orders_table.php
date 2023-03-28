@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatusesTable extends Migration
+class AddStatusIdToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('statuses', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('group');
-            $table->char('letter');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->uuid('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses');
         });
     }
 
@@ -28,6 +26,8 @@ class CreateStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statuses');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('status_id');
+        });
     }
 }

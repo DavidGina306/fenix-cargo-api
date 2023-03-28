@@ -116,10 +116,25 @@ Route::group([
             Route::get('/{locale}', "LocaleController@get");
         });
 
+        Route::group(['prefix' => 'banks'], function () {
+            Route::get('search-select', "BankController@searchToSelect");
+            Route::post('/', "BankController@store");
+            Route::get('/', "BankController@index");
+        });
+
+        Route::group(['prefix' => 'countries'], function () {
+            Route::get('search-select', "CountryController@searchToSelect");
+            Route::post('/', "CountryController@store");
+            Route::get('/', "CountryController@index");
+        });
+
         Route::group(['prefix' => 'orders'], function () {
             Route::get('search-select-status', "OrderController@searchToSelectStatus");
+            Route::get('movements/{order}', "OrderController@listMovement");
+            Route::get('warnings/{order}', "OrderController@listMovement");
             Route::post('/', "OrderController@store");
             Route::post('/movement', "OrderController@updateMovement");
+            Route::post('/warning', "OrderController@storeOrderWarning");
             Route::post('/single-item', "OrderController@storeSingleItem");
             Route::get('/', "OrderController@index");
             Route::put('/{order}', "OrderController@update");

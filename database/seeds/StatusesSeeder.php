@@ -13,11 +13,11 @@ class StatusesSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['name' => 'Aguardando Coleta', 'group' => 'order'],
-            ['name' => 'Aguardando Liberação', 'group' => 'order'],
-            ['name' => 'Coleta Efetuada', 'group' => 'order'],
-            ['name' => 'Em transito', 'group' => 'order'],
-            ['name' => 'Entrega efetuada', 'group' => 'order'],
+            ['name' => 'Aguardando Coleta', 'group' => 'order', 'letter' => 'W'],
+            ['name' => 'Aguardando Liberação', 'group' => 'order', 'letter' => 'F'],
+            ['name' => 'Coleta Efetuada', 'group' => 'order', 'letter' => 'G'],
+            ['name' => 'Em transito', 'group' => 'order', 'letter' => 'T'],
+            ['name' => 'Entrega efetuada', 'group' => 'order', 'letter' => 'D'],
 
         ];
 

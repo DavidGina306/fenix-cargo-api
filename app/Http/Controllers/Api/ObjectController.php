@@ -8,7 +8,8 @@ use App\Services\Cabinet\Object\PaginateObjectService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-
+use Illuminate\Support\Facades\Log;
+use QrCode;
 class ObjectController extends Controller
 {
     public function paginate(Request $request)
@@ -36,14 +37,18 @@ class ObjectController extends Controller
             $data = [
                 'code' => $object->number,
                 'description' => $object->description,
-                'customer'  => $object->customer->name
+                'customer'  => $object->customer->name,
+                'qrcode' => QrCode::format('png')->size(40)->generate($object->number),
+                'quantity'  => $object->quantity,
             ];
             $pdf = App::make('dompdf.wrapper');
-            $pdf->setPaper(array(0, 0, 400, 400), 'landscape');
+            $pdf->setPaper(array(0, 0, 400, 300), 'landscape');
             $pdf->setOption('javascript-delay', 3000);
+            $pdf->setOption('isRemoteEnabled', true);
             $pdf->loadView('pdf', $data);
             return $pdf->download('teste.pdf');
         } catch (Exception $e) {
+            Log::error($e);
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }

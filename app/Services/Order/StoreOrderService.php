@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Locale;
 use App\Models\ObjectModel;
 use App\Models\Order;
+use App\Models\Status;
 use App\Services\Address\StoreAddressService;
 use Carbon\Carbon;
 use Exception;
@@ -25,7 +26,7 @@ class StoreOrderService
                     'customer_id' => $customer->id,
                     'address_id' => $address->id,
                     'locale_id' => $locale->id,
-                    'status' => 'W',
+                    'status_id' => Status::query()->where('name', 'Aguardando Coleta')->first()->id,
                     'quantity' =>  array_sum(array_column($request['items'], 'quantity')),
                     'value' => 0,
                     'total_weight' => array_sum(array_column($request['items'], 'total_weight')),
@@ -52,7 +53,7 @@ class StoreOrderService
                     'customer_id' =>  $object->customer->id,
                     'address_id' => $address->id,
                     'locale_id' => $object->locale->id,
-                    'status' => 'W',
+                    'status_id' => Status::query()->where('name', 'Aguardando Coleta')->first()->id,
                     'quantity' =>  $request['item']['quantity'],
                     'value' => 0,
                     'total_weight' => $request['item']['total_weight'],
@@ -72,16 +73,17 @@ class StoreOrderService
     public static function storeItems(array $data, Order $order)
     {
         try {
-            Log::warning($data);
             foreach ($data as $item) {
                 $object = ObjectModel::query()->whereNumber($item['number'])->first();
                 $order->objects()->attach($object->id, ['current_quantity' => $item['quantity']]);
                 $object->update([
-                    'current_quantity' => $item['quantity'] - $object->current_quantity
+                    'current_quantity' => $object->current_quantity - $item['quantity']
                 ]);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to register objects to Order', 500);        }
     }
+
+
 }

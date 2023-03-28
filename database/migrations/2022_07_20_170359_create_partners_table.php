@@ -17,6 +17,7 @@ class CreatePartnersTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('document');
+            $table->string('document_2')->nullable();
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');

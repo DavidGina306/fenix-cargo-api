@@ -6,10 +6,13 @@ use App\DataTables\OrderDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderSingleItemRequest;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\StoreOrderWarningRequest;
 use App\Http\Requests\UpdatedOrderRequest;
 use App\Services\DatatableService;
+use App\Services\Order\Movement\ListMovementOrderService;
 use App\Services\Order\SearchToSelectStatusOrderService;
 use App\Services\Order\StoreOrderService;
+use App\Services\Order\StoreOrderWarningService;
 use App\Services\Order\UpdateOrderService;
 use Exception;
 use Illuminate\Http\Request;
@@ -56,6 +59,15 @@ class OrderController extends Controller
         }
     }
 
+    public function listMovement($orderId)
+    {
+        try {
+            return response(ListMovementOrderService::listOrderMovements($orderId), 200);
+        } catch (\Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
     public function searchToSelectStatus(Request $request)
     {
         try {
@@ -70,6 +82,19 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             $partner =  UpdateOrderService::store($request->all());
+            DB::commit();
+            return response($partner->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function storeOrderWarning(StoreOrderWarningRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $partner =  StoreOrderWarningService::store($request->all());
             DB::commit();
             return response($partner->toArray(), 200);
         } catch (Exception $e) {

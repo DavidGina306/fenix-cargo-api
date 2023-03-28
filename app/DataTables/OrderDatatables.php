@@ -30,6 +30,13 @@ class OrderDatatables extends DataTable
                     $sql->where('name', 'like', $keyword);
                 });
             })
+            ->editColumn('status', function ($query) {
+                return $query->status->letter;
+            })->filterColumn('status', function ($query, $keyword) {
+                $query->whereHas('status', function ($sql) use ($keyword) {
+                    $sql->where('name', 'like', $keyword);
+                });
+            })
             ->addColumn('action', function ($query) {
                 return [
                     'id' => $query->id,
@@ -44,10 +51,11 @@ class OrderDatatables extends DataTable
             ->join('addresses as a', 'orders.address_id', '=', 'a.id')
             ->join('customers as c', 'orders.customer_id', '=', 'c.id')
             ->join('locales as l', 'orders.locale_id', '=', 'l.id')
+            ->join('statuses as s', 'orders.status_id', '=', 's.id')
             ->select(
                 'orders.id',
                 'orders.number',
-                'orders.status',
+                'orders.status_id',
                 'orders.quantity',
                 'orders.open_date',
                 'a.id as id_address',
@@ -61,6 +69,7 @@ class OrderDatatables extends DataTable
                 'c.name',
                 'c.document',
                 'l.id as locale_id',
+                's.id as status_id',
                 'l.name',
             );
     }
@@ -90,7 +99,7 @@ class OrderDatatables extends DataTable
             'quantity' => ['title' => 'Quantidade', 'width' => '200px', 'class' => 'text-center'],
             'customer' => ['title' => 'Cliente', 'width' => '200px', 'class' => 'text-center'],
             'open_date' => ['title' => 'Entrada', 'name' => 'orders.open_date',  'width' => '200px'],
-            'status' => ['title' => 'Status', 'status' => 'orders.status',  'width' => '200px']
+            'status' => ['title' => 'Status',  'width' => '200px', 'class' => 'text-center']
         ];
     }
 

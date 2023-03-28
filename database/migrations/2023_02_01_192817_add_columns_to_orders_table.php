@@ -19,8 +19,6 @@ class AddColumnsToOrdersTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->uuid('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
-            $table->enum('status', ['W', 'P', 'A', 'T', 'D', 'C'])->default('W')->comment('W: waiting pickup; P: Pickup confirmed, A:
-            awaiting delivery, T: in Transit, D: delivery, C: cancel');
             $table->longText('notes');
             $table->date('open_date');
             $table->decimal('total_weight');

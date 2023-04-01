@@ -31,6 +31,8 @@ class UpdatedOrderRequest extends FormRequest
             'status_id' => 'required|uuid',
             'order_id' => 'required|uuid',
             'entry_date' => 'required|date',
+            'time' => 'required',
+            'document_type' => 'required|max:1',
             'doc_received_for' => 'required|max:200',
             'received_for' => 'required|max:200',
             'files' => 'array|nullable',

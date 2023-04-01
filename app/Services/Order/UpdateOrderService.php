@@ -7,6 +7,7 @@ use App\Models\OrderMovement;
 use App\Models\Status;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 
 class UpdateOrderService
@@ -21,13 +22,26 @@ class UpdateOrderService
                 [
                     'status_id' => $status->id,
                     'order_id' => $order->id,
+                    'time' => $request['time'],
                     'entry_date' => isset($request['entry_date']) ? new Carbon($request['entry_date']) : Carbon::now(),
                     'received_for' => $request['received_for'],
                     'doc_received_for' => $request['doc_received_for'],
+                    'document_type' => $request['document_type'],
                 ]
             );
             $order->update(['status_id' => $status->id]);
             return $orderMovement;
+        } catch (ModelNotFoundException $e) {
+            switch ($e->getModel()) {
+                case 'App\Models\Order':
+                    throw new Exception('Order not found', 404);
+                    break;
+                case 'App\Models\Status':
+                    throw new Exception('Status not found', 404);
+                    break;
+                default:
+                    throw new Exception('Error Model not found', 404);
+            }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to register Order', 500);

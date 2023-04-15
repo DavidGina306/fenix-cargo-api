@@ -1,0 +1,52 @@
+version: "2"
+services:
+  database:
+    image: mariadb:10.5.8
+    container_name: database
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    tty: true
+    ports:
+      - "3306:3306"
+    networks:
+      - main
+  nginx:
+    container_name: server
+    build:
+      context: ./docker/nginx
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf/:/etc/nginx/conf.d/:ro
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+    networks:
+      - main
+  php-fpm:
+    container_name: php
+    build:
+      context: ./docker/php-fpm
+      args:
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+        - USER_NAME=${USER_NAME}
+        - PHP_FPM_VERSION=${PHP_FPM_VERSION}
+    restart: always
+    volumes:
+      - .:/var/www
+      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/${PHP_FPM_VERSION}/fpm/conf.d/99-overrides.ini
+    networks:
+      - main
+
+networks:
+  main:
+    name: main-network
+    enable_ipv6: false
+    driver: bridge

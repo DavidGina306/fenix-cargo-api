@@ -15,15 +15,44 @@ class AddColumnsToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('number');
-            $table->uuid('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
-            $table->uuid('address_id');
-            $table->foreign('address_id')->references('id')->on('addresses');
+            $table->string('delivery_type')->nullable();
+            $table->string('material')->nullable();
+
+            //payer
+            $table->uuid('payer_id')->nullable();
+            $table->foreign('payer_id')->references('id')->on('customers');
+
+            $table->uuid('doc_type_id')->nullable();
+            $table->foreign('doc_type_id')->references('id')->on('doc_types');
+
+            $table->uuid('packing_type_id')->nullable();
+            $table->foreign('packing_type_id')->references('id')->on('packing_types');
+
+            $table->string('sender_name');
+            $table->string('sender_search_for')->nullable();
+            $table->string('phone_sender_search_for')->nullable();
+            $table->uuid('sender_id')->nullable();
+            $table->foreign('sender_id')->references('id')->on('customers');
+            $table->uuid('sender_address_id');
+            $table->foreign('sender_address_id')->references('id')->on('addresses');
+
+            $table->string('recipient_name')->nullable();
+            $table->string('recipient_search_for')->nullable();
+            $table->string('phone_recipient_search_for')->nullable();
+            $table->uuid('recipient_id')->nullable();
+            $table->foreign('recipient_id')->references('id')->on('customers');
+            $table->uuid('recipient_address_id')->nullable();
+            $table->foreign('recipient_address_id')->references('id')->on('addresses');
+
             $table->longText('notes');
             $table->date('open_date');
             $table->decimal('total_weight');
             $table->decimal('value');
             $table->decimal('quantity');
+            $table->decimal('height');
+            $table->decimal('width');
+            $table->decimal('weight');
+            $table->decimal('length');
         });
     }
 

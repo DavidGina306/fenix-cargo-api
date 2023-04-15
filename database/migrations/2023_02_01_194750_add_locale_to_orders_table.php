@@ -14,7 +14,7 @@ class AddLocaleToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->uuid('locale_id');
+            $table->uuid('locale_id')->nullable();
             $table->foreign('locale_id')->references('id')->on('locales');
         });
     }

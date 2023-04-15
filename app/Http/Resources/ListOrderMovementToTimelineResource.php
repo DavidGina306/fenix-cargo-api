@@ -20,6 +20,7 @@ class ListOrderMovementToTimelineResource extends JsonResource
             "status" => $this->status,
             "orderMovements" => $this->orderMovements->map(function($query)  {
                 return [
+                    "order_id" => $this->id,
                     "id" => $query->id,
                     "status" => $query->status,
                     "time"=> $query->time,

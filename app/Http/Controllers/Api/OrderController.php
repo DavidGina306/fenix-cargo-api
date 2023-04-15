@@ -8,8 +8,11 @@ use App\Http\Requests\OrderSingleItemRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\StoreOrderWarningRequest;
 use App\Http\Requests\UpdatedOrderRequest;
+use App\Http\Requests\UpdateMovementItemRequest;
 use App\Services\DatatableService;
 use App\Services\Order\Movement\ListMovementOrderService;
+use App\Services\Order\Movement\ListOrderWarningService;
+use App\Services\Order\Movement\UpdateMovementService;
 use App\Services\Order\SearchToSelectStatusOrderService;
 use App\Services\Order\StoreOrderService;
 use App\Services\Order\StoreOrderWarningService;
@@ -37,9 +40,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $partner =  StoreOrderService::store($request->all());
+            $order =  StoreOrderService::store($request->all());
             DB::commit();
-            return response($partner->toArray(), 200);
+            return response($order->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
@@ -50,9 +53,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $partner =  StoreOrderService::storeSingleItem($request->all());
+            $order =  StoreOrderService::storeSingleItem($request->all());
             DB::commit();
-            return response($partner->toArray(), 200);
+            return response($order->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
@@ -68,6 +71,15 @@ class OrderController extends Controller
         }
     }
 
+    public function listWarnings($orderId)
+    {
+        try {
+            return response(ListOrderWarningService::listWarningOrder($orderId), 200);
+        } catch (\Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
     public function searchToSelectStatus(Request $request)
     {
         try {
@@ -77,13 +89,26 @@ class OrderController extends Controller
         }
     }
 
-    public function updateMovement(UpdatedOrderRequest $request)
+    public function setMovement(UpdatedOrderRequest $request)
     {
         try {
             DB::beginTransaction();
-            $partner =  UpdateOrderService::store($request->all());
+            $orderMovement =  UpdateOrderService::store($request->all());
             DB::commit();
-            return response($partner->toArray(), 200);
+            return response($orderMovement->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function updateMovement(UpdateMovementItemRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $orderMovement =  UpdateMovementService::update($request->all());
+            DB::commit();
+            return response($orderMovement->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
@@ -94,9 +119,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $partner =  StoreOrderWarningService::store($request->all());
+            $orderWarning =  StoreOrderWarningService::store($request->all());
             DB::commit();
-            return response($partner->toArray(), 200);
+            return response($orderWarning->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

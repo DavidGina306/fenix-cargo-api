@@ -60,9 +60,9 @@ class UpdateOrderService
         try {
             Log::info($order);
             if ($request['city'] == 'O') {
-                return $order->address->town;
+                return $order->addressSender->town;
             } else if ($request['city'] == 'D') {
-                return $order->address->town;
+                return $order->addressRecipient->town;
             }
             return $request['other_city'];
         } catch (\Exception $e) {

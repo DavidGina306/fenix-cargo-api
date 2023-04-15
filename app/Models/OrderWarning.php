@@ -30,4 +30,14 @@ class OrderWarning extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+      /**
+     * The status that belong to the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partner::class);
+    }
 }

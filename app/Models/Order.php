@@ -18,9 +18,29 @@ class Order extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function customer(): BelongsTo
+    public function sender(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'sender_id');
+    }
+
+    /**
+     * Get the order that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function packingType(): BelongsTo
+    {
+        return $this->belongsTo(PackingType::class);
+    }
+
+    /**
+     * Get the customer that owns the Quote
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function docType(): BelongsTo
+    {
+        return $this->belongsTo(DocType::class);
     }
 
     /**
@@ -28,9 +48,29 @@ class Order extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function address(): BelongsTo
+    public function recipient(): BelongsTo
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Customer::class, 'recipient_id');
+    }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function addressSender(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'sender_address_id');
+    }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function addressRecipient(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'recipient_address_id');
     }
 
     /**

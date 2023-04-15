@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Services\DataTable;
 
 class OrderDatatables extends DataTable
@@ -12,22 +13,30 @@ class OrderDatatables extends DataTable
     {
         return datatables($query)
             ->escapeColumns([])
-            ->editColumn('customer', function ($query) {
-                return $query->customer->name;
+            ->editColumn('sender', function ($query) {
+                return  $query->sender ? $query->sender->name : $query->sender_name;
+            })
+            ->editColumn('weight', function ($query) {
+                return $query->weight.' KG' ;
+            })
+            ->editColumn('value', function ($query) {
+                return 'R$ '.$query->value ;
+            })
+            ->editColumn('origem', function ($query) {
+                Log::info($query);
+                return $query->town.' / '.  $query->state;
             })
             ->editColumn('open_date', function ($query) {
                 return Carbon::parse($query['open_date'])->format('d/m/Y');
             })
-            ->filterColumn('customer', function ($query, $keyword) {
-                $query->whereHas('customer', function ($sql) use ($keyword) {
+            ->filterColumn('sender', function ($query, $keyword) {
+                $query->whereHas('sender', function ($sql) use ($keyword) {
                     $sql->where('name', 'like', $keyword);
                 });
             })
-            ->editColumn('locale', function ($query) {
-                return $query->locale->name;
-            })->filterColumn('locale', function ($query, $keyword) {
-                $query->whereHas('locale', function ($sql) use ($keyword) {
-                    $sql->where('name', 'like', $keyword);
+            ->filterColumn('origem', function ($query, $keyword) {
+                $query->whereHas('addressSender', function ($sql) use ($keyword) {
+                    $sql->where('town', 'like', $keyword)->orWhere('state', 'like', $keyword);
                 });
             })
             ->editColumn('status', function ($query) {
@@ -48,9 +57,9 @@ class OrderDatatables extends DataTable
     public function query(Order $model)
     {
         return $model->newQuery()
-            ->join('addresses as a', 'orders.address_id', '=', 'a.id')
-            ->join('customers as c', 'orders.customer_id', '=', 'c.id')
-            ->join('locales as l', 'orders.locale_id', '=', 'l.id')
+            ->join('addresses as ase', 'orders.sender_address_id', '=', 'ase.id')
+            ->join('addresses as ar', 'orders.recipient_address_id', '=', 'ar.id')
+            ->leftJoin('customers as c', 'orders.sender_id', '=', 'c.id')
             ->join('statuses as s', 'orders.status_id', '=', 's.id')
             ->select(
                 'orders.id',
@@ -58,19 +67,20 @@ class OrderDatatables extends DataTable
                 'orders.status_id',
                 'orders.quantity',
                 'orders.open_date',
-                'a.id as id_address',
-                'a.address_line_1',
-                'a.address_line_2',
-                'a.address_line_3',
-                'a.postcode',
-                'a.country',
-                'a.town',
-                'c.id as customer_id',
+                'orders.sender_name',
+                'orders.weight',
+                'orders.value',
+                'ase.id as address_sender_id',
+                'ase.address_line_1',
+                'ase.address_line_2',
+                'ase.address_line_3',
+                'ase.postcode',
+                'ase.country',
+                'ase.state',
+                'ase.town',
+                'c.id as sender_id',
                 'c.name',
                 'c.document',
-                'l.id as locale_id',
-                's.id as status_id',
-                'l.name',
             );
     }
 
@@ -95,10 +105,12 @@ class OrderDatatables extends DataTable
                 'width' => '10px'
             ],
             'number' => ['title' => 'MINUTA', 'name' => 'orders.number',  'width' => '200px'],
-            'locale' => ['title' => 'Armazém', 'width' => '200px', 'class' => 'text-center'],
+            'open_date' => ['title' => 'Solicitação', 'name' => 'orders.open_date',  'width' => '200px'],
+            'origem' => ['title' => 'Origem', 'width' => '200px', 'class' => 'text-center'],
             'quantity' => ['title' => 'Quantidade', 'width' => '200px', 'class' => 'text-center'],
-            'customer' => ['title' => 'Cliente', 'width' => '200px', 'class' => 'text-center'],
-            'open_date' => ['title' => 'Entrada', 'name' => 'orders.open_date',  'width' => '200px'],
+            'weight' => ['title' => 'Peso', 'name' => 'orders.weight',  'width' => '200px'],
+            'value' => ['title' => 'Peso', 'name' => 'orders.value',  'width' => '200px'],
+            'sender' => ['title' => 'Cliente', 'width' => '200px', 'class' => 'text-center'],
             'status' => ['title' => 'Status',  'width' => '200px', 'class' => 'text-center']
         ];
     }

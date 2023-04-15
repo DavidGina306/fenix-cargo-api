@@ -16,10 +16,12 @@ class CreateOrderWarningsTable extends Migration
         Schema::create('order_warnings', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('entry_date');
-            $table->string('agent');
-            $table->string('notes');
-            $table->string('responsible');
+            $table->string('profile');
+            $table->string('contact')->nullable();
+            $table->boolean('is_whatsaap')->default(false);
             $table->decimal('value');
+            $table->uuid('partner_id');
+            $table->foreign('partner_id')->references('id')->on('partners');
             $table->uuid('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

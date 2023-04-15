@@ -21,9 +21,9 @@ Route::group([
         Route::group(['prefix' => 'partners'], function () {
             Route::post('/', "PartnerController@store");
             Route::get('/', "PartnerController@index");
+            Route::get('search-select', "PartnerController@searchToSelect");
             Route::put('/{partner}', "PartnerController@update");
             Route::get('/{partner}', "PartnerController@get");
-            Route::post('search-select', "PartnerController@searchToSelect");
         });
 
         Route::group(['prefix' => 'customers'], function () {
@@ -73,11 +73,11 @@ Route::group([
         });
 
         Route::group(['prefix' => 'packing-types'], function () {
-            Route::get('search-select', "LocaleController@searchToSelect");
-            Route::post('/', "LocaleController@store");
-            Route::get('/', "LocaleController@index");
-            Route::put('/{packing}', "LocaleController@update");
-            Route::get('/{packing}', "LocaleController@get");
+            Route::get('search-select', "PackingTypeController@searchToSelect");
+            Route::post('/', "PackingTypeController@store");
+            Route::get('/', "PackingTypeController@index");
+            Route::put('/{packing}', "PackingTypeController@update");
+            Route::get('/{packing}', "PackingTypeController@get");
         });
 
         Route::group(['prefix' => 'add-fees'], function () {
@@ -131,9 +131,11 @@ Route::group([
         Route::group(['prefix' => 'orders'], function () {
             Route::get('search-select-status', "OrderController@searchToSelectStatus");
             Route::get('movements/{order}', "OrderController@listMovement");
-            Route::get('warnings/{order}', "OrderController@listMovement");
+            Route::get('warnings/{order}', "OrderController@listWarnings");
             Route::post('/', "OrderController@store");
-            Route::post('/movement', "OrderController@updateMovement");
+            Route::post('/movement', "OrderController@setMovement");
+            Route::post('/update/movement', "OrderController@updateMovement");
+
             Route::post('/warning', "OrderController@storeOrderWarning");
             Route::post('/single-item', "OrderController@storeSingleItem");
             Route::get('/', "OrderController@index");

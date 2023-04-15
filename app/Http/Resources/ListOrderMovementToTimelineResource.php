@@ -22,9 +22,12 @@ class ListOrderMovementToTimelineResource extends JsonResource
                 return [
                     "id" => $query->id,
                     "status" => $query->status,
-                    "entry_date"=> Carbon::parse($query->entry_date),
+                    "time"=> $query->time,
+                    "entry_date"=> Carbon::parse($query->entry_date)->format('d/m/Y'),
                     "doc_received_for"=> $query->doc_received_for,
-                    "received_for" =>$query->received_for,
+                    'document_type' => $query->document_type,
+                    "received_for" => $query->received_for,
+                    "locale" => $query->locale,
                     'timestamp' => Carbon::parse($query->entry_date),
                     'title' => 'Alterando status para '.$query->status->name . ' responsável '. $query->received_for
                 ];

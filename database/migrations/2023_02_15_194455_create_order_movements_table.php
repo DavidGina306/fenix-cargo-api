@@ -18,6 +18,7 @@ class CreateOrderMovementsTable extends Migration
             $table->date('entry_date');
             $table->string('received_for');
             $table->string('doc_received_for');
+            $table->string('locale');
             $table->uuid('status_id');
             $table->foreign('status_id')->references('id')->on('statuses');
             $table->timestamps();

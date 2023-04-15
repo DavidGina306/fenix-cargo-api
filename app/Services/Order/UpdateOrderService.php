@@ -27,6 +27,7 @@ class UpdateOrderService
                     'received_for' => $request['received_for'],
                     'doc_received_for' => $request['doc_received_for'],
                     'document_type' => $request['document_type'],
+                    'locale' => self::setLocale($order, $request)
                 ]
             );
             $order->update(['status_id' => $status->id]);
@@ -45,6 +46,28 @@ class UpdateOrderService
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to register Order', 500);
+        }
+    }
+    /**
+     * funtion to get city
+     *
+     * @param Order $order
+     * @param array $request
+     * @return string
+     */
+    public static function setLocale(Order $order, array $request): string
+    {
+        try {
+            Log::info($order);
+            if ($request['city'] == 'O') {
+                return $order->address->town;
+            } else if ($request['city'] == 'D') {
+                return $order->address->town;
+            }
+            return $request['other_city'];
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new Exception('Error to register set Locale', 500);
         }
     }
 }

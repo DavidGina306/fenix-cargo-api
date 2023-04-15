@@ -34,6 +34,7 @@ class UpdatedOrderRequest extends FormRequest
             'time' => 'required',
             'document_type' => 'required|max:1',
             'doc_received_for' => 'required|max:200',
+            'city' => 'required',
             'received_for' => 'required|max:200',
             'files' => 'array|nullable',
             "files.*.file" => ['required_with:files', "required_with:files.*.ext"],

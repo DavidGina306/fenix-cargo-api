@@ -43,16 +43,16 @@ class AddColumnsToOrdersTable extends Migration
             $table->foreign('recipient_id')->references('id')->on('customers');
             $table->uuid('recipient_address_id')->nullable();
             $table->foreign('recipient_address_id')->references('id')->on('addresses');
-
+            $table->string('barcode')->nullable();
             $table->longText('notes');
             $table->date('open_date');
             $table->decimal('total_weight');
             $table->decimal('value');
             $table->decimal('quantity');
-            $table->decimal('height');
-            $table->decimal('width');
+            $table->decimal('height')->nullable();
+            $table->decimal('width')->nullable();
             $table->decimal('weight');
-            $table->decimal('length');
+            $table->decimal('length')->nullable();
         });
     }
 

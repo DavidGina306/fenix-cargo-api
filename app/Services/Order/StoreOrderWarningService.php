@@ -3,9 +3,11 @@
 namespace App\Services\Order;
 
 use App\Helpers\MoneyToDecimal;
+use App\Models\Media;
 use App\Models\Order;
 use App\Models\OrderWarning;
 use App\Models\Partner;
+use App\Services\StoreMediasService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -28,10 +30,30 @@ class StoreOrderWarningService
                     'value' => MoneyToDecimal::moneyToDecimal($request['value']),
                 ]
             );
+            self::storeImages($request['files'], $warning->id);
             return $warning;
         } catch (\Exception $e) {
             Log::error($e);
             throw new Exception('Error to register Order Warning', 500);
+        }
+    }
+
+    public static function storeImages(array $data, string $orderWaningId)
+    {
+        try {
+            foreach ($data as $value) {
+                $image = StoreMediasService::store($value);
+                Media::query()->firstOrCreate(
+                    [
+                        "mediable_id" => $orderWaningId,
+                        "mediable_type" => OrderWarning::class,
+                        "url" => $image
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            throw new Exception('Error to register images to Order Warnings', 500);
         }
     }
 }

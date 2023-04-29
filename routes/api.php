@@ -140,7 +140,7 @@ Route::group([
             Route::post('/single-item', "OrderController@storeSingleItem");
             Route::get('/', "OrderController@index");
             Route::put('/{order}', "OrderController@update");
-            Route::get('/{order}', "OrderController@get");
+            Route::get('/{order}', "OrderController@getData");
         });
     });
 

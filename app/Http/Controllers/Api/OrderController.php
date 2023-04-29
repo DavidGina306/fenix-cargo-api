@@ -10,6 +10,7 @@ use App\Http\Requests\StoreOrderWarningRequest;
 use App\Http\Requests\UpdatedOrderRequest;
 use App\Http\Requests\UpdateMovementItemRequest;
 use App\Services\DatatableService;
+use App\Services\Order\GetOrderService;
 use App\Services\Order\Movement\ListMovementOrderService;
 use App\Services\Order\Movement\ListOrderWarningService;
 use App\Services\Order\Movement\UpdateMovementService;
@@ -89,7 +90,7 @@ class OrderController extends Controller
         }
     }
 
-    public function setMovement(UpdatedOrderRequest $request)
+    public function update(UpdatedOrderRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -122,6 +123,20 @@ class OrderController extends Controller
             $orderWarning =  StoreOrderWarningService::store($request->all());
             DB::commit();
             return response($orderWarning->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+
+    public function getData($orderId)
+    {
+        try {
+            DB::beginTransaction();
+            $order =  GetOrderService::get($orderId);
+            DB::commit();
+            return response($order, 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

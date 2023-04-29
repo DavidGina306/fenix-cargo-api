@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ListOrderWarningToEdiResource extends JsonResource
+class ListOrderWarningToEditResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,6 +27,7 @@ class ListOrderWarningToEdiResource extends JsonResource
                     "value" => $query->value,
                     "entry_date"=> Carbon::parse($query->entry_date)->format('d/m/Y'),
                     'timestamp' => Carbon::parse($query->entry_date),
+                    'files' => []
                 ];
             })
         ];

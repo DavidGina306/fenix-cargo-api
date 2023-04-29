@@ -30,8 +30,12 @@ class StoreOrderService
             $order = Order::create(
                 [
                     'delivery_type' => $request['delivery_type'],
+                    'is_payer'  => $request['is_payer'],
+                    'barcode'  => isset($request['barcode']) ? isset($request['barcode']) : null,
+                    'obs'  => isset($request['obs']) ? isset($request['obs']) : null,
                     'number' => substr(str_shuffle(time() . mt_rand(0, 999) . md5(time() . mt_rand(0, 999))), 0, 16),
-                    'packing_type_id' => $docType  ? $typePacking->id : null,
+                    'packing_type_id' => $typePacking  ? $typePacking->id : null,
+                    'doc_type_id' => $docType  ? $docType->id : null,
                     //sender
                     'sender_id' =>  $customerSender  ? $customerSender->id : null,
                     'sender_name' =>  $customerSender  ? $customerSender->name : $request['sender_name'],
@@ -42,6 +46,7 @@ class StoreOrderService
                     'recipient_id' =>  $customerRecipient  ? $customerRecipient->id : null,
                     'recipient_name' =>  $customerRecipient  ? $customerRecipient->name :  $request['recipient_name'],
                     'recipient_name' => $request['recipient_name'],
+                    'recipient_search_for' => $request['recipient_search_for'],
                     'phone_recipient_search_for' => $request['phone_recipient_search_for'],
                     'recipient_address_id' => $addressRecipient->id,
                     //about data

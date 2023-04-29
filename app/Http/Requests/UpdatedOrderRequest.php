@@ -20,6 +20,36 @@ class UpdatedOrderRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'address_recipient' => array_merge(
+                $this->address_recipient,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address_recipient['postcode'])
+                ]
+            ),
+            'payer' => array_merge(
+                $this->payer,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->payer['postcode'])
+                ]
+            ),
+            'dispatcher' => array_merge(
+                $this->dispatcher,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->dispatcher['postcode'])
+                ]
+            ),
+            'address_sender' => array_merge(
+                $this->address_sender,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address_sender['postcode'])
+                ]
+            )
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,17 +58,53 @@ class UpdatedOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'status_id' => 'required|uuid',
-            'order_id' => 'required|uuid',
-            'entry_date' => 'required|date',
-            'time' => 'required',
-            'document_type' => 'required|max:1',
-            'doc_received_for' => 'required|max:200',
-            'city' => 'required',
-            'received_for' => 'required|max:200',
-            'files' => 'array|nullable',
-            "files.*.file" => ['required_with:files', "required_with:files.*.ext"],
-            "files.*.ext" => ['required_with:files', 'required_with:files.*.file',  new MimeTypeRule(['jpg', 'png', 'jpeg'])],
+            'material' => 'required|max:100',
+            'total' => 'required',
+            'barcode' => 'nullable|max:41',
+            'quantity' => 'required',
+            'height' => '',
+            'width' => '',
+            'length' => '',
+            'weight' => 'required',
+            'packing_type_id' => 'required|uuid',
+            'doc_type_id' => 'required|uuid',
+            'sender_id' => 'required_if:is_sender_id,false',
+            'sender_name' => 'required_if:is_sender_id,true',
+            'sender_search_for' => 'required|max:100',
+            'phone_sender_search_for' => 'required|max:14',
+            'address_sender' => 'array|required',
+            'address_sender.address_line_1' => 'required|max:100',
+            'address_sender.address_line_2' => 'required|max:100',
+            'address_sender.address_line_3' => 'max:100',
+            'address_sender.country' => 'required|max:50',
+            'address_sender.town' => 'required|max:50',
+            'address_sender.postcode' => 'required|min:8|max:8',
+            'recipient_id' => 'required_if:is_recipient_id,false',
+            'recipient_name' => 'required_if:is_recipient_id,true',
+            'recipient_search_for' => 'required|max:100',
+            'phone_recipient_search_for' => 'max:14',
+            'address_recipient' => 'array|required',
+            'address_recipient.address_line_1' => 'required|max:100',
+            'address_recipient.address_line_2' => 'required|max:100',
+            'address_recipient.address_line_3' => 'max:100',
+            'address_recipient.country' => 'required|max:50',
+            'address_recipient.town' => 'required|max:50',
+            'address_recipient.postcode' => 'required|min:8|max:8',
+            'payer' => 'array|required_if:is_payer,3',
+            'payer.address_line_1' => 'required_if:is_payer,3|max:100',
+            'payer.address_line_2' => 'required_if:is_payer,3|max:100',
+            'payer.address_line_3' => 'max:100',
+            'payer.country' => 'required_if:is_payer,3|max:50',
+            'payer.town' => 'required_if:is_payer,3|max:50',
+            'payer.postcode' => 'required_if:is_payer,3|min:8|max:8',
+            'dispatcher' => 'array|nullabel',
+            'dispatcher.id' => 'uuid|required_with:dispatcher',
+            'dispatcher.address_line_1' => 'required_with:dispatcher|max:100',
+            'dispatcher.address_line_2' => 'required_with:dispatcher|max:100',
+            'dispatcher.address_line_3' => 'max:100',
+            'dispatcher.country' => 'required_with:dispatcher|max:50',
+            'dispatcher.town' => 'required_with:dispatcher|max:50',
+            'dispatcher.postcode' => 'required_with:dispatcher|min:8|max:8',
         ];
     }
 }

@@ -21,7 +21,15 @@ class OrderWarning extends Model
         return $this->belongsTo(Order::class);
     }
 
-     /**
+    /**
+     * Get all of the post's medias.
+     */
+    public function medias()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
+
+    /**
      * The status that belong to the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -31,7 +39,7 @@ class OrderWarning extends Model
         return $this->belongsTo(Status::class);
     }
 
-      /**
+    /**
      * The status that belong to the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

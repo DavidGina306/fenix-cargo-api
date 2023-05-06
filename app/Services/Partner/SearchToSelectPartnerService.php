@@ -21,4 +21,18 @@ class SearchToSelectPartnerService
             throw new Exception('Error to get Profile', 500);
         }
     }
+
+    public static function groupSearchToSelect($request)
+    {
+        try {
+            $response =  Partner::query();
+            if ($search = $request->search) {
+                $response->where('name', 'like', "%$search%")->where('profile', 'like', "%$request->profile%")->orWhere('id', 'like', "%$search%");
+            }
+            return $response->whereStatus('E')->select(['id as code', 'name as label'])->get();
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            throw new Exception('Error to get Customer', 500);
+        }
+    }
 }

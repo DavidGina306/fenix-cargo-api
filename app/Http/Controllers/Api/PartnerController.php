@@ -73,4 +73,13 @@ class PartnerController extends Controller
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }
+
+    public function groupSearchToSelect(Request $request)
+    {
+        try {
+            return response(SearchToSelectPartnerService::groupSearchToSelect($request), 200);
+        } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
 }

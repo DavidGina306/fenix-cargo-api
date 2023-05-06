@@ -17,6 +17,7 @@ class UpdateMovementService
                 'document_type' => $request['document_type'],
                 'doc_received_for' => $request['doc_received_for'],
                 'received_for' => $request['received_for'],
+                'locale' => $request['locale'],
             ]);
             return  $orderMovement;
         } catch (ModelNotFoundException $e) {

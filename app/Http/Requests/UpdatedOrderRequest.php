@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\MimeTypeRule;
 use App\Traits\ValidationErrorTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -35,12 +34,6 @@ class UpdatedOrderRequest extends FormRequest
                     'postcode' => preg_replace('/[^0-9]/', '', $this->payer['postcode'])
                 ]
             ),
-            'dispatcher' => array_merge(
-                $this->dispatcher,
-                [
-                    'postcode' => preg_replace('/[^0-9]/', '', $this->dispatcher['postcode'])
-                ]
-            ),
             'address_sender' => array_merge(
                 $this->address_sender,
                 [
@@ -60,7 +53,7 @@ class UpdatedOrderRequest extends FormRequest
         return [
             'material' => 'required|max:100',
             'total' => 'required',
-            'barcode' => 'nullable|max:41',
+            'barcode' => 'nullable|max:44',
             'quantity' => 'required',
             'height' => '',
             'width' => '',
@@ -68,8 +61,8 @@ class UpdatedOrderRequest extends FormRequest
             'weight' => 'required',
             'packing_type_id' => 'required|uuid',
             'doc_type_id' => 'required|uuid',
-            'sender_id' => 'required_if:is_sender_id,false',
-            'sender_name' => 'required_if:is_sender_id,true',
+            'sender_id' => 'required|uuid',
+            'sender_name' => 'required|uuid',
             'sender_search_for' => 'required|max:100',
             'phone_sender_search_for' => 'required|max:14',
             'address_sender' => 'array|required',
@@ -90,21 +83,14 @@ class UpdatedOrderRequest extends FormRequest
             'address_recipient.country' => 'required|max:50',
             'address_recipient.town' => 'required|max:50',
             'address_recipient.postcode' => 'required|min:8|max:8',
-            'payer' => 'array|required_if:is_payer,3',
+            'payer' => 'array',
+            'payer.id' => 'required|uuid',
             'payer.address_line_1' => 'required_if:is_payer,3|max:100',
             'payer.address_line_2' => 'required_if:is_payer,3|max:100',
             'payer.address_line_3' => 'max:100',
             'payer.country' => 'required_if:is_payer,3|max:50',
             'payer.town' => 'required_if:is_payer,3|max:50',
-            'payer.postcode' => 'required_if:is_payer,3|min:8|max:8',
-            'dispatcher' => 'array|nullabel',
-            'dispatcher.id' => 'uuid|required_with:dispatcher',
-            'dispatcher.address_line_1' => 'required_with:dispatcher|max:100',
-            'dispatcher.address_line_2' => 'required_with:dispatcher|max:100',
-            'dispatcher.address_line_3' => 'max:100',
-            'dispatcher.country' => 'required_with:dispatcher|max:50',
-            'dispatcher.town' => 'required_with:dispatcher|max:50',
-            'dispatcher.postcode' => 'required_with:dispatcher|min:8|max:8',
+            'payer.postcode' => 'required_if:is_payer,3|min:8|max:8'
         ];
     }
 }

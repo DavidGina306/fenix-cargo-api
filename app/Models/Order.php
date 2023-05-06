@@ -78,6 +78,16 @@ class Order extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function addressPayer(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'payer_address_id');
+    }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function locale(): BelongsTo
     {
         return $this->belongsTo(Locale::class);

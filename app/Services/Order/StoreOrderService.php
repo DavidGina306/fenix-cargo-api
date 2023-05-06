@@ -45,7 +45,6 @@ class StoreOrderService
                     //recipient
                     'recipient_id' =>  $customerRecipient  ? $customerRecipient->id : null,
                     'recipient_name' =>  $customerRecipient  ? $customerRecipient->name :  $request['recipient_name'],
-                    'recipient_name' => $request['recipient_name'],
                     'recipient_search_for' => $request['recipient_search_for'],
                     'phone_recipient_search_for' => $request['phone_recipient_search_for'],
                     'recipient_address_id' => $addressRecipient->id,

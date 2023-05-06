@@ -24,6 +24,9 @@ class EditOrderResource extends JsonResource
             "sender_name" => $this->sender_name,
             "sender_search_for" => $this->sender_search_for,
             "phone_sender_search_for" => $this->phone_sender_search_for,
+            "recipient_name" => $this->recipient_name,
+            "recipient_search_for" => $this->recipient_search_for,
+            "phone_recipient_search_for" => $this->phone_recipient_search_for,
             "sender_id" => $this->sender_id,
             "recipient_name" => $this->recipient_name,
             "recipient_search_for" => $this->recipient_search_for,
@@ -59,7 +62,6 @@ class EditOrderResource extends JsonResource
                 "country" => $this->addressRecipient->country,
                 "state" => $this->addressRecipient->state
             ],
-            "dispatcher" => [],
             "number" => $this->number
         ];
     }

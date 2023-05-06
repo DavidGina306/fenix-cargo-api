@@ -27,7 +27,7 @@ class ListOrderWarningToEditResource extends JsonResource
                     "value" => $query->value,
                     "entry_date"=> Carbon::parse($query->entry_date)->format('d/m/Y'),
                     'timestamp' => Carbon::parse($query->entry_date),
-                    'files' => []
+                    'files' => $query->medias
                 ];
             })
         ];

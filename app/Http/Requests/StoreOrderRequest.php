@@ -54,7 +54,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'material' => 'required|max:100',
             'total' => 'required',
-            'barcode' => 'nullable|max:41',
+            'barcode' => 'nullable|max:44',
             'quantity' => 'required',
             'height' => '',
             'width' => '',

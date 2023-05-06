@@ -22,6 +22,7 @@ Route::group([
             Route::post('/', "PartnerController@store");
             Route::get('/', "PartnerController@index");
             Route::get('search-select', "PartnerController@searchToSelect");
+            Route::get('group/search-select', "PartnerController@groupSearchToSelect");
             Route::put('/{partner}', "PartnerController@update");
             Route::get('/{partner}', "PartnerController@get");
         });
@@ -133,7 +134,7 @@ Route::group([
             Route::get('movements/{order}', "OrderController@listMovement");
             Route::get('warnings/{order}', "OrderController@listWarnings");
             Route::post('/', "OrderController@store");
-            Route::post('/movement', "OrderController@setMovement");
+            Route::post('/movement', "OrderController@storeOrderMovement");
             Route::post('/update/movement', "OrderController@updateMovement");
 
             Route::post('/warning', "OrderController@storeOrderWarning");

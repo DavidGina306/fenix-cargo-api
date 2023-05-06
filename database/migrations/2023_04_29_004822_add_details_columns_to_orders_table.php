@@ -14,8 +14,6 @@ class AddDetailsColumnsToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->uuid('dispatcher_order_id')->nullable();
-            $table->foreign('dispatcher_order_id')->references('id')->on('dispatcher_orders');
             $table->uuid('quote_id')->nullable();
             $table->foreign('quote_id')->references('id')->on('quotes');
             $table->decimal('freight_value')->nullable();
@@ -34,7 +32,7 @@ class AddDetailsColumnsToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            //
+            $table->dropColumn('dispatcher_order_id');
         });
     }
 }

@@ -26,7 +26,7 @@ class StoreOrderWarningService
                     'order_id' => $order->id,
                     'partner_id' => $partner->id,
                     'entry_date' => isset($request['entry_date']) ? new Carbon($request['entry_date']) : Carbon::now(),
-                    'contact' => isset($request['contact']) ? $request['contact'] : "",
+                    'contact' => isset($request['contact']) ? $request['contact'] : isset($request['number']),
                     'value' => MoneyToDecimal::moneyToDecimal($request['value']),
                 ]
             );

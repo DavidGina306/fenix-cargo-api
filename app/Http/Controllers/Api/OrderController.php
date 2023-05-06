@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\DataTables\OrderDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderSingleItemRequest;
+use App\Http\Requests\StoreOrderMovementRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\StoreOrderWarningRequest;
 use App\Http\Requests\UpdatedOrderRequest;
@@ -13,6 +14,7 @@ use App\Services\DatatableService;
 use App\Services\Order\GetOrderService;
 use App\Services\Order\Movement\ListMovementOrderService;
 use App\Services\Order\Movement\ListOrderWarningService;
+use App\Services\Order\Movement\StoreOrderMovementService;
 use App\Services\Order\Movement\UpdateMovementService;
 use App\Services\Order\SearchToSelectStatusOrderService;
 use App\Services\Order\StoreOrderService;
@@ -21,6 +23,7 @@ use App\Services\Order\UpdateOrderService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -90,13 +93,13 @@ class OrderController extends Controller
         }
     }
 
-    public function update(UpdatedOrderRequest $request)
+    public function update(UpdatedOrderRequest $request, $orderId)
     {
         try {
             DB::beginTransaction();
-            $orderMovement =  UpdateOrderService::store($request->all());
+            $order =  UpdateOrderService::update($request->all(), $orderId);
             DB::commit();
-            return response($orderMovement->toArray(), 200);
+            return response($order->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
@@ -121,6 +124,19 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             $orderWarning =  StoreOrderWarningService::store($request->all());
+            DB::commit();
+            return response($orderWarning->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function storeOrderMovement(StoreOrderMovementRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $orderWarning =  StoreOrderMovementService::store($request->all());
             DB::commit();
             return response($orderWarning->toArray(), 200);
         } catch (Exception $e) {

@@ -21,6 +21,7 @@ class AddDetailsColumnsToOrdersTable extends Migration
             $table->string('obs')->nullable();
             $table->decimal('insurance_percentage')->nullable();
             $table->decimal('insurance_value')->nullable();
+            $table->string('is_payer')->nullable();
         });
     }
 

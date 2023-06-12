@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Partner;
+namespace App\Services\Invoice;
 
-use App\Models\Partner;
+use App\Models\Invoice;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class SearchToSelectPartnerService
+class SearchToSelectInvoiceService
 {
     public static function search($request)
     {
         try {
-            $response =  Partner::query();
+            $response =  Invoice::query();
             if ($search = $request->search) {
                 $response->where('name', 'like', "%$search%")->orWhere('id', 'like', "%$search%");
             }
@@ -26,7 +26,7 @@ class SearchToSelectPartnerService
     {
         try {
             Log::warning($request->profile);
-            $response =  Partner::query()->where('profile', 'like', "%$request->profile%");
+            $response =  Invoice::query()->where('profile', 'like', "%$request->profile%");
             if ($search = $request->search) {
                 $response->where('name', 'like', "%$search%");
             }

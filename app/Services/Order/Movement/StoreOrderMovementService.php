@@ -24,7 +24,7 @@ class StoreOrderMovementService
                 [
                     'status_id' => $status->id,
                     'order_id' => $order->id,
-                    'time' => $request['time'],
+                    'time' => Carbon::parse($request['time'])->format('H:i:s'),
                     'entry_date' => isset($request['entry_date']) ? new Carbon($request['entry_date']) : Carbon::now(),
                     'received_for' => $request['received_for'],
                     'doc_received_for' => $request['doc_received_for'],

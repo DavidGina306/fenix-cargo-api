@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ObjectModel;
 use App\Services\Cabinet\Object\PaginateObjectService;
+use App\Services\Cabinet\Object\SearchToSelectObjectService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -16,6 +17,15 @@ class ObjectController extends Controller
     {
         try {
             return PaginateObjectService::paginate($request);
+        } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function searchToSelect(Request $request)
+    {
+        try {
+            return response(SearchToSelectObjectService::search($request), 200);
         } catch (Exception $e) {
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }

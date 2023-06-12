@@ -10,16 +10,19 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\StoreOrderWarningRequest;
 use App\Http\Requests\UpdatedOrderRequest;
 use App\Http\Requests\UpdateMovementItemRequest;
+use App\Http\Requests\UpdateWaringOrderRequest;
 use App\Services\DatatableService;
 use App\Services\Order\GetOrderService;
 use App\Services\Order\Movement\ListMovementOrderService;
 use App\Services\Order\Movement\ListOrderWarningService;
 use App\Services\Order\Movement\StoreOrderMovementService;
 use App\Services\Order\Movement\UpdateMovementService;
+use App\Services\Order\SearchOrderByService;
 use App\Services\Order\SearchToSelectStatusOrderService;
 use App\Services\Order\StoreOrderService;
 use App\Services\Order\StoreOrderWarningService;
 use App\Services\Order\UpdateOrderService;
+use App\Services\Order\UpdateOrderWarningService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -93,6 +96,17 @@ class OrderController extends Controller
         }
     }
 
+    public function searchByNumber(Request $request)
+    {
+        try {
+            return response(SearchToSelectStatusOrderService::searchByNumber($request), 200);
+        } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+
+
     public function update(UpdatedOrderRequest $request, $orderId)
     {
         try {
@@ -111,6 +125,19 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             $orderMovement =  UpdateMovementService::update($request->all());
+            DB::commit();
+            return response($orderMovement->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function updateWarning(UpdateWaringOrderRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $orderMovement =  UpdateOrderWarningService::update($request->all());
             DB::commit();
             return response($orderMovement->toArray(), 200);
         } catch (Exception $e) {
@@ -153,6 +180,17 @@ class OrderController extends Controller
             $order =  GetOrderService::get($orderId);
             DB::commit();
             return response($order, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function searchOrderPaginate(Request $request)
+    {
+        try {
+            $order =  SearchOrderByService::searchOrderPaginate($request);
+            return $order;
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

@@ -61,6 +61,10 @@ Route::group([
             Route::get('search-select', "FeeTypeController@searchToSelect");
         });
 
+        Route::group(['prefix' => 'payment-types'], function () {
+            Route::get('search-select', "PaymentTypeController@searchToSelect");
+        });
+
         Route::group(['prefix' => 'fee-rules'], function () {
             Route::get('search-select', "FeeRuleController@searchToSelect");
         });
@@ -97,6 +101,15 @@ Route::group([
             Route::get('/{doc}', "DocTypeController@get");
         });
 
+
+        Route::group(['prefix' => 'invoices'], function () {
+            Route::get('search-select', "InvoiceController@searchToSelect");
+            Route::post('/', "InvoiceController@store");
+            Route::get('/', "InvoiceController@index");
+            Route::put('/{doc}', "InvoiceController@update");
+            Route::get('/{doc}', "InvoiceController@get");
+        });
+
         Route::group(['prefix' => 'cabinets'], function () {
             Route::get('/paginate', "CabinetController@paginate");
             Route::get('/', "CabinetController@index");
@@ -104,6 +117,7 @@ Route::group([
         });
 
         Route::group(['prefix' => 'objects'], function () {
+            Route::get('search-select', "ObjectController@searchToSelect");
             Route::get('/paginate', "ObjectController@paginate");
             Route::get('/paginate-create', "ObjectController@paginateCreate");
             Route::get('/print/{objectId}', "ObjectController@print");
@@ -131,6 +145,8 @@ Route::group([
 
         Route::group(['prefix' => 'orders'], function () {
             Route::get('search-select-status', "OrderController@searchToSelectStatus");
+            Route::get('search-select', "OrderController@searchByNumber");
+            Route::get('/paginate-create', "OrderController@searchOrderPaginate");
             Route::get('movements/{order}', "OrderController@listMovement");
             Route::get('warnings/{order}', "OrderController@listWarnings");
             Route::post('/', "OrderController@store");

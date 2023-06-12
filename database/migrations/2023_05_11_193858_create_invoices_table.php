@@ -20,14 +20,14 @@ class CreateInvoicesTable extends Migration
             $table->foreign('payer_address_id')->references('id')->on('addresses');
             $table->uuid('payer_id');
             $table->foreign('payer_id')->references('id')->on('customers');
-            $table->string("payment_type");
+            $table->string("type_invoice_id");
             $table->decimal("interest");
             $table->decimal("penalty");
             $table->decimal('discount');
             $table->decimal('value');
             $table->integer('quantity');
             $table->date("due_date");
-            $table->string("bank_id");
+            $table->uuid("bank_id");
             $table->foreign('bank_id')->references('id')->on('banks');
             $table->string("barcode")->nullable();
             $table->string("note")->nullable();

@@ -15,7 +15,7 @@ class CreatePaymentTypesTable extends Migration
     {
         Schema::create('payment_types', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('name');
+            $table->string('name');
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
         });

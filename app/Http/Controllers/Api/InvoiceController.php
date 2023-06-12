@@ -41,18 +41,18 @@ class InvoiceController extends Controller
     public function get($InvoiceId)
     {
         try {
-            $packingType =  GetInvoiceService::get($InvoiceId);
-            return response($packingType, 200);
+            $invoice =  GetInvoiceService::get($InvoiceId);
+            return response($invoice, 200);
         } catch (Exception $e) {
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }
 
-    public function update(UpdateInvoiceRequest $request, $packingTypeId)
+    public function update(UpdateInvoiceRequest $request, $invoiceId)
     {
         try {
             DB::beginTransaction();
-            $Id =  UpdateInvoiceService::update($request->all(), $packingTypeId);
+            $Id =  UpdateInvoiceService::update($request->all(), $invoiceId);
             DB::commit();
             return response($Id->toArray(), 201);
         } catch (Exception $e) {
@@ -65,9 +65,9 @@ class InvoiceController extends Controller
     {
         try {
             DB::beginTransaction();
-            $packingType =  StoreInvoiceService::store($request->all());
+            $invoice =  StoreInvoiceService::store($request->all());
             DB::commit();
-            return response($packingType->toArray(), 200);
+            return response($invoice->toArray(), 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

@@ -57,6 +57,7 @@ class StoreInvoiceRequest extends FormRequest
             'due_date' => 'date',
             'bank_id' => 'uuid|required',
             'barcode' => 'max:200',
+            'type_invoice_id' => 'required'
       ];
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentTypesTable extends Migration
+class AddColumnStatusIdToInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreatePaymentTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_types', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
-            $table->timestamps();
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->uuid("status_id");
+            $table->foreign('status_id')->references('id')->on('statuses');
         });
     }
 
@@ -28,6 +26,8 @@ class CreatePaymentTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_types');
+        Schema::table('invoices', function (Blueprint $table) {
+            //
+        });
     }
 }

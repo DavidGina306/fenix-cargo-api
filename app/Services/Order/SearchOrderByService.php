@@ -4,8 +4,8 @@ namespace App\Services\Order;
 
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Status;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 
 class SearchOrderByService
@@ -23,7 +23,7 @@ class SearchOrderByService
                 $response->orWhere('payer_id', 'like', "%$payerId%");
             }
 
-
+            $response->where('status_id', '<>', Status::query()->where('group', 'order')->where('letter', 'F')->first()->id);
             return OrderResource::collection($response->paginate($request->per_page ?? 10));
         } catch (\Exception $e) {
             Log::error($e->getMessage());

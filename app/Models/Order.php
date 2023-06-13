@@ -132,4 +132,10 @@ class Order extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function invoices()
+    {
+        return $this->belongsToMany(Invoice::class, 'invoice_order', 'order_id', 'invoice_id');
+    }
+
 }

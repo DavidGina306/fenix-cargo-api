@@ -14,12 +14,10 @@ class CreateInvoiceOrderTable extends Migration
     public function up()
     {
         Schema::create('invoice_order', function (Blueprint $table) {
-            $table->uuid('id');
             $table->uuid('invoice_id');
             $table->uuid('order_id');
             $table->foreign('invoice_id')->references('id')->on('invoices');
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->timestamps();
         });
     }
 

@@ -20,6 +20,10 @@ class StatusesSeeder extends Seeder
             ['name' => 'Entrega efetuada', 'group' => 'order', 'letter' => 'D'],
             ['name' => 'Saiu para coleta', 'group' => 'order', 'letter' => 'S'],
             ['name' => 'Saiu para entrega', 'group' => 'order', 'letter' => 'E'],
+            ['name' => 'Faturada', 'group' => 'order', 'letter' => 'F'],
+            ['name' => 'PAGO', 'group' => 'invoice', 'letter' => 'PG'],
+            ['name' => 'Pendente', 'group' => 'invoice', 'letter' => 'PE'],
+
         ];
 
         foreach ($data as $status) {

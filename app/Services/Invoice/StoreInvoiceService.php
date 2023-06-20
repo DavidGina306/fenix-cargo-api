@@ -40,6 +40,7 @@ class StoreInvoiceService
                     'note' => 'Observação',
                     'payer_id' => $payer->id,
                     'bank_id' => $bank->id,
+                    'status_id' => Status::query()->where('group', 'invoice')->where('letter', 'PE')->first()->id,
                     'payer_address_id' => $address->id,
                     'payment_type_id' => $paymentType->id
 

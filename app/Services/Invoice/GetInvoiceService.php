@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Log;
 
 class GetInvoiceService
 {
-    public static function get($InvoiceId)
+    public static function get($invoiceId)
     {
         try {
-            $Invoice = Invoice::query()->findOrFail($InvoiceId);
-            return new InvoiceResource($Invoice);
+            $invoice = Invoice::query()->findOrFail($invoiceId);
+            Log::info($invoice);
+            return new InvoiceResource($invoice);
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {
                 case 'App\Models\Invoice':

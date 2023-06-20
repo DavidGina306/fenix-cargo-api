@@ -106,8 +106,8 @@ Route::group([
             Route::get('search-select', "InvoiceController@searchToSelect");
             Route::post('/', "InvoiceController@store");
             Route::get('/', "InvoiceController@index");
-            Route::put('/{doc}', "InvoiceController@update");
-            Route::get('/{doc}', "InvoiceController@get");
+            Route::put('/{invoice}', "InvoiceController@update");
+            Route::get('/{invoice}', "InvoiceController@get");
         });
 
         Route::group(['prefix' => 'cabinets'], function () {

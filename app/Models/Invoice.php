@@ -31,4 +31,34 @@ class Invoice extends Model
     {
         return $this->belongsTo(Customer::class, 'payer_id');
     }
+
+    /**
+     * Get the customer that owns the Cabinet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'payer_address_id');
+    }
+
+    /**
+     * Get the bank that owns the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bank(): BelongsTo
+    {
+        return $this->belongsTo(Bank::class);
+    }
+
+    /**
+     * Get the paymentType that owns the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paymentType(): BelongsTo
+    {
+        return $this->belongsTo(PaymentType::class);
+    }
 }

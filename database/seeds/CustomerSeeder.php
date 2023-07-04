@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Address;
 use App\Models\Customer;
 use App\Models\CustomerAgent;
 use App\Models\Profile;
@@ -15,6 +16,17 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
+        $address = Address::query()->firstOrCreate(
+            [
+                'address_line_1' => 'address_line_1',
+                'address_line_2' => 'address_line_2',
+                'address_line_3' => 'address_line_3',
+                'town' => 'town',
+                'country' => 'Brasil',
+                'state' => 'PE',
+                'postcode' => '52060090'
+            ]
+        );
         $customer = Customer::query()->firstOrCreate(
             [
                 'name' => 'David Test',
@@ -22,10 +34,7 @@ class CustomerSeeder extends Seeder
                 'type' => 'F',
                 'gender' => 'M',
                 'document' => '08392990447',
-                'email' => "davidtest@gmail.com",
-                'email_2' => "gina@gmail.com",
-                'contact' => "92991531387",
-                'contact_2' => "92991531387"
+                "address_id" => $address->id
             ]
         );
         $dataUser = [

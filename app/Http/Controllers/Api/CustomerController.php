@@ -59,9 +59,7 @@ class CustomerController extends Controller
     public function get($customer)
     {
         try {
-            DB::beginTransaction();
             $customer =  GetCustomerService::get($customer);
-            DB::commit();
             return response($customer, 200);
         } catch (Exception $e) {
             DB::rollBack();

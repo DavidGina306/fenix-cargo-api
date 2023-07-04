@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePartnerRequest;
 use App\Http\Requests\UpdatePartnerRequest;
 use App\Services\DatatableService;
+use App\Services\Partner\ChangeStatusPartnerService;
 use App\Services\Partner\GetPartnerService;
 use App\Services\Partner\SearchToSelectPartnerService;
 use App\Services\Partner\StorePartnerService;
@@ -70,6 +71,17 @@ class PartnerController extends Controller
         try {
             return response(SearchToSelectPartnerService::search($request), 200);
         } catch (Exception $e) {
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function changeStatus($partner)
+    {
+        try {
+            $partner =  ChangeStatusPartnerService::changeStatus($partner);
+            return response($partner, 201);
+        } catch (Exception $e) {
+            DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }

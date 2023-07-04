@@ -22,9 +22,8 @@ class StoreAgentService
                         'name' => $value['name'],
                         'role' => $value['role'] ?? "",
                         'email' => $value['email'],
-                        'email_2' => $value['email_2'] ?? "",
                         'contact' => $value['contact'],
-                        'contact_2' => $value['contact_2'] ?? "",
+                        'departament' => $value['departament'] ?? "",
                         'partner_id' => $partner->id,
                         "user_id" => $user->id
                     ]));
@@ -35,9 +34,7 @@ class StoreAgentService
                     'name' => $request['name'],
                     'role' => $request['role'] ?? "",
                     'email' => $request['email'],
-                    'email_2' => $request['email_2'] ?? "",
                     'contact' => $request['contact'],
-                    'contact_2' => $request['contact_2'] ?? "",
                     'partner_id' => $partner->id,
                     "user_id" => $user->id
                 ]);

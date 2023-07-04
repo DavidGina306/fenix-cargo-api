@@ -17,13 +17,12 @@ class CreateCustomersTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('role');
-            $table->string('email');
             $table->enum('type', ['F', 'J']);
             $table->string('document');
-            $table->string('email_2')->nullable();
-            $table->string('contact');
+            $table->string('document_2')->nullable();
+            $table->uuid('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->enum('gender', ['F', 'M', 'O'])->comment('F:female;M:male;O:Others')->nullable();
-            $table->string('contact_2')->nullable();
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->timestamps();
         });

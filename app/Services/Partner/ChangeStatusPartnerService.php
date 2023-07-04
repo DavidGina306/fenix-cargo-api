@@ -2,7 +2,7 @@
 
 namespace App\Services\Partner;
 
-use App\Http\Resources\partnerResource;
+use App\Http\Resources\PartnerResource;
 use App\Models\Partner;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -38,9 +38,11 @@ class ChangeStatusPartnerService
     {
         try {
             foreach ($partner->agents as $agent) {
-                $agent->user->update([
-                    'status' => $status
-                ]);
+                if ($agent->user) {
+                    $agent->user->update([
+                        'status' => $status
+                    ]);
+                }
                 $agent->update([
                     'status' => $status
                 ]);

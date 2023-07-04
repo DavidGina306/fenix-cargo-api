@@ -6,6 +6,7 @@ use App\Helpers\GenderHelper;
 use App\Models\Customer;
 use App\Models\CustomerAgent;
 use App\Models\Profile;
+use App\Services\Address\UpdateAddressService;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,12 +25,10 @@ class UpdateCustomerService
                     'type' => $request['type'],
                     'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
-                    'email' => $request['email'],
-                    'email_2' => $request['email_2'] ?? "",
-                    'contact' => $request['contact'],
-                    'contact_2' => $request['contact_2'] ?? ""
+                    'document_2' => $request['document_2'] ?? "",
                 ]
             );
+            UpdateAddressService::update($request['address'], $customer->address->id);
             self::updateAgents($request['agents'], $customer);
             return $customer->fresh();
         } catch (ModelNotFoundException $e) {
@@ -56,6 +55,7 @@ class UpdateCustomerService
                     $dataAgent->update([
                         'email' => $agent['email'],
                         'name' => $agent['name'],
+                        'departament' => $agent['departament'],
                         'contact' => $agent['contact']
                     ]);
                 } else {
@@ -72,6 +72,7 @@ class UpdateCustomerService
                             'email' => $agent['email'],
                             'name' => $agent['name'],
                             'contact' => $agent['contact'],
+                            'departament' => $agent['departament'],
                             'user_id' => $user->id
                         ]
                     );

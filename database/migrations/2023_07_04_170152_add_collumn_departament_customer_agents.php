@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnStatusIdToInvoicesTable extends Migration
+class AddCollumnDepartamentCustomerAgents extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddColumnStatusIdToInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->uuid("status_id");
-            $table->foreign('status_id')->references('id')->on('statuses');
+        Schema::table('customer_agents', function (Blueprint $table) {
+            $table->string('departament')->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ class AddColumnStatusIdToInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('status_id');
+        Schema::table('customer_agents', function (Blueprint $table) {
+            $table->dropColumn('departament');
         });
     }
 }

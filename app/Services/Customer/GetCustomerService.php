@@ -13,6 +13,7 @@ class GetCustomerService
     public static function get($customerId)
     {
         try {
+            Log::alert("customer ". $customerId);
             $customer = Customer::query()->findOrFail($customerId);
             return new CustomerResource($customer);
         } catch (ModelNotFoundException $e) {

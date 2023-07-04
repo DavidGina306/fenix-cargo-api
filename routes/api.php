@@ -25,6 +25,8 @@ Route::group([
             Route::get('group/search-select', "PartnerController@groupSearchToSelect");
             Route::put('/{partner}', "PartnerController@update");
             Route::get('/{partner}', "PartnerController@get");
+            Route::put('/{partner}/change-status', "PartnerController@changeStatus");
+
         });
 
         Route::group(['prefix' => 'customers'], function () {

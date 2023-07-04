@@ -6,6 +6,7 @@ use App\Helpers\GenderHelper;
 use App\Models\Customer;
 use App\Models\CustomerAgent;
 use App\Models\Profile;
+use App\Services\Address\StoreAddressService;
 use App\Services\User\StoreUserService;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +16,7 @@ class StoreCustomerService
     public static function store($request)
     {
         try {
-
+            $address = StoreAddressService::store($request['address']);
             $customer = Customer::create(
                 [
                     'name' => $request['name'],
@@ -23,10 +24,8 @@ class StoreCustomerService
                     'type' => $request['type'],
                     'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
-                    'email' => $request['email'],
-                    'email_2' => $request['email_2'] ?? "",
-                    'contact' => $request['contact'],
-                    'contact_2' => $request['contact_2'] ?? ""
+                    'document_2' => $request['document_2'],
+                    'address_id' => $address->id
                 ]
             );
             self::storeAgents($request['agents'], $customer);
@@ -50,6 +49,7 @@ class StoreCustomerService
             CustomerAgent::query()->firstOrCreate([
                 'name' => $agent['name'],
                 'email' => $agent['email'],
+                'departament' => $agent['departament'],
                 'contact' => $agent['contact'],
                 'user_id' => $user->id,
                 'role' => $request['role'] ?? "",

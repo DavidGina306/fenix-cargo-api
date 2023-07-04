@@ -2,6 +2,7 @@
 
 namespace App\Services\Partner;
 
+use App\Helpers\GenderHelper;
 use App\Models\Partner;
 use App\Models\PartnerAgent;
 use App\Models\Profile;
@@ -21,11 +22,9 @@ class UpdatePartnerService
                 [
                     'name' => $request['name'],
                     'type' => $request['type'],
-                    'gender' => $request['gender'],
+                    'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
-                    'email' => $request['email'],
-                    'email_2' => $request['email_2'] ?? "",
-                    'contact' => $request['contact']
+                    'document_2' => $request['document_2']
                 ]
             );
             UpdateAddressService::update($request['address'], $partner->address->id);
@@ -55,6 +54,7 @@ class UpdatePartnerService
                     $dataAgent->update([
                         'email' => $agent['email'],
                         'name' => $agent['name'],
+                        'departament' => isset($agent['departament']) ? $agent['departament'] : "" ,
                         'contact' => $agent['contact']
                     ]);
                 } else {
@@ -71,6 +71,7 @@ class UpdatePartnerService
                             'email' => $agent['email'],
                             'name' => $agent['name'],
                             'contact' => $agent['contact'],
+                            'departament' => isset($agent['departament']) ? $agent['departament'] : "" ,
                             'user_id' => $user->id
                         ]
                     );

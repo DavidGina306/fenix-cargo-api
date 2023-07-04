@@ -19,6 +19,18 @@ class StoreCustomerRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'address' => array_merge(
+                $this->address,
+                [
+                    'postcode' => preg_replace('/[^0-9]/', '', $this->address['postcode'])
+                ]
+            )
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,16 +40,14 @@ class StoreCustomerRequest extends FormRequest
     {
         return [
             'name' => 'required|max:200',
-            'document' => 'required|max:100',
+            'document' => 'nullable|max:100',
+            'document_2' => 'nullable|max:200',
             'role' => 'max:100',
-            'type' => 'required',
-            'gender' => 'nullable',
-            'email' => 'required|max:200|email',
-            'email_2' => 'email|nullable',
-            'contact' => 'required|max:50',
-            'contact_2' => 'max:50|nullable',
+            'type' => 'required|in:J,F',
+            'gender' => 'required|in:Masculino,Outro,Feminino',
             'agents' => 'array|required',
-            'agents.*.name' => 'required|max:100',
+            'agents.*.departament' => 'nullable|max:200',
+            'agents.*.name' => 'required|max:200',
             'agents.*.email' => 'max:200|email|unique:users,email',
             'agents.*.contact' => 'required|max:50',
         ];

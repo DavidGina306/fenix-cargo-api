@@ -17,12 +17,6 @@ class AddColumnToPartnersTable extends Migration
             $table->enum('type', ['F', 'J']);
             $table->enum('profile', ['C', 'M', 'P']);
             $table->enum('gender', ['F', 'M', 'O'])->nullable();
-            $table->string('email');
-            $table->string('email_2');
-            $table->string('contact');
-            $table->string('contact_phone');
-            $table->string('contact_2')->nullable();
-            $table->string('contact_2_phone')->nullable();
         });
     }
 

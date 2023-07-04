@@ -24,8 +24,6 @@ class StorePartnerRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'email' => Str::lower($this->email),
-            'contact' => preg_replace('/[^0-9]/', '', $this->contact),
             'address' => array_merge(
                 $this->address,
                 [
@@ -46,11 +44,8 @@ class StorePartnerRequest extends FormRequest
             'name' => 'required|max:200',
             'document' => 'required|max:100',
             'role' => 'max:100',
-            'type' => 'required',
-            'gender' => 'nullable',
-            'email' => 'required|max:200|email',
-            'email_2' => 'email|nullable',
-            'contact' => 'required|max:50',
+            'type' => 'required|in:J,F',
+            'gender' => 'nullable|in:Masculino,Outro,Feminino',
             'address' => 'array|required',
             'address.address_line_1' => 'required|max:100',
             'address.address_line_2' => 'max:100',
@@ -62,6 +57,8 @@ class StorePartnerRequest extends FormRequest
             'agents.*.name' => 'required|max:100',
             'agents.*.email' => 'max:200|email',
             'agents.*.contact' => 'required|max:15',
+            'agents.*.departament' => 'max:200|nullable',
+
         ];
     }
 }

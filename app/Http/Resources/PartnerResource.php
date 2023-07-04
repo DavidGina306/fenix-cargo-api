@@ -24,17 +24,13 @@ class PartnerResource extends JsonResource
             "created_at" => $this->created_at,
             "gender" => $this->gender,
             "type" => $this->type,
-            "email" => $this->email,
-            "email_2" => $this->email_2,
-            "contact" => $this->contact,
-            "contact_phone" => $this->contact_phone,
-            "contact_2_phone" => $this->contact_2_phone,
             "agents" => $this->agents->map(function ($query) {
                 return [
                     "id" => $query->id,
                     "name" => $query->name,
                     "email" => $query->email,
-                    "contact" => $query->contact
+                    "contact" => $query->contact,
+                    "departament" => $query->departament
                 ];
             }),
             "bank_data" =>

@@ -23,12 +23,6 @@ class StorePartnerService
                     'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
                     'document_2' => $request['document_2'] ?? "",
-                    'email' => $request['email'],
-                    'email_2' => $request['email_2'] ?? "",
-                    'contact' => $request['contact'],
-                    'contact_phone' => $request['contact_phone'],
-                    'contact_2' => $request['contact_2'],
-                    'contact_2_phone' => $request['contact_2_phone'],
                     'address_id' => $address->id
                 ]
             );

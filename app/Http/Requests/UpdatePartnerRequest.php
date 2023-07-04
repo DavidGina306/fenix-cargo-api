@@ -23,9 +23,6 @@ class UpdatePartnerRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'email' => Str::lower($this->email),
-            'contact' => preg_replace('/[^0-9]/', '', $this->contact),
-            'contact_2' => preg_replace('/[^0-9]/', '', $this->contact_2),
             'address' => array_merge(
                 $this->address,
                 [
@@ -48,14 +45,11 @@ class UpdatePartnerRequest extends FormRequest
             'role' => 'max:100',
             'type' => 'required',
             'gender' => 'nullable',
-            'email' => 'required|max:200|email',
-            'email_2' => 'email|nullable',
-            'contact' => 'required|max:50',
-            'contact_2' => 'max:100|nullable',
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',
             'agents.*.email' => 'max:200|email',
             'agents.*.contact' => 'required|max:50',
+            'agents.*.departament' => 'required|max:50',
             'agents.*.id' => 'uuid|nullable',
             'address' => 'array|required',
             'address.address_line_1' => 'required|max:100',

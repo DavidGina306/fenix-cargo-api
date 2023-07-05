@@ -44,7 +44,7 @@ class StoreCustomerRequest extends FormRequest
             'document_2' => 'nullable|max:200',
             'role' => 'max:100',
             'type' => 'required|in:J,F',
-            'gender' => 'required|in:Masculino,Outro,Feminino',
+            'gender' => 'nullable|in:Masculino,Outro,Feminino',
             'agents' => 'array|required',
             'agents.*.departament' => 'nullable|max:200',
             'agents.*.name' => 'required|max:200',

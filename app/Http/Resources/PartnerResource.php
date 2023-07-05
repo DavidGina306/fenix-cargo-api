@@ -41,6 +41,7 @@ class PartnerResource extends JsonResource
                 "pix" =>  $this->bankData->pix,
                 "beneficiaries" =>  $this->bankData->beneficiaries,
                 "bank_id" =>  $this->bankData->bank_id,
+                "bills" => $this->bankData->bills ? true : false
             ],
             "address" => [
                 "id" => $this->address->id,

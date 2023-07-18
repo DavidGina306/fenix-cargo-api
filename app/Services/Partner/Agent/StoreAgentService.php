@@ -6,6 +6,7 @@ use App\Models\Partner;
 use App\Models\PartnerAgent;
 use App\Models\Profile;
 use App\Services\User\StoreUserService;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -16,8 +17,12 @@ class StoreAgentService
         try {
             $agents = [];
             if (isset($request['agents'])) {
+                Log::info($request['agents']);
                 foreach ($request['agents'] as $value) {
-                    $user = self::storeUser($value);
+                    $user = User::query()->whereEmail($value['email'])->first();
+                    if (!$user) {
+                        $user = self::storeUser($value);
+                    }
                     array_push($agents, PartnerAgent::query()->create([
                         'name' => $value['name'],
                         'role' => $value['role'] ?? "",
@@ -29,7 +34,10 @@ class StoreAgentService
                     ]));
                 }
             } else {
-                $user = self::storeUser($request);
+                $user = User::query()->whereEmail($request['email'])->first();
+                if (!$user) {
+                    $user = self::storeUser($request);
+                }
                 $agents[] = PartnerAgent::query()->create([
                     'name' => $request['name'],
                     'role' => $request['role'] ?? "",

@@ -17,9 +17,9 @@ class RelationDataTable extends DataTable
                     'status' => $query->status
                 ];
             })->editColumn('destiny', function ($query) {
-                return $query->destiny_initial . ' / ' . $query->destiny_final . ' - ' .  $query->destiny_state;
+                return $query->destiny_1 . ' / ' . $query->destiny_2 . ' - ' .  $query->destiny_state;
             })->filterColumn('destiny', function ($query, $keyword) {
-                $query->where('destiny_initial', 'like', $keyword)->orWhere('destiny_final', 'like', $keyword);
+                $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
             })->editColumn('origin', function ($query) {
                 return $query->origin_initial . ' - ' . $query->origin_state;
             })->filterColumn('origin', function ($query, $keyword) {

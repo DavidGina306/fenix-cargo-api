@@ -8,6 +8,7 @@ use App\Models\CustomerAgent;
 use App\Models\Profile;
 use App\Services\Address\StoreAddressService;
 use App\Services\User\StoreUserService;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -24,7 +25,7 @@ class StoreCustomerService
                     'type' => $request['type'],
                     'gender' => isset($request['gender']) ? GenderHelper::getGenderValue($request['gender']) : null,
                     'document' => $request['document'],
-                    'document_2' => $request['document_2'],
+                    'document_2' => $request['document_2'] ?? "",
                     'address_id' => $address->id
                 ]
             );
@@ -45,7 +46,10 @@ class StoreCustomerService
                 'password' => "Abcd@1234",
                 'profile_id' => Profile::query()->whereName('agent_customer')->first()->id
             ];
-            $user = StoreUserService::store($dataUser);
+            $user = User::query()->whereEmail($dataUser['email'])->first();
+            if(!$user) {
+                $user = StoreUserService::store($dataUser);
+            }
             CustomerAgent::query()->firstOrCreate([
                 'name' => $agent['name'],
                 'email' => $agent['email'],

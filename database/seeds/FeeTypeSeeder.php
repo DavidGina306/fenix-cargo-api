@@ -14,16 +14,16 @@ class FeeTypeSeeder extends Seeder
     {
         $feeTypes = [
             [
-                'name' => 'Urgente 24h'
+                'name' => 'Aéreo Urgente'
             ],
             [
-                'name' => 'Comum'
+                'name' => 'Aéreo Convencional'
             ],
             [
-                'name' => 'Caminhão exclusivo'
+                'name' => 'Rodoviário'
             ],
             [
-                'name' => 'Tabela de parceiro'
+                'name' => 'Caminhão Exclusivo'
             ]
         ];
 

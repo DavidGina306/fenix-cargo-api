@@ -48,8 +48,23 @@ class StoreCustomerRequest extends FormRequest
             'agents' => 'array|required',
             'agents.*.departament' => 'nullable|max:200',
             'agents.*.name' => 'required|max:200',
-            'agents.*.email' => 'max:200|email|unique:users,email',
+            'agents.*.email' => 'max:200|email',
             'agents.*.contact' => 'required|max:50',
+            'address.address_line_1' => 'required|max:100',
+            'address.address_line_2' => 'max:100',
+            'address.address_line_3' => 'max:100',
+            'address.country' => 'required|max:50',
+            'address.town' => 'max:50',
+            'address.postcode' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('address.country') === 'Brasil') {
+                        if (!preg_match('/^\d{8}$/', $value)) {
+                            $fail('O campo CEP deve conter 8 dígitos numéricos.');
+                        }
+                    }
+                },
+            ],
         ];
     }
 }

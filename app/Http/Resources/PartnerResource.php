@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Country;
+use Illuminate\Support\Optional;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PartnerResource extends JsonResource
@@ -14,6 +16,7 @@ class PartnerResource extends JsonResource
      */
     public function toArray($request)
     {
+        $bankData = $this->bankData;
         return [
             "name" => $this->name,
             "document" => $this->document,
@@ -33,16 +36,6 @@ class PartnerResource extends JsonResource
                     "departament" => $query->departament
                 ];
             }),
-            "bank_data" =>
-            [
-                "id" =>  $this->bankData->id,
-                "agency" =>  $this->bankData->agency,
-                "checking_account" =>  $this->bankData->checking_account,
-                "pix" =>  $this->bankData->pix,
-                "beneficiaries" =>  $this->bankData->beneficiaries,
-                "bank_id" =>  $this->bankData->bank_id,
-                "bills" => $this->bankData->bills ? true : false
-            ],
             "address" => [
                 "id" => $this->address->id,
                 "address_line_1" => $this->address->address_line_1,
@@ -50,8 +43,17 @@ class PartnerResource extends JsonResource
                 "address_line_3" => $this->address->address_line_3,
                 "postcode" => $this->address->postcode,
                 "town" => $this->address->town,
-                "country" => $this->address->country,
+                "country" => Country::whereNome($this->address->country)->first()->id ?? "Brasil",
                 "state" => $this->address->state
+            ],
+            "bank_data" => [
+                "id" => $bankData->id ?? null,
+                "agency" => $bankData->agency ?? null,
+                "checking_account" => $bankData->checking_account ?? null,
+                "pix" => $bankData->pix ?? null,
+                "beneficiaries" => $bankData->beneficiaries ?? null,
+                "bank_id" => $bankData->bank_id ?? null,
+                "bills" => isset($bankData->bills) ? true : false
             ]
         ];
     }

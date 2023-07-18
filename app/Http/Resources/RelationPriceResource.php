@@ -6,40 +6,31 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RelationPriceResource extends JsonResource
 {
-      /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
     public function toArray($request)
     {
         return [
-            "deadline_type" => $this->deadline_type,
-            "deadline_initial" => $this->deadline_initial,
-            "id" => $this->id,
-            "weight_final" => $this->weight_final,
-            "deadline_final" => $this->deadline_final,
-            "destiny_type" => $this->destiny_type,
-            "destiny_initial" => $this->destiny_initial,
-            "destiny_final" => $this->destiny_final,
-            "destiny_state" => $this->destiny_state,
-            "origin_type" => $this->origin_type,
-            "origin_initial" => $this->origin_initial,
-            "origin_state" => $this->origin_state,
-            "relationPriceDetails" => $this->relationPriceDetails->map(function($query)  {
-                return [
-                    "id" => $query->id,
-                    "value" => $query->value,
-                    "weight_initial"=> $query->weight_initial,
-                    "weight_final" => $query->weight_final,
-                    'currency' => $query->currency()->select('id', 'name')->get(),
-                    'feeRule'=> $query->feeRule()->select('id', 'name')->get()
-                ];
-            }),
-            "partner" => [
-                $this->partner()->select('name', 'id')->get()
-            ]
+            'id' => $this->id,
+            'number' => $this->number,
+            'deadline_initial' => $this->deadline_initial,
+            'deadline_final' => $this->deadline_final,
+            'destiny_country' => $this->destiny_country,
+            'destiny_1' => $this->destiny_1,
+            'destiny_2' => $this->destiny_2,
+            'origin_country' => $this->origin_country,
+            'origin_state' => $this->origin_state,
+            'origin_city' => $this->origin_city,
+            'value' => $this->value,
+            'weight_initial' => $this->weight_initial,
+            'weight_final' => $this->weight_final,
+            'local_type' => $this->local_type,
+            'status' => $this->status,
+            'partner_id' => $this->partner_id,
+            'fee_type_id' => $this->fee_type_id,
+            'fee_rule_id' => $this->fee_rule_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deadline_type' => $this->deadline_type,
+            'type' => $this->type,
         ];
     }
 }

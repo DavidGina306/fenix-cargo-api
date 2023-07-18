@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jamesh\Uuid\HasUuid;
 
 class RelationPrice extends Model
@@ -34,12 +33,12 @@ class RelationPrice extends Model
     }
 
     /**
-     * Get all of the relationPrices for the RelationPrice
+     * Get the feeRule that owns the RelationPrice
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function relationPriceDetails(): HasMany
+    public function feeRule(): BelongsTo
     {
-        return $this->hasMany(RelationPriceDetail::class);
+        return $this->belongsTo(FeeRule::class);
     }
 }

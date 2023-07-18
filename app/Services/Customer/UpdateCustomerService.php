@@ -8,6 +8,7 @@ use App\Models\CustomerAgent;
 use App\Models\Profile;
 use App\Services\Address\UpdateAddressService;
 use App\Services\User\StoreUserService;
+use App\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -66,7 +67,10 @@ class UpdateCustomerService
                         'password' => "Abcd@1234",
                         'profile_id' => Profile::query()->whereName('agent_customer')->first()->id
                     ];
-                    $user = StoreUserService::store($dataUser);
+                    $user = User::query()->whereEmail($dataUser['email'])->first();
+                    if(!$user) {
+                        $user = StoreUserService::store($dataUser);
+                    }
                     $dataAgent = $customer->agents()->create(
                         [
                             'email' => $agent['email'],

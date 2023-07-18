@@ -4,19 +4,18 @@ namespace App\Services\Partner\Bank;
 
 use App\Models\Bank;
 use App\Models\Partner;
-use App\Models\PartnerDetailBank;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 
-class StoreBankDataService
+class UpdateBankDataService
 {
-    public static function store(array $request, Partner $partner)
+    public static function update(array $request, Partner $partner)
     {
         try {
-            if($request['bank_id']) {
+            if ($partner->bankData) {
                 $bank = Bank::query()->findOrFail($request['bank_id']);
-                $partberDetailBank = PartnerDetailBank::query()->create([
+                $partner->bankData->update([
                     'agency' => $request['agency'],
                     'checking_account' => $request['checking_account'],
                     'beneficiaries' => $request['beneficiaries'],
@@ -24,7 +23,18 @@ class StoreBankDataService
                     'partner_id' => $partner->id,
                     'bank_id' => $bank->id,
                 ]);
-                return $partberDetailBank;
+            } else {
+                if ($request['bank_id']) {
+                    $bank = Bank::query()->findOrFail($request['bank_id']);
+                    $partner->bankData()->create([
+                        'agency' => $request['agency'],
+                        'checking_account' => $request['checking_account'],
+                        'beneficiaries' => $request['beneficiaries'],
+                        'pix' => $request['pix'],
+                        'partner_id' => $partner->id,
+                        'bank_id' => $bank->id
+                    ]);
+                }
             }
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {

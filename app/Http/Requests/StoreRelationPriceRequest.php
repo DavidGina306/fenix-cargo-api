@@ -28,15 +28,13 @@ class StoreRelationPriceRequest extends FormRequest
     {
         return [
             'partner_id' => 'uuid|nullable',
-            'destiny_type' => 'required',
-            'destiny_initial' => 'required',
-            'destiny_final' => 'max:100|nullable',
-            'destiny_state' => 'required',
-            'origin_type' => 'required',
-            'origin_initial' => 'required',
-            'origin_state' => 'required',
+            'destiny_1' => 'required|max:100',
+            'destiny_2' => 'required|max:100',
+            'destiny_country' => 'nullable|uuid',
+            'origin_country' => 'required|uuid',
             'deadline_type' => 'required',
             'deadline_initial' => 'required',
+            'destiny_country' => 'uuid|nullable',
             'deadline_final' => 'required',
             'rule_types' => 'array|required',
             'rule_types.*.fee_rule_id' => 'required|uuid',
@@ -44,7 +42,6 @@ class StoreRelationPriceRequest extends FormRequest
             'rule_types.*.value' => 'required',
             'rule_types.*.weight_initial' => 'required',
             'rule_types.*.weight_final' => 'nullable',
-
         ];
     }
 }

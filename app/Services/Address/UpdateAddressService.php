@@ -3,6 +3,7 @@
 namespace App\Services\Address;
 
 use App\Models\Address;
+use App\Models\Country;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -12,6 +13,12 @@ class UpdateAddressService
     public static function update(array $request, string $addresId)
     {
         try {
+            $country = Country::query()->where("id",$request['country'])->orWhere('nome', 'like', "%{$request['country']}%")->first();
+            if ($country) {
+                $countryName = $country->nome;
+            } else {
+                $countryName = $request['country'];
+            }
             $address = Address::query()->findOrFail($addresId);
             $address->update(
                 [
@@ -21,7 +28,7 @@ class UpdateAddressService
                     'address_line_3' => $request['address_line_3'],
                     'town' => $request['town'],
                     'state' => $request['state'],
-                    'country' => $request['country'],
+                    'country' => $countryName,
                 ]
             );
             return $address->fresh();

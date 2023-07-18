@@ -41,6 +41,7 @@ Route::group([
         Route::group(['prefix' => 'relations'], function () {
             Route::post('/', "RelationPriceController@store");
             Route::get('/{relation}', "RelationPriceController@get");
+            Route::get('by-type/{type}', "RelationPriceController@searchByType");
             Route::get('/', "RelationPriceController@index");
         });
 

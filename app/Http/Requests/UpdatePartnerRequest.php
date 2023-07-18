@@ -56,8 +56,16 @@ class UpdatePartnerRequest extends FormRequest
             'address.address_line_2' => 'max:100',
             'address.address_line_3' => 'max:100',
             'address.country' => 'required|max:50',
-            'address.town' => 'required|max:50',
-            'address.postcode' => 'required|min:8|max:8',
-        ];
+            'address.town' => 'max:50',
+            'address.postcode' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('address.country') === 'Brasil') {
+                        if (!preg_match('/^\d{8}$/', $value)) {
+                            $fail('O campo CEP deve conter 8 dígitos numéricos.');
+                        }
+                    }
+                },
+            ],        ];
     }
 }

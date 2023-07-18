@@ -7,7 +7,9 @@ use App\Models\Partner;
 use App\Models\PartnerAgent;
 use App\Models\Profile;
 use App\Services\Address\UpdateAddressService;
+use App\Services\Partner\Bank\UpdateBankDataService;
 use App\Services\User\StoreUserService;
+use App\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
@@ -29,6 +31,7 @@ class UpdatePartnerService
             );
             UpdateAddressService::update($request['address'], $partner->address->id);
             self::updateAgents($request['agents'], $partner);
+            UpdateBankDataService::update( $request['bank_data'], $partner);
             return $partner->fresh();
         } catch (ModelNotFoundException $e) {
             switch ($e->getModel()) {
@@ -65,7 +68,10 @@ class UpdatePartnerService
                         'password' => "Abcd@1234",
                         'profile_id' => Profile::query()->whereName('agent_partner')->first()->id
                     ];
-                    $user = StoreUserService::store($dataUser);
+                    $user = User::query()->whereEmail($dataUser['email'])->first();
+                    if(!$user) {
+                        $user = StoreUserService::store($dataUser);
+                    }
                     $dataAgent = $partner->agents()->create(
                         [
                             'email' => $agent['email'],

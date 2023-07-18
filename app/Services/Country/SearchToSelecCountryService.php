@@ -15,7 +15,7 @@ class SearchToSelecCountryService
             if ($search = $request->search) {
                 $response->where('nome', 'like', "%$search%")->orWhere('id', 'like', "%$search%");
             }
-            return $response->whereStatus('E')->select(['id as code', 'nome as label'])->get();
+            return $response->select(['id as code', 'nome as label'])->get();
         } catch (Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to get Country', 500);

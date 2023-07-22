@@ -68,6 +68,17 @@ class StorePartnerRequest extends FormRequest
             'agents.*.email' => 'max:200|email',
             'agents.*.contact' => 'required|max:15',
             'agents.*.departament' => 'max:200|nullable',
+            'bank_data' => 'array|nullable',
+            'bank_data.agency' => 'nullable|max:50|required_with:bank_data.checking_account',
+            'bank_data.checking_account' => 'required_with:bank_data.agency',
+            'bank_data.bank_id' => 'required_with:bank_data.checking_account'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'agents.*.name' => 'nome do agente',
         ];
     }
 }

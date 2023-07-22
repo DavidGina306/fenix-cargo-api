@@ -12,10 +12,7 @@ trait ValidationErrorTrait
     {
         $errors = [];
         foreach ($validator->errors()->toArray() as $key => $value) {
-            $keyName = explode('.', $key);
-            if (!isset($errors[$keyName[0]])) {
-                $errors[$keyName[0]] = $value[0];
-            }
+            $errors[$key] = $value[0];
         }
 
         throw new HttpResponseException(response()->json($errors, 422));

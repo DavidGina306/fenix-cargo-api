@@ -39,7 +39,7 @@ class StoreRelationPriceService
                     'number' => substr(str_shuffle(time() . mt_rand(0, 999) . md5(time() . mt_rand(0, 999))), 0, 16),
                     'destiny_1' => $request['destiny_1'],
                     'destiny_2' => $request['destiny_2'],
-                    'type' => $request['type'] == 'P' ? RelationPriceType::PATERN : $request['type'] == 'C' ? RelationPriceType::COMPANY : RelationPriceType::FENIX,
+                    'type' => $request['type'] == 'P' ? RelationPriceType::PARTNER : $request['type'] == 'C' ? RelationPriceType::COMPANY : RelationPriceType::FENIX,
                     "destiny_country"=> GetCountryService::searchById($request['destiny_country'])->id,
                     "local_type" => $request['local_type'] ?? false,
                     'origin_city' => $request['origin_city'],

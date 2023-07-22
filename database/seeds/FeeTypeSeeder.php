@@ -24,6 +24,9 @@ class FeeTypeSeeder extends Seeder
             ],
             [
                 'name' => 'Caminhão Exclusivo'
+            ],
+            [
+                'name' => 'Rota CEP'
             ]
         ];
 

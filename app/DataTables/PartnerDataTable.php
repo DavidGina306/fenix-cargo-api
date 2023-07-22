@@ -3,9 +3,6 @@
 namespace App\DataTables;
 
 use App\Models\Partner;
-use App\Models\Product;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Services\DataTable;
 
 class PartnerDataTable extends DataTable

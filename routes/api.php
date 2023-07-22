@@ -43,6 +43,12 @@ Route::group([
             Route::get('/{relation}', "RelationPriceController@get");
             Route::get('by-type/{type}', "RelationPriceController@searchByType");
             Route::get('/', "RelationPriceController@index");
+            Route::group(['prefix' => 'datatable'], function() {
+                Route::get('/company', "RelationDataTableController@getCompanyDataTable");
+                Route::get('/fenix', "RelationDataTableController@getFenixDataTable");
+                Route::get('/partner', "RelationDataTableController@getPatnerDataTable");
+
+            });
         });
 
         Route::group(['prefix' => 'quotes'], function () {

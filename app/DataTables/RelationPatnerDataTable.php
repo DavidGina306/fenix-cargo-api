@@ -2,11 +2,12 @@
 
 namespace App\DataTables;
 
+use App\Enums\RelationPriceType;
 use App\Models\Country;
 use App\Models\RelationPrice;
 use Yajra\DataTables\Services\DataTable;
 
-class RelationDataTable extends DataTable
+class RelationPatnerDataTable extends DataTable
 {
     public function dataTable($query)
     {
@@ -18,32 +19,28 @@ class RelationDataTable extends DataTable
                     'status' => $query->status
                 ];
             })->editColumn('destiny', function ($query) {
-                return $query->destiny_1 . ' / ' . $query->destiny_2 . ' - ' .  Country::find($query->destiny_country)->nome;
+                return $query->destiny_1 . ' / ' . $query->destiny_2;
             })->filterColumn('destiny', function ($query, $keyword) {
                 $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
             })->editColumn('origin', function ($query) {
                 return $query->origin_city . ' - ' . $query->origin_state;
             })->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
-            })->editColumn('fee_type', function ($query) {
-                return $query->feeType->name ?? "";
-            })->filterColumn('fee_type', function ($query, $keyword) {
-                $query->whereHas('feeType',  function ($fee) use ($keyword) {
-                    $fee->where('name', 'like', $keyword);
-                });
             })->editColumn('partner', function ($query) {
                 return $query->partner->name ?? "";
             })->filterColumn('partner', function ($query, $keyword) {
                 $query->whereHas('partner',  function ($partner) use ($keyword) {
                     $partner->where('name', 'like', $keyword);
                 });
+            })->editColumn('value', function ($query) {
+                return '$ '.$query->value;
             });
     }
 
 
     public function query(RelationPrice $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('type', RelationPriceType::PARTNER);
     }
 
     public function html()
@@ -67,11 +64,12 @@ class RelationDataTable extends DataTable
                 'width' => '10px'
             ],
             'number' => ['title' => 'Numero', 'name' => 'number', 'width' => '100px'],
-            'fee_type' => ['title' => 'Tarifa', 'name' => 'fee_type', 'width' => '200px'],
             'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px'],
+            'value' => ['title' => 'Frete', 'name' => 'value', 'width' => '200px'],
+            'weight_initial' => ['title' => 'PESO INI', 'name' => 'weight_initial', 'width' => '200px'],
+            'weight_final' => ['title' => 'PESO FINAL', 'name' => 'weight_final', 'width' => '200px'],
             'origin' => ['title' => 'Origem', 'name' => 'origin', 'width' => '200px'],
             'destiny' => ['title' => 'Destino', 'name' => 'destiny', 'width' => '200px'],
-            'type' => ['title' => 'Tipo', 'name' => 'type', 'width' => '200px'],
             'status' => ['title' => 'Status', 'name' => 'status', 'width' => '200px'],
         ];
     }

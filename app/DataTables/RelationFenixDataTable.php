@@ -6,7 +6,7 @@ use App\Models\Country;
 use App\Models\RelationPrice;
 use Yajra\DataTables\Services\DataTable;
 
-class RelationDataTable extends DataTable
+class RelationFenixDataTable extends DataTable
 {
     public function dataTable($query)
     {

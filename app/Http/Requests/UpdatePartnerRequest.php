@@ -66,6 +66,10 @@ class UpdatePartnerRequest extends FormRequest
                         }
                     }
                 },
-            ],        ];
+            ],
+            'bank_data.agency' => 'nullable|max:50|required_with:bank_data.checking_account',
+            'bank_data.checking_account' => 'required_with:bank_data.agency',
+            'bank_data.bank_id' => 'required_with:bank_data.checking_account'
+        ];
     }
 }

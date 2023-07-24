@@ -41,4 +41,14 @@ class RelationPrice extends Model
     {
         return $this->belongsTo(FeeRule::class);
     }
+
+    /**
+     * Get the currency that owns the RelationPrice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency(): BelongsTo
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

@@ -30,6 +30,7 @@ class RelationPriceResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deadline_type' => $this->deadline_type,
+            'currency_id' => $this->currency_id,
             'type' => $this->type,
         ];
     }

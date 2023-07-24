@@ -4,6 +4,7 @@ namespace App\Services\RelationPrice;
 
 use App\Enums\RelationPriceType;
 use App\Helpers\MoneyToDecimal;
+use App\Models\Currency;
 use App\Models\FeeRule;
 use App\Models\FeeType;
 use App\Models\Partner;
@@ -32,8 +33,12 @@ class StoreRelationPriceService
                 if (isset($request['fee_type_id']) && $request['fee_type_id'] != '') {
                     $feeType = FeeType::query()->findOrFail($request['fee_type_id']);
                 }
-                if(isset($request['fee_rule_id']) && $request['fee_type_id'] != '') {
-                    $feeRule = FeeRule::query()->findOrFail($request['fee_rule_id']);
+                if(isset($rule['fee_rule_id']) && $rule['fee_rule_id'] != '') {
+                    $feeRule = FeeRule::query()->findOrFail($rule['fee_rule_id']);
+                }
+
+                if(isset($rule['currency_id']) && $rule['currency_id'] != '' ) {
+                    $currency = Currency::query()->findOrFail($rule['currency_id']);
                 }
                 $relationPrice = RelationPrice::query()->firstOrCreate([
                     'number' => substr(str_shuffle(time() . mt_rand(0, 999) . md5(time() . mt_rand(0, 999))), 0, 16),
@@ -53,7 +58,8 @@ class StoreRelationPriceService
                     'weight_final' =>  MoneyToDecimal::moneyToDecimal($rule['weight_final']) ?? "",
                     'fee_rule_id' => isset($feeRule) ? $feeRule->id : null,
                     'partner_id' =>  isset($partner) ? $partner->id : null,
-                    'fee_type_id' => isset($feeType) ? $feeType->id : null
+                    'fee_type_id' => isset($feeType) ? $feeType->id : null,
+                    'currency_id' => isset($currency) ? $currency->id : null,
                 ]);
                 array_push($relationPrices, $relationPrice);
             }
@@ -65,8 +71,11 @@ class StoreRelationPriceService
                 case 'App\Models\Partner':
                     throw new Exception('Partner not found', 404);
                     break;
-                case 'App\Models\Partner':
+                case 'App\Models\FeeType':
                         throw new Exception('FeeType not found', 404);
+                        break;
+                case 'App\Models\FeeRule':
+                        throw new Exception('FeeRule not found', 404);
                         break;
                 default:
                     throw new Exception('Error Model not found', 404);

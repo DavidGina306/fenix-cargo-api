@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Country;
+use App\Enums\RelationPriceType;
 use App\Models\RelationPrice;
 use Yajra\DataTables\Services\DataTable;
 
@@ -17,33 +17,55 @@ class RelationFenixDataTable extends DataTable
                     'id' => $query->id,
                     'status' => $query->status
                 ];
-            })->editColumn('destiny', function ($query) {
-                return $query->destiny_1 . ' / ' . $query->destiny_2 . ' - ' .  Country::find($query->destiny_country)->nome;
-            })->filterColumn('destiny', function ($query, $keyword) {
-                $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
-            })->editColumn('origin', function ($query) {
+            })
+            ->editColumn('destiny', function ($query) {
+                return $query->destiny_1 . ' / ' . $query->destiny_2;
+            })
+            ->filterColumn('destiny', function ($query, $keyword) {
+                $query->where('destiny_1', 'like', $keyword)
+                    ->orWhere('destiny_2', 'like', $keyword);
+            })
+            ->editColumn('origin', function ($query) {
                 return $query->origin_city . ' - ' . $query->origin_state;
-            })->filterColumn('origin', function ($query, $keyword) {
+            })
+            ->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
-            })->editColumn('fee_type', function ($query) {
+            })
+            ->editColumn('fee_type', function ($query) {
                 return $query->feeType->name ?? "";
-            })->filterColumn('fee_type', function ($query, $keyword) {
-                $query->whereHas('feeType',  function ($fee) use ($keyword) {
+            })
+            ->filterColumn('fee_type', function ($query, $keyword) {
+                $query->whereHas('feeType', function ($fee) use ($keyword) {
                     $fee->where('name', 'like', $keyword);
                 });
-            })->editColumn('partner', function ($query) {
-                return $query->partner->name ?? "";
-            })->filterColumn('partner', function ($query, $keyword) {
-                $query->whereHas('partner',  function ($partner) use ($keyword) {
-                    $partner->where('name', 'like', $keyword);
+            })
+            ->editColumn('weight', function ($query) {
+                return $query->weight_initial . ' - ' . $query->weight_final;
+            })
+            ->filterColumn('weight', function ($query, $keyword) {
+                $query->where('weight_initial', 'like', $keyword)
+                    ->orWhere('weight_final', 'like', $keyword);
+            })
+            ->editColumn('deadline', function ($query) {
+                return $query->deadline_initial . ' - ' . $query->deadline_final . ' - ' . $query->deadline_type;
+            })
+            ->filterColumn('deadline', function ($query, $keyword) {
+                $query->where('deadline_initial', 'like', $keyword)
+                    ->orWhere('deadline_final', 'like', $keyword);
+            })
+            ->editColumn('fee_rule', function ($query) {
+                return $query->feeRule->name ?? "";
+            })
+            ->filterColumn('fee_rule', function ($query, $keyword) {
+                $query->whereHas('feeRule', function ($fee) use ($keyword) {
+                    $fee->where('name', 'like', $keyword);
                 });
             });
     }
 
-
     public function query(RelationPrice $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('type', RelationPriceType::FENIX)->with('feeType', 'feeRule');
     }
 
     public function html()
@@ -53,7 +75,6 @@ class RelationFenixDataTable extends DataTable
             ->columns($this->getColumns())
             ->parameters($this->getBuilderParameters() ?? []);
     }
-
 
     protected function getColumns()
     {
@@ -66,13 +87,53 @@ class RelationFenixDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'number' => ['title' => 'Numero', 'name' => 'number', 'width' => '100px'],
-            'fee_type' => ['title' => 'Tarifa', 'name' => 'fee_type', 'width' => '200px'],
-            'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px'],
-            'origin' => ['title' => 'Origem', 'name' => 'origin', 'width' => '200px'],
-            'destiny' => ['title' => 'Destino', 'name' => 'destiny', 'width' => '200px'],
-            'type' => ['title' => 'Tipo', 'name' => 'type', 'width' => '200px'],
-            'status' => ['title' => 'Status', 'name' => 'status', 'width' => '200px'],
+            'number' => [
+                'title' => 'Numero',
+                'name' => 'number',
+                'width' => '100px'
+            ],
+            'fee_type' => [
+                'title' => 'Tarifa',
+                'name' => 'feeType.name', // Corrigido o nome da coluna
+                'width' => '200px'
+            ],
+            'weight' => [
+                'title' => 'Peso(I - F)',
+                'name' => 'weight',
+                'width' => '200px',
+                'searchable' => false,
+                'orderable' => false
+            ],
+            'origin' => [
+                'title' => 'Origem',
+                'name' => 'origin',
+                'width' => '200px',
+                'orderable' => false
+            ],
+            'destiny' => [
+                'title' => 'Destino',
+                'name' => 'destiny',
+                'width' => '200px',
+                'orderable' => false
+            ],
+            'fee_rule' => [
+                'title' => 'Regra',
+                'name' => 'feeRule.name', // Corrigido o nome da coluna
+                'width' => '200px',
+                'orderable' => false
+            ],
+            'deadline' => [
+                'title' => 'Prazo',
+                'name' => 'deadline',
+                'width' => '200px',
+                'searchable' => false,
+                'orderable' => false
+            ],
+            'status' => [
+                'title' => 'Status',
+                'name' => 'status',
+                'width' => '200px'
+            ],
         ];
     }
 

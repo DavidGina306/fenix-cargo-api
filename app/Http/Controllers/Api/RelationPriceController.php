@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRelationPriceRequest;
 use App\Services\DatatableService;
 use App\Services\RelationPrice\GetRelationPriceService;
 use App\Services\RelationPrice\StoreRelationPriceService;
+use App\Services\RelationPrice\UpdatedRelationPriceService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +31,19 @@ class RelationPriceController extends Controller
         try {
             DB::beginTransaction();
             $relationPrice =  StoreRelationPriceService::store($request->all());
+            DB::commit();
+            return response($relationPrice, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function update(StoreRelationPriceRequest $request, $relationPriceId)
+    {
+        try {
+            DB::beginTransaction();
+            $relationPrice =  UpdatedRelationPriceService::update($request->all(), $relationPriceId);
             DB::commit();
             return response($relationPrice, 200);
         } catch (Exception $e) {

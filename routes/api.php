@@ -49,6 +49,7 @@ Route::group([
                 Route::get('/partner', "RelationDataTableController@getPatnerDataTable");
 
             });
+            Route::put('/{relation}', "RelationPriceController@update");
         });
 
         Route::group(['prefix' => 'quotes'], function () {

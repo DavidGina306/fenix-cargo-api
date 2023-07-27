@@ -87,11 +87,6 @@ class RelationFenixDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'number' => [
-                'title' => 'Numero',
-                'name' => 'number',
-                'width' => '100px'
-            ],
             'fee_type' => [
                 'title' => 'Tarifa',
                 'name' => 'feeType.name', // Corrigido o nome da coluna

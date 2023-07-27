@@ -44,6 +44,8 @@ class PartnerDataTable extends DataTable
             ->select(
                 'partners.id',
                 'partners.name',
+                'partners.type',
+                'partners.profile',
                 'partners.document',
                 'partners.status',
                 'a.id as id_address',
@@ -77,7 +79,9 @@ class PartnerDataTable extends DataTable
                 'width' => '10px'
             ],
             'name' => ['title' => 'Name', 'name' => 'partners.name',  'width' => '200px'],
-            'document' => ['title' => 'CNPJ', 'name' => 'document', 'width' => '200px'],
+            'type' => ['title' => 'Tipo', 'name' => 'partners.type',  'width' => '200px'],
+            'profile' => ['title' => 'Perfil', 'name' => 'partners.profile',  'width' => '200px'],
+            'document' => ['title' => 'CPF/CNPJ', 'name' => 'document', 'width' => '200px'],
             'address' => ['title' => 'Endereço', 'width' => '200px', 'class' => 'text-center'],
             'parceiros' => ['title' => 'Parceiros', 'width' => '200px', 'class' => 'text-center'],
             'status' => ['title' => 'Status', 'name' => 'partners.status', 'width' => '50px', 'class' => 'text-center'],

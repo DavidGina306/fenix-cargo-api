@@ -27,9 +27,10 @@ class StoreRelationPriceRequest extends FormRequest
     public function rules()
     {
         return [
-            'partner_id' => 'uuid|nullable',
+            'partner_id' => 'nullable|uuid|required_if:type,P,C',
             'destiny_1' => 'required|max:100',
             'destiny_2' => 'required|max:100',
+            'type' => 'required|in:C,P,F',
             'destiny_country' => 'nullable|uuid',
             'origin_country' => 'required|uuid',
             'deadline_type' => 'required',

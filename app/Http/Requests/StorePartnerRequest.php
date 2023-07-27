@@ -46,6 +46,7 @@ class StorePartnerRequest extends FormRequest
             'document' => 'required|max:100',
             'role' => 'max:100',
             'type' => 'required|in:J,F',
+            'profile' => 'required|in:P,M,C',
             'gender' => 'nullable|in:Masculino,Outro,Feminino',
             'address' => 'array|required',
             'address.address_line_1' => 'required|max:100',
@@ -71,6 +72,7 @@ class StorePartnerRequest extends FormRequest
             'bank_data' => 'array|nullable',
             'bank_data.agency' => 'nullable|max:50|required_with:bank_data.checking_account',
             'bank_data.checking_account' => 'required_with:bank_data.agency',
+            'bank_data.beneficiaries' => 'required_with:bank_data.agency',
             'bank_data.bank_id' => 'required_with:bank_data.checking_account'
         ];
     }

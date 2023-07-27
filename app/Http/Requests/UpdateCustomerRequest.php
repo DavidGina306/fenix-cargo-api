@@ -30,7 +30,7 @@ class UpdateCustomerRequest extends FormRequest
             'name' => 'required|max:200',
             'document' => 'required|max:100',
             'role' => 'max:100',
-            'type' => 'required',
+            'type' => 'required|in:J,F',
             'gender' => 'nullable',
             'agents' => 'array|required',
             'agents.*.name' => 'required|max:100',

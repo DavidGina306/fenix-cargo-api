@@ -15,9 +15,9 @@ class CreatePartnerDetailBanksTable extends Migration
     {
         Schema::create('partner_detail_banks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('agency');
-            $table->string('checking_account');
-            $table->string('beneficiaries');
+            $table->string('agency')->nullable();
+            $table->string('checking_account')->nullable();
+            $table->string('beneficiaries')->nullable();
             $table->string('pix')->nullable();
             $table->uuid('partner_id');
             $table->foreign('partner_id')->references('id')->on('partners');

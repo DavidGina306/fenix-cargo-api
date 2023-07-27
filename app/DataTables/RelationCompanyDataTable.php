@@ -63,7 +63,6 @@ class RelationCompanyDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'number' => ['title' => 'Numero', 'name' => 'number', 'width' => '100px'],
             'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px'],
             'value' => ['title' => 'Frete', 'name' => 'value', 'width' => '200px'],
             'weight_initial' => ['title' => 'PESO INI', 'name' => 'weight_initial', 'width' => '200px'],

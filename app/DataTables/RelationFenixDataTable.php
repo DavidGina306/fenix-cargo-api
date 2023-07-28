@@ -40,7 +40,7 @@ class RelationFenixDataTable extends DataTable
                 });
             })
             ->editColumn('weight', function ($query) {
-                return $query->weight_initial . ' - ' . $query->weight_final;
+                return number_format($query->weight_initial, 1) . ' - ' . number_format($query->weight_final, 1);
             })
             ->filterColumn('weight', function ($query, $keyword) {
                 $query->where('weight_initial', 'like', $keyword)

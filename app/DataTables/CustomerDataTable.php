@@ -18,6 +18,24 @@ class CustomerDataTable extends DataTable
                 ];
             })->editColumn('type', function ($query) {
                 return $query->type == "J" ? "Juridica" : "Fisica";
+            })->editColumn('agents', function ($query) {
+                return $query->agents->pluck(['name']);
+            })->filterColumn('agents', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('name', 'like', $keyword);
+                });
+            })->editColumn('email', function ($query) {
+                return $query->agents->pluck(['email']);
+            })->filterColumn('email', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('email', 'like', $keyword);
+                });
+            })->editColumn('contact', function ($query) {
+                return $query->agents->pluck(['contact']);
+            })->filterColumn('contact', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('contact', 'like', $keyword);
+                });
             });
     }
 
@@ -25,6 +43,7 @@ class CustomerDataTable extends DataTable
     public function query(Customer $model)
     {
         return $model->newQuery()
+            ->leftJoin('customer_agents as ca', 'ca.customer_id', '=', 'customers.id')
             ->select(
                 'customers.id',
                 'customers.name',
@@ -58,7 +77,15 @@ class CustomerDataTable extends DataTable
             'name' => ['title' => 'Name', 'name' => 'customers.name',  'width' => '200px'],
             'type' => ['title' => 'Tipo Cliente', 'name' => 'customers.type', 'width' => '200px'],
             'document' => ['title' => 'Documento', 'name' => 'customers.document', 'width' => '200px'],
-            'status' => ['title' => 'Status', 'name' => 'customers.status', 'width' => '50px', 'class' => 'text-center'],
+            'agents' => ['title' => 'Responsaveis', 'width' => '200px', 'class' => 'text-center'],
+            'email' => ['title' => 'Email', 'width' => '200px', 'class' => 'text-center'],
+            'contact' => ['title' => 'Contato', 'width' => '200px', 'class' => 'text-center'],
+            'status' => [
+                'title' => 'Status',
+                'name' => 'customers.status',
+                'width' => '50px',
+                'class' => 'text-center'
+            ],
         ];
     }
 

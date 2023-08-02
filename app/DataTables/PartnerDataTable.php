@@ -22,6 +22,18 @@ class PartnerDataTable extends DataTable
                 $query->whereHas('agents', function ($sql) use ($keyword) {
                     $sql->where('name', 'like', $keyword);
                 });
+            })->editColumn('email', function ($query) {
+                return $query->agents->pluck(['email']);
+            })->filterColumn('email', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('email', 'like', $keyword);
+                });
+            })->editColumn('contact', function ($query) {
+                return $query->agents->pluck(['contact']);
+            })->filterColumn('contact', function ($query, $keyword) {
+                $query->whereHas('agents', function ($sql) use ($keyword) {
+                    $sql->where('contact', 'like', $keyword);
+                });
             })->editColumn('address', function ($query) {
                 return $query->town . " ". $query->postcode;
             })->filterColumn('address', function ($query, $keyword) {
@@ -84,6 +96,8 @@ class PartnerDataTable extends DataTable
             'document' => ['title' => 'CPF/CNPJ', 'name' => 'document', 'width' => '200px'],
             'address' => ['title' => 'Endereço', 'width' => '200px', 'class' => 'text-center'],
             'parceiros' => ['title' => 'Parceiros', 'width' => '200px', 'class' => 'text-center'],
+            'email' => ['title' => 'Email', 'width' => '200px', 'class' => 'text-center'],
+            'contact' => ['title' => 'Contato', 'width' => '200px', 'class' => 'text-center'],
             'status' => ['title' => 'Status', 'name' => 'partners.status', 'width' => '50px', 'class' => 'text-center'],
         ];
     }

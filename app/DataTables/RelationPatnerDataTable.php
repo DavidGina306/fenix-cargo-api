@@ -34,6 +34,12 @@ class RelationPatnerDataTable extends DataTable
                 });
             })->editColumn('value', function ($query) {
                 return '$ '.$query->value;
+            })->editColumn('weight', function ($query) {
+                return number_format($query->weight_initial, 1) . ' - ' . number_format($query->weight_final, 1);
+            })
+            ->filterColumn('weight', function ($query, $keyword) {
+                $query->where('weight_initial', 'like', $keyword)
+                    ->orWhere('weight_final', 'like', $keyword);
             });
     }
 
@@ -64,9 +70,14 @@ class RelationPatnerDataTable extends DataTable
                 'width' => '10px'
             ],
             'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px', 'orderable' => false],
+            'weight' => [
+                'title' => 'Peso(I - F)',
+                'name' => 'weight',
+                'width' => '200px',
+                'searchable' => false,
+                'orderable' => false
+            ],
             'value' => ['title' => 'Frete', 'name' => 'value', 'width' => '200px'],
-            'weight_initial' => ['title' => 'PESO INI', 'name' => 'weight_initial', 'width' => '200px'],
-            'weight_final' => ['title' => 'PESO FINAL', 'name' => 'weight_final', 'width' => '200px'],
             'origin' => ['title' => 'Origem', 'name' => 'origin', 'width' => '200px'],
             'destiny' => ['title' => 'Destino', 'name' => 'destiny', 'width' => '200px'],
             'status' => ['title' => 'Status', 'name' => 'status', 'width' => '200px'],

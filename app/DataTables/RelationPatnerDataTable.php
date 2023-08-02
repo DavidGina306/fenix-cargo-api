@@ -63,7 +63,7 @@ class RelationPatnerDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px'],
+            'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px', 'orderable' => false],
             'value' => ['title' => 'Frete', 'name' => 'value', 'width' => '200px'],
             'weight_initial' => ['title' => 'PESO INI', 'name' => 'weight_initial', 'width' => '200px'],
             'weight_final' => ['title' => 'PESO FINAL', 'name' => 'weight_final', 'width' => '200px'],

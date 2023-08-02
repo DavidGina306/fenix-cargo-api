@@ -19,11 +19,11 @@ class RelationPatnerDataTable extends DataTable
                     'status' => $query->status
                 ];
             })->editColumn('destiny', function ($query) {
-                return $query->destiny_1 . ' / ' . $query->destiny_2;
+                return  $query->destiny_2;
             })->filterColumn('destiny', function ($query, $keyword) {
                 $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
             })->editColumn('origin', function ($query) {
-                return $query->origin_city . ' - ' . $query->origin_state;
+                return $query->origin_city ;
             })->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
             })->editColumn('partner', function ($query) {

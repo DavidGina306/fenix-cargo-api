@@ -19,11 +19,11 @@ class RelationCompanyDataTable extends DataTable
                     'status' => $query->status
                 ];
             })->editColumn('destiny', function ($query) {
-                return $query->destiny_1 . ' / ' . $query->destiny_2;
+                return  $query->destiny_2;
             })->filterColumn('destiny', function ($query, $keyword) {
                 $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
             })->editColumn('origin', function ($query) {
-                return $query->origin_city . ' - ' . $query->origin_state;
+                return $query->origin_city ;
             })->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
             })->editColumn('partner', function ($query) {
@@ -33,7 +33,7 @@ class RelationCompanyDataTable extends DataTable
                     $partner->where('name', 'like', $keyword);
                 });
             })->editColumn('value', function ($query) {
-                return '$ '.$query->value;
+                return '$ ' . $query->value;
             })->editColumn('weight', function ($query) {
                 return number_format($query->weight_initial, 1) . ' - ' . number_format($query->weight_final, 1);
             })
@@ -69,7 +69,7 @@ class RelationCompanyDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
-            'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px', 'orderable' => false ],
+            'partner' => ['title' => 'Parceiro', 'name' => 'partner', 'width' => '200px', 'orderable' => false],
             'weight' => [
                 'title' => 'Peso(I - F)',
                 'name' => 'weight',

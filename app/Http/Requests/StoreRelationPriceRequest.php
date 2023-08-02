@@ -34,9 +34,8 @@ class StoreRelationPriceRequest extends FormRequest
             'destiny_country' => 'nullable|uuid',
             'origin_country' => 'required|uuid',
             'deadline_type' => 'required',
-            'deadline_initial' => 'required',
-            'destiny_country' => 'uuid|nullable',
-            'deadline_final' => 'required',
+            'deadline_initial' => 'required|integer|lte:deadline_final', // Usando "lte" (menor ou igual) para números inteiros
+            'deadline_final' => 'required|integer',
             'rule_types' => 'array|required',
             'rule_types.*.fee_rule_id' => 'required|uuid',
             'rule_types.*.currency_id' => 'uuid|nullable',

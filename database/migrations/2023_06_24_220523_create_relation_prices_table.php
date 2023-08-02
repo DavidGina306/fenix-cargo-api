@@ -23,7 +23,7 @@ class CreateRelationPricesTable extends Migration
             $table->string('destiny_2');
             $table->string('origin_country');
             $table->string('origin_state');
-            $table->string('origin_city');
+            $table->string('origin_city')->nullable();
             $table->enum('type', ['F', 'C', 'P'])->default('F')->comment('F:Fenix;C:compnay,P:Partner');
             $table->decimal('value')->nullable();
             $table->decimal('weight_initial')->nullable();

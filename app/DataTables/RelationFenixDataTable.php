@@ -3,7 +3,10 @@
 namespace App\DataTables;
 
 use App\Enums\RelationPriceType;
+use App\Models\FeeType;
 use App\Models\RelationPrice;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Services\DataTable;
 
 class RelationFenixDataTable extends DataTable
@@ -19,14 +22,14 @@ class RelationFenixDataTable extends DataTable
                 ];
             })
             ->editColumn('destiny', function ($query) {
-                return $query->destiny_1 . ' / ' . $query->destiny_2;
+                return  $query->destiny_2;
             })
             ->filterColumn('destiny', function ($query, $keyword) {
                 $query->where('destiny_1', 'like', $keyword)
                     ->orWhere('destiny_2', 'like', $keyword);
             })
             ->editColumn('origin', function ($query) {
-                return $query->origin_city . ' - ' . $query->origin_state;
+                return $query->origin_city ;
             })
             ->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
@@ -63,9 +66,14 @@ class RelationFenixDataTable extends DataTable
             });
     }
 
-    public function query(RelationPrice $model)
+    public function query(RelationPrice $model, Request $request)
     {
-        return $model->newQuery()->where('type', RelationPriceType::FENIX)->with('feeType', 'feeRule');
+        Log::info($request->research);
+        $model = $model->newQuery()->where('type', RelationPriceType::FENIX);
+        if ($request->research && $feeType = FeeType::query()->find($request->research)) {
+            $model->where('fee_type_id', $feeType->id);
+        }
+        return $model->with('feeType', 'feeRule');
     }
 
     public function html()

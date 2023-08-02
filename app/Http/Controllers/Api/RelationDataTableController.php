@@ -7,6 +7,8 @@ use App\DataTables\RelationFenixDataTable;
 use App\DataTables\RelationPatnerDataTable;
 use App\Http\Controllers\Controller;
 use App\Services\DatatableService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class RelationDataTableController extends Controller
 {
@@ -35,8 +37,9 @@ class RelationDataTableController extends Controller
     }
 
 
-    public function getFenixDataTable()
+    public function getFenixDataTable(Request $request)
     {
+        Log::warning([$request->research]);
         return DatatableService::datatable($this->relationFenixDataTable);
     }
 }

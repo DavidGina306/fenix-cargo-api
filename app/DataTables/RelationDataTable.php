@@ -22,7 +22,7 @@ class RelationDataTable extends DataTable
             })->filterColumn('destiny', function ($query, $keyword) {
                 $query->where('destiny_1', 'like', $keyword)->orWhere('destiny_2', 'like', $keyword);
             })->editColumn('origin', function ($query) {
-                return $query->origin_city . ' - ' . $query->origin_state;
+                return $query->origin_city ;
             })->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
             })->editColumn('fee_type', function ($query) {

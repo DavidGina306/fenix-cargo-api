@@ -20,6 +20,11 @@ class RelationFenixDataTable extends DataTable
                     'id' => $query->id,
                     'status' => $query->status
                 ];
+            })->addColumn('select', function ($query) {
+                return [
+                    'id' => $query->id,
+                    'status' => $query->status
+                ];
             })
             ->editColumn('destiny', function ($query) {
                 return  $query->destiny_2;
@@ -29,7 +34,7 @@ class RelationFenixDataTable extends DataTable
                     ->orWhere('destiny_2', 'like', $keyword);
             })
             ->editColumn('origin', function ($query) {
-                return $query->origin_city ;
+                return $query->origin_city;
             })
             ->filterColumn('origin', function ($query, $keyword) {
                 $query->where('origin_city', 'like', $keyword);
@@ -95,6 +100,16 @@ class RelationFenixDataTable extends DataTable
                 'printable' => false,
                 'width' => '10px'
             ],
+            'select' => [
+                'name' => 'select',
+                'title' => '', // Renderiza o título como HTML
+                'orderable' => false,
+                'raw' => true, // Adicione esta linha para interpretar como HTML
+                'searchable' => false,
+                'exportable' => false,
+                'data' => 'select', // Adicione esta linha para definir o conteúdo da coluna como 'select'
+                'printable' => false,
+            ],
             'fee_type' => [
                 'title' => 'Tarifa',
                 'name' => 'feeType.name', // Corrigido o nome da coluna
@@ -143,5 +158,10 @@ class RelationFenixDataTable extends DataTable
     protected function filename()
     {
         return 'tabela_de_preços_' . date('YmdHis');
+    }
+
+    protected function renderSelectColumnTitle()
+    {
+        return '<input type="checkbox" id="select-all">'; // Retorne o HTML do título
     }
 }

@@ -46,6 +46,7 @@ Route::group([
             Route::group(['prefix' => 'datatable'], function() {
                 Route::get('/company', "RelationDataTableController@getCompanyDataTable");
                 Route::get('/fenix', "RelationDataTableController@getFenixDataTable");
+                Route::get('/postcode', "RelationDataTableController@getPostcodeDataTable");
                 Route::get('/partner', "RelationDataTableController@getPatnerDataTable");
 
             });

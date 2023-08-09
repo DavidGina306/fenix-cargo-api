@@ -36,6 +36,10 @@ class AdditionalFeeSeeder extends Seeder
             [
                 'name' => 'Gelo',
                 'value' => 30
+            ],
+            [
+                'name' => 'Caminhão Exclusivo',
+                'value' => 30
             ]
         ];
 

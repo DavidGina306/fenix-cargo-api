@@ -50,6 +50,7 @@ class StoreRelationPriceService
                         'value' => MoneyToDecimal::moneyToDecimal($rule['value']),
                         'weight_initial' => MoneyToDecimal::moneyToDecimal($rule['weight_initial']),
                         'weight_final' => MoneyToDecimal::moneyToDecimal($rule['weight_final']) ?? "",
+                        'above_excess_weight' => MoneyToDecimal::moneyToDecimal($rule['above_excess_weight']) ?? "",
                         'fee_rule_id' => optional($feeRule)->id,
                         'partner_id' => optional($partner)->id,
                         'fee_type_id' => optional($feeType)->id,

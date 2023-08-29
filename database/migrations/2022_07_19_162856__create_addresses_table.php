@@ -16,11 +16,11 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->softDeletes();
             $table->uuid('id')->primary();
-            $table->string('address_line_1');
+            $table->string('address_line_1')->nullable();
             $table->string('address_line_2')->nullable();
             $table->string('address_line_3')->nullable();
             $table->string('number')->nullable();
-            $table->string('postcode');
+            $table->string('postcode')->nullable();
             $table->string('town')->nullable();
             $table->string('state')->nullable();
             $table->string('country');

@@ -55,6 +55,7 @@ Route::group([
 
         Route::group(['prefix' => 'quotes'], function () {
             Route::post('/', "QuoteController@store");
+            Route::post('/calculate', "QuoteController@calculate");
             Route::get('/', "QuoteController@index");
         });
 

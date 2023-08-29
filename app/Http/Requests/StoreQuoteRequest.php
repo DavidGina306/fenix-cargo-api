@@ -26,15 +26,33 @@ class StoreQuoteRequest extends FormRequest
     public function rules()
     {
         return [
-            'comment_1' => 'max:200|nullable',
-            'comment_2' => 'max:200|nullable',
-            'width' => 'required',
-            'length' => 'required',
-            'quantity' => 'required',
-            'cubed_weight' => 'required',
+            "fee_rule_id" => 'uuid|nullable',
+            "customer_id" => 'uuid|nullable',
+            "sender_name " => 'max:200|nullable',
+            "sender_address_line_1" => 'max:150|nullable',
+            "sender_address_line_2" => 'max:150|nullable',
+            "sender_address_line_3" => 'max:150|nullable',
+            "sender_address_states" => 'max:150|nullable',
+            "sender_address_country" => 'max:150|nullable',
+            "sender_address_town" => 'max:150|nullable',
+            'sender_postcode' => 'max:8|nullable',
+            'recieve_name' => 'max:200|nullable',
+            'receive_postcode' => 'max:8|nullable',
+            "receive_address_line_1" => 'max:150|nullable',
+            "receive_address_line_2" => 'max:150|nullable',
+            "receive_address_line_3" => 'max:150|nullable',
+            "receive_address_states" => 'max:10|nullable',
+            'receive_address_town' => 'max:100|nullable',
+            "receive_address_country" => 'uuid|nullable',
             'doc_type_id' => 'required|uuid',
-            'add_price' => 'required',
-            'fee_type_id' => 'required|uuid'
+            'nf_price' => 'required',
+            "productData" => 'array|required',
+            "productData.*.quantity" => "nullable",
+            "productData.*.height" => "nullable",
+            "productData.*.width" => "nullable",
+            "productData.*.length" => "nullable",
+            "productData.*.weight" => "nullable",
+            "productData.*.cubed_weight" => "nullable",
         ];
     }
 }

@@ -37,4 +37,17 @@ class QuoteController extends Controller
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
         }
     }
+
+    public function calculate(StoreQuoteRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $quote =  StoreQuoteService::store($request->all());
+            DB::commit();
+            return response($quote->toArray(), 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
 }

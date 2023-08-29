@@ -17,10 +17,7 @@ class FeeRuleSeeder extends Seeder
                 'name' => 'Taxa Minima'
             ],
             [
-                'name' => 'Excedente fixo por kg'
-            ],
-            [
-                'name' => 'Excedente variável por peso'
+                'name' => 'Excedente'
             ],
             [
                 'name' => 'Taxa fixa por kg'

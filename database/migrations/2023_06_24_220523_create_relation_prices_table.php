@@ -25,9 +25,10 @@ class CreateRelationPricesTable extends Migration
             $table->string('origin_state');
             $table->string('origin_city')->nullable();
             $table->enum('type', ['F', 'C', 'P'])->default('F')->comment('F:Fenix;C:compnay,P:Partner');
-            $table->decimal('value')->nullable();
-            $table->decimal('weight_initial')->nullable();
-            $table->decimal('weight_final')->nullable();
+            $table->decimal('value', 10, 2)->nullable();
+            $table->decimal('weight_initial', 8, 1)->nullable();
+            $table->decimal('weight_final', 8, 1)->nullable();
+            $table->decimal('above_excess_weight', 8, 1)->nullable();
             $table->boolean("local_type")->default(false);
             $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
             $table->uuid('partner_id')->nullable();

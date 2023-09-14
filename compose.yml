@@ -10,6 +10,8 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     tty: true
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
     networks:
@@ -39,6 +41,9 @@ services:
         - USER_NAME=${USER_NAME}
         - PHP_FPM_VERSION=${PHP_FPM_VERSION}
     restart: always
+    environment:
+      - USER_UID=${USER_UID}
+      - USER_GID=${USER_GID}
     volumes:
       - .:/var/www
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/${PHP_FPM_VERSION}/fpm/conf.d/99-overrides.ini

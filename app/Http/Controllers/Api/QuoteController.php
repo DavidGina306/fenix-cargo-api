@@ -6,6 +6,7 @@ use App\DataTables\QuoteDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Services\DatatableService;
+use App\Services\Quote\CalculateQuoteService;
 use App\Services\Quote\StoreQuoteService;
 use Exception;
 use Illuminate\Http\Request;
@@ -41,10 +42,8 @@ class QuoteController extends Controller
     public function calculate(StoreQuoteRequest $request)
     {
         try {
-            DB::beginTransaction();
-            $quote =  StoreQuoteService::store($request->all());
-            DB::commit();
-            return response($quote->toArray(), 200);
+            $quote =  CalculateQuoteService::sumQuote($request->all());
+            return response($quote, 200);
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

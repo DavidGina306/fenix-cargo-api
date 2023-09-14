@@ -15,7 +15,7 @@ class SearchToSelectAdditionalFeeService
             if ($search = $request->search) {
                 $response->where('name', 'like', "%$search%")->orWhere('id', 'like', "%$search%");
             }
-            return $response->whereStatus('E')->select(['id as code', 'name as label'])->get();
+            return $response->whereStatus('E')->select(['id as code', 'name as label', 'value as value'])->get();
         } catch (Exception $e) {
             Log::error($e->getMessage());
             throw new Exception('Error to get AdditionalFee', 500);

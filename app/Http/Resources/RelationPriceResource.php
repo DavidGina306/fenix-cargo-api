@@ -22,6 +22,7 @@ class RelationPriceResource extends JsonResource
             'value' => $this->value,
             'weight_initial' => $this->weight_initial,
             'weight_final' => $this->weight_final,
+            'above_excess_weight' => $this->above_excess_weight,
             'local_type' => $this->local_type,
             'status' => $this->status,
             'partner_id' => $this->partner_id,

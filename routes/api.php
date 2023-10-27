@@ -133,6 +133,8 @@ Route::group([
             Route::get('/paginate', "ObjectController@paginate");
             Route::get('/paginate-create', "ObjectController@paginateCreate");
             Route::get('/print/{objectId}', "ObjectController@print");
+            Route::post('/order', "ObjectController@store");
+
         });
 
         Route::group(['prefix' => 'locales'], function () {

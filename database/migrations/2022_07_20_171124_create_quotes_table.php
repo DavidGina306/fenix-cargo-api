@@ -18,7 +18,7 @@ class CreateQuotesTable extends Migration
             $table->string('number')->unique();
             $table->string('comment_1')->nullable();
             $table->string('comment_2')->nullable();
-            $table->enum('status', ['E', 'D'])->default('E')->comment('E:enable;D:disabled');
+            $table->enum('status', ['E', 'D', 'C', 'A', 'W'])->default('E')->comment('E:enable;D:disabled');
 
             $table->decimal('value');
             $table->decimal('add_price')->nullable();

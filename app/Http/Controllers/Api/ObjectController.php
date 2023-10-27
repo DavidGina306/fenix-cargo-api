@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ObejctoToOrderRequest;
 use App\Models\ObjectModel;
 use App\Services\Cabinet\Object\PaginateObjectService;
 use App\Services\Cabinet\Object\SearchToSelectObjectService;
+use App\Services\Cabinet\Object\StoreObectToOrderService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -57,6 +59,16 @@ class ObjectController extends Controller
             $pdf->setOption('isRemoteEnabled', true);
             $pdf->loadView('pdf', $data);
             return $pdf->download('teste.pdf');
+        } catch (Exception $e) {
+            Log::error($e);
+            return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function store(ObejctoToOrderRequest $request)
+    {
+        try {
+            return response(StoreObectToOrderService::store($request->all()), 200);
         } catch (Exception $e) {
             Log::error($e);
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

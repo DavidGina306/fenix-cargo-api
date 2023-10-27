@@ -86,19 +86,31 @@ class StoreOrderService
     {
         try {
             $object = ObjectModel::query()->whereNumber($request['item']['number'])->first();
-            $address = StoreAddressService::store($request['address']);
+            $addressRecipient = StoreAddressService::store($request['address']);
+            $customer = Customer::query()->find($request["customer_id"]);
+
             $order = Order::create(
                 [
+                    'payer_id' => $customer->id,
                     'number' => substr(str_shuffle(time() . mt_rand(0, 999) . md5(time() . mt_rand(0, 999))), 0, 16),
-                    'customer_id' =>  $object->customer->id,
-                    'address_id' => $address->id,
-                    'locale_id' => $object->locale->id,
-                    'status_id' => Status::query()->where('name', 'Aguardando Coleta')->first()->id,
-                    'quantity' =>  $request['item']['quantity'],
-                    'value' => 0,
-                    'total_weight' => $request['item']['total_weight'],
+                    'sender_id' => $customer->id,
+                    'sender_name' => $customer->name,
+                    'sender_address_id' => $customer->address->id,
+                    'sender_search_for' => "",
+                    'recipient_id' => $customer->id,
+                    'recipient_name' => $customer->name,
+                    'recipient_address_id' => $addressRecipient->id,
+                    'status_id' => Status::where('name', 'Aguardando Coleta')->first()->id,
+                    'quantity' => $request['item']['quantity'],
+                    'height' => $object->height,
+                    'width' => $object->width,
+                    'length' => $object->length,
+                    'weight' => $request['item']['total_weight'],
+                    'value' => 0.0,
+                    'total_weight' => 0.0,
                     'open_date' => isset($request['open_date']) ? new Carbon($request['open_date']) : Carbon::now(),
-                    'notes' => 'Observação'
+                    'notes' => 'Observação',
+
                 ]
             );
             $items[] = $request['item'];
@@ -106,7 +118,7 @@ class StoreOrderService
             return $order;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            throw new Exception('Error to register Order', 500);
+            throw new Exception('Error to register Order to Object', 500);
         }
     }
 

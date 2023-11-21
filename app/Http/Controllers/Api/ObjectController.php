@@ -7,10 +7,11 @@ use App\Http\Requests\ObejctoToOrderRequest;
 use App\Models\ObjectModel;
 use App\Services\Cabinet\Object\PaginateObjectService;
 use App\Services\Cabinet\Object\SearchToSelectObjectService;
-use App\Services\Cabinet\Object\StoreObectToOrderService;
+use App\Services\Cabinet\Object\StoreObjectToOrderService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use QrCode;
 class ObjectController extends Controller
@@ -68,7 +69,10 @@ class ObjectController extends Controller
     public function store(ObejctoToOrderRequest $request)
     {
         try {
-            return response(StoreObectToOrderService::store($request->all()), 200);
+            DB::beginTransaction();
+            $object = StoreObjectToOrderService::store($request->all());
+            DB::commit();
+            return response($object, 200);
         } catch (Exception $e) {
             Log::error($e);
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);

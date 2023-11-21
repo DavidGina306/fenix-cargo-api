@@ -62,6 +62,8 @@ class EditOrderResource extends JsonResource
                 "country" => $this->addressRecipient->country,
                 "state" => $this->addressRecipient->state
             ],
+            "insurance_value" => $this->insurance_value,
+            "insurance_percentage" => $this->insurance_percentage,
             "number" => $this->number
         ];
     }

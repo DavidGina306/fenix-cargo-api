@@ -45,6 +45,14 @@ class CreateQuotesTable extends Migration
             $table->uuid('recipient_id')->nullable();
             $table->foreign('recipient_id')->references('id')->on('customers');
 
+
+            $table->decimal('insurance', 8, 2)->nullable();
+            $table->decimal('flat_fee', 8, 2)->nullable();
+            $table->decimal('fee', 8, 2)->nullable();
+            $table->decimal('minimum_fee', 8, 2)->nullable();
+            $table->decimal('excess_weight', 8, 2)->nullable();
+            $table->decimal('insurance_percentage', 5, 2)->nullable();
+
             $table->timestamps();
         });
     }

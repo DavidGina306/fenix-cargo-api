@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jamesh\Uuid\HasUuid;
 
 class Quote extends Model
@@ -20,16 +21,6 @@ class Quote extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    /**
-     * Get the customer that owns the Quote
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function feeType(): BelongsTo
-    {
-        return $this->belongsTo(FeeType::class);
     }
 
     /**
@@ -70,5 +61,15 @@ class Quote extends Model
     public function additionalFees(): BelongsToMany
     {
         return $this->belongsToMany(AdditionalFee::class, 'additional_fee_quote', 'quote_id', 'additional_fee_id');
+    }
+
+    /**
+     * Get all of the products for the Quote
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(QuoteProduct::class);
     }
 }

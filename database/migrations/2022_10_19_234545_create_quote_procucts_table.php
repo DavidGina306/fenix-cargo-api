@@ -13,7 +13,7 @@ class CreateQuoteProcuctsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quote_procucts', function (Blueprint $table) {
+        Schema::create('quote_products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->decimal('width');
             $table->decimal('height');
@@ -33,6 +33,6 @@ class CreateQuoteProcuctsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quote_procucts');
+        Schema::dropIfExists('quote_products');
     }
 }

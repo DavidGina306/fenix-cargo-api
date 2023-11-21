@@ -16,6 +16,7 @@ class CreateAdditionalFeeQuoteTable extends Migration
         Schema::create('additional_fee_quote', function (Blueprint $table) {
             $table->uuid('additional_fee_id');
             $table->uuid('quote_id');
+            $table->decimal('value', 10, 2)->nullable();
             $table->foreign('additional_fee_id')->references('id')->on('additional_fees');
             $table->foreign('quote_id')->references('id')->on('quotes');
         });

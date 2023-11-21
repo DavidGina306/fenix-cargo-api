@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Services\DatatableService;
 use App\Services\Quote\CalculateQuoteService;
+use App\Services\Quote\GenerateOrderByQuoteService;
 use App\Services\Quote\StoreQuoteService;
 use Exception;
 use Illuminate\Http\Request;
@@ -47,6 +48,19 @@ class QuoteController extends Controller
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e, 'message' => $e->getMessage(),], 400);
+        }
+    }
+
+    public function generateOrder($quoteId)
+    {
+        try {
+            DB::beginTransaction();
+            $quote =  GenerateOrderByQuoteService::store($quoteId);
+            DB::commit();
+            return response($quote, 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response(['error' => $e, 'message' => $e->getMessage(),], 500);
         }
     }
 }

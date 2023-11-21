@@ -57,6 +57,7 @@ Route::group([
             Route::post('/', "QuoteController@store");
             Route::post('/calculate', "QuoteController@calculate");
             Route::get('/', "QuoteController@index");
+            Route::get('/order/{quote}', "QuoteController@generateOrder");
         });
 
         Route::group(['prefix' => 'users'], function () {

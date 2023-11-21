@@ -86,11 +86,11 @@ class QuoteDataTable extends DataTable
             'origem' => ['title' => 'Origem', 'width' => '200px', 'class' => 'text-center'],
             'destino' => ['title' => 'Destino', 'width' => '200px'],
             'value' => ['title' => 'Frete', 'width' => '200px', 'name' => 'value', 'class' => 'text-center'],
-            'height' => ['title' => 'Altura', 'name' => 'height', 'width' => '200px'],
-            'width' => ['title' => 'Altura', 'name' => 'width', 'width' => '200px'],
-            'length' => ['title' => 'Altura', 'name' => 'length', 'width' => '200px'],
-            'status' => ['title' => 'Excedente', 'width' => '50px', 'class' => 'text-center'],
-
+            'excess_weight' => ['title' => 'Excedente', 'width' => '200px', 'name' => 'value', 'class' => 'text-center'],
+            'fee' => ['title' => 'Taxa', 'width' => '200px', 'name' => 'value', 'class' => 'text-center'],
+            'minimum_fee' => ['title' => 'Taxa Minima', 'width' => '200px', 'name' => 'value', 'class' => 'text-center'],
+            'insurance' => ['title' => 'Seguro', 'width' => '200px', 'name' => 'value', 'class' => 'text-center'],
+            'status' => ['title' => 'Status', 'width' => '50px', 'class' => 'text-center'],
         ];
     }
 

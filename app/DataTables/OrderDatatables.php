@@ -109,7 +109,7 @@ class OrderDatatables extends DataTable
             'origem' => ['title' => 'Origem', 'width' => '200px', 'class' => 'text-center'],
             'quantity' => ['title' => 'Quantidade', 'width' => '200px', 'class' => 'text-center'],
             'weight' => ['title' => 'Peso', 'name' => 'orders.weight',  'width' => '200px'],
-            'value' => ['title' => 'Peso', 'name' => 'orders.value',  'width' => '200px'],
+            'value' => ['title' => 'Valor', 'name' => 'orders.value',  'width' => '200px'],
             'sender' => ['title' => 'Cliente', 'width' => '200px', 'class' => 'text-center'],
             'status' => ['title' => 'Status',  'width' => '200px', 'class' => 'text-center']
         ];
